@@ -1,0 +1,506 @@
+@{
+    ViewData["Title"] = "Caller Tunes";
+}
+
+<section class="account-area">
+    <div class="container" style="padding-top: 140px; padding-bottom: 60px;">
+
+        <!-- Breadcrumb -->
+        <div class="hero__wrap__users" style="margin-bottom: 30px; justify-content: flex-start;" data-aos="fade-up">
+            <div class="hero__wrap__users__img">
+                <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-4.jpg" alt="user"></span>
+            </div>
+            <div class="hero__wrap__users__title">
+                <span>
+                    <a href="/MyAccount" style="color: inherit; text-decoration: none;">My Account</a>
+                    <i class="las la-angle-right" style="margin: 0 10px;"></i>
+                    Caller Tunes
+                </span>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="transactions-panel">
+
+                    <div class="panel-header">
+                        <h5 class="mb-0">
+                            <i class="las la-music" style="color: hsl(var(--base));"></i>
+                            Caller Tunes
+                        </h5>
+                        <div class="happy-users-badge" style="padding: 0.25rem 1rem;">
+                            <i class="las la-headphones"></i>
+                            <span>Music Service</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="alert mb-4" style="background: hsl(var(--base) / 0.1); border-left: 4px solid hsl(var(--base)); border-radius: 12px; padding: 1rem 1.5rem;">
+                                <i class="las la-check-circle" style="color: hsl(var(--base));"></i>
+                                @ViewBag.Message
+                            </div>
+                        }
+
+                        <!-- Now Playing Bar -->
+                        <div id="nowPlayingBar" style="display:none; background: hsl(var(--base) / 0.08); border: 1px solid hsl(var(--base) / 0.2); border-radius: 16px; padding: 14px 20px; margin-bottom: 24px; align-items: center; gap: 14px;">
+                            <div class="vinyl-spin">
+                                <i class="las la-compact-disc"></i>
+                            </div>
+                            <div style="flex:1;">
+                                <div style="font-weight:700; font-size:14px; color: hsl(var(--heading-color));" id="nowPlayingName">—</div>
+                                <div style="font-size:12px; color: hsl(var(--text-color));">Now previewing...</div>
+                            </div>
+                            <!-- Progress bar -->
+                            <div class="audio-progress">
+                                <div class="audio-progress-fill" id="progressFill"></div>
+                            </div>
+                            <button onclick="stopPreview()" class="stop-btn">
+                                <i class="las la-stop"></i> Stop
+                            </button>
+                        </div>
+
+                        <div class="welcome-content mb-4">
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <div class="stat-icon" style="width: 70px; height: 70px; font-size: 30px;">
+                                    <i class="las la-music"></i>
+                                </div>
+                                <div>
+                                    <h4 style="font-size: 1.5rem; margin-bottom: 5px;">Choose Your Caller Tune</h4>
+                                    <p style="color: hsl(var(--text-color) / 0.8); margin-bottom: 0;">
+                                        Click any tune to preview it — then activate your favourite
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form method="post">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold mb-3" style="font-size: 1.1rem;">
+                                    Select Your Tune
+                                </label>
+
+                                <div class="row g-3">
+
+                                    <!-- Bollywood Hits -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('bollywood', 'Bollywood Hits')">
+                                            <input type="radio" name="tune" value="Bollywood Hits" required />
+                                            <div class="tune-card__icon" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base));">
+                                                <i class="las la-film"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base));">Bollywood</span>
+                                                <h6>Bollywood Hits</h6>
+                                                <small>Latest Bollywood songs</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-bollywood">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Classical Music -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('classical', 'Classical Music')">
+                                            <input type="radio" name="tune" value="Classical Music" />
+                                            <div class="tune-card__icon" style="background: hsl(var(--base-two) / 0.1); color: hsl(var(--base-two));">
+                                                <i class="las la-guitar"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(var(--base-two) / 0.1); color: hsl(var(--base-two));">Classical</span>
+                                                <h6>Classical Music</h6>
+                                                <small>Traditional melodies</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-classical">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Pop Music -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('pop', 'Pop Music')">
+                                            <input type="radio" name="tune" value="Pop Music" />
+                                            <div class="tune-card__icon" style="background: hsl(40 100% 46% / 0.1); color: hsl(40 100% 46%);">
+                                                <i class="las la-headphones"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(40 100% 46% / 0.1); color: hsl(40 100% 46%);">Pop</span>
+                                                <h6>Pop Music</h6>
+                                                <small>International pop hits</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-pop">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Instrumental -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('instrumental', 'Instrumental')">
+                                            <input type="radio" name="tune" value="Instrumental" />
+                                            <div class="tune-card__icon" style="background: hsl(196 100% 50% / 0.1); color: hsl(196 100% 50%);">
+                                                <i class="las la-drum"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(196 100% 50% / 0.1); color: hsl(196 100% 50%);">Instrumental</span>
+                                                <h6>Instrumental</h6>
+                                                <small>Soothing instrumentals</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-instrumental">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Devotional -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('devotional', 'Devotional')">
+                                            <input type="radio" name="tune" value="Devotional" />
+                                            <div class="tune-card__icon" style="background: hsl(0 96% 63% / 0.1); color: hsl(0 96% 63%);">
+                                                <i class="las la-pray"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(0 96% 63% / 0.1); color: hsl(0 96% 63%);">Devotional</span>
+                                                <h6>Devotional</h6>
+                                                <small>Spiritual & devotional</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-devotional">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Default Ringtone -->
+                                    <div class="col-md-6">
+                                        <label class="tune-card" onclick="playTune('default', 'Default Ringtone')">
+                                            <input type="radio" name="tune" value="Default Ringtone" />
+                                            <div class="tune-card__icon" style="background: hsl(0 0% 50% / 0.1); color: hsl(0 0% 50%);">
+                                                <i class="las la-phone"></i>
+                                            </div>
+                                            <div class="tune-card__info">
+                                                <span class="tune-card__genre" style="background: hsl(0 0% 50% / 0.1); color: hsl(0 0% 50%);">Default</span>
+                                                <h6>Default Ringtone</h6>
+                                                <small>Standard ringtone</small>
+                                            </div>
+                                            <div class="tune-card__play" id="play-default">
+                                                <i class="las la-play-circle"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="common__btn w-100" style="justify-content:space-between;">
+                                    <span><i class="las la-check-circle me-2"></i>Activate Selected Tune</span>
+                                    <span><i class="fa-solid fa-arrow-right"></i></span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="alert mt-4 mb-0" style="background: hsl(var(--base) / 0.05); border-left: 4px solid hsl(var(--base) / 0.3); border-radius: 12px;">
+                            <small style="display: flex; align-items: center; gap: 10px;">
+                                <i class="las la-info-circle" style="color: hsl(var(--base)); font-size: 1.2rem;"></i>
+                                Activation may take up to 2 hours. Standard charges may apply.
+                            </small>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-end mt-4">
+                    <a href="/MyAccount" class="common__btn" style="background: transparent; border: 1px solid hsl(var(--border-color)); color: hsl(var(--text-color));">
+                        <span><i class="las la-arrow-left me-2"></i>Back to My Account</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ── Tune Card ── */
+    .tune-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #fff;
+        border: 2px solid hsl(var(--border-color));
+        border-radius: 16px;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .tune-card input[type="radio"] {
+        display: none;
+    }
+
+    .tune-card:hover {
+        border-color: hsl(var(--base));
+        box-shadow: 0 6px 20px hsl(var(--base) / 0.1);
+        transform: translateY(-2px);
+    }
+
+    .tune-card:has(input:checked) {
+        border-color: hsl(var(--base));
+        background: hsl(var(--base) / 0.03);
+        box-shadow: 0 6px 24px hsl(var(--base) / 0.15);
+    }
+
+    .tune-card:has(input:checked)::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 4px; height: 100%;
+        background: hsl(var(--base));
+        border-radius: 4px 0 0 4px;
+    }
+
+    .tune-card__icon {
+        width: 46px; height: 46px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+    }
+
+    .tune-card__info { flex: 1; }
+
+    .tune-card__genre {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .tune-card__info h6 {
+        margin: 0 0 2px;
+        font-size: 14px;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+    }
+
+    .tune-card__info small {
+        color: hsl(var(--text-color));
+        font-size: 12px;
+    }
+
+    .tune-card__play {
+        font-size: 28px;
+        color: hsl(var(--base) / 0.4);
+        transition: all 0.2s;
+        flex-shrink: 0;
+    }
+
+    .tune-card:hover .tune-card__play,
+    .tune-card:has(input:checked) .tune-card__play {
+        color: hsl(var(--base));
+        transform: scale(1.1);
+    }
+
+    .tune-card__play.playing {
+        color: hsl(var(--base)) !important;
+        animation: pulse-play 0.8s infinite alternate;
+    }
+
+    @@keyframes pulse-play {
+        from { transform: scale(1);   opacity: 1; }
+        to   { transform: scale(1.2); opacity: 0.7; }
+    }
+
+    /* ── Now Playing Bar ── */
+    #nowPlayingBar { display: flex !important; }
+
+    .vinyl-spin {
+        width: 44px; height: 44px;
+        background: hsl(var(--base) / 0.1);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 22px;
+        color: hsl(var(--base));
+        animation: spin 2s linear infinite;
+        flex-shrink: 0;
+    }
+
+    @@keyframes spin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+    }
+
+    .audio-progress {
+        width: 100px; height: 6px;
+        background: hsl(var(--border-color));
+        border-radius: 3px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .audio-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: hsl(var(--base));
+        border-radius: 3px;
+        transition: width 0.1s linear;
+    }
+
+    .stop-btn {
+        background: transparent;
+        border: 1px solid hsl(var(--border-color));
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        cursor: pointer;
+        color: hsl(var(--text-color));
+        flex-shrink: 0;
+        transition: 0.2s;
+    }
+
+    .stop-btn:hover {
+        background: hsl(0 100% 50% / 0.1);
+        border-color: hsl(0 100% 50%);
+        color: hsl(0 100% 50%);
+    }
+</style>
+
+@section Scripts {
+<script>
+    // ── Web Audio API tone definitions ──────────────────────────────────────
+    // Each tune is a sequence of [frequency, duration] pairs
+    const tunes = {
+        bollywood: {
+            notes: [[523,0.15],[587,0.15],[659,0.15],[698,0.3],[659,0.15],[587,0.15],[523,0.3],
+                    [440,0.15],[493,0.15],[523,0.15],[587,0.3],[523,0.15],[493,0.15],[440,0.4]],
+            type: 'sine'
+        },
+        classical: {
+            notes: [[330,0.3],[370,0.3],[415,0.3],[440,0.6],[415,0.3],[370,0.3],[330,0.6],
+                    [294,0.3],[330,0.3],[370,0.3],[415,0.6],[370,0.3],[330,0.3],[294,0.6]],
+            type: 'triangle'
+        },
+        pop: {
+            notes: [[659,0.1],[659,0.1],[0,0.1],[659,0.1],[0,0.1],[523,0.1],[659,0.2],
+                    [784,0.3],[0,0.3],[392,0.3],[0,0.3],[523,0.2],[392,0.2],[330,0.4]],
+            type: 'sawtooth'
+        },
+        instrumental: {
+            notes: [[440,0.4],[0,0.1],[494,0.4],[0,0.1],[523,0.4],[0,0.1],[587,0.4],
+                    [0,0.2],[523,0.4],[0,0.1],[494,0.4],[0,0.1],[440,0.6]],
+            type: 'sine'
+        },
+        devotional: {
+            notes: [[264,0.4],[297,0.4],[330,0.4],[352,0.4],[396,0.4],[440,0.4],[495,0.4],
+                    [528,0.6],[495,0.3],[440,0.3],[396,0.3],[352,0.3],[330,0.6]],
+            type: 'sine'
+        },
+        default: {
+            notes: [[941,0.2],[0,0.1],[941,0.2],[0,0.1],[941,0.2],[0,0.1],
+                    [1209,0.4],[0,0.2],[941,0.2],[0,0.1],[1209,0.4]],
+            type: 'square'
+        }
+    };
+
+    let audioCtx    = null;
+    let stopNodes   = [];
+    let progressInt = null;
+    let currentPlay = null;
+
+    function getCtx() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        return audioCtx;
+    }
+
+    function playTune(tuneKey, tuneName) {
+        stopPreview();
+
+        const ctx      = getCtx();
+        const tune     = tunes[tuneKey];
+        const bar      = document.getElementById('nowPlayingBar');
+        const nameEl   = document.getElementById('nowPlayingName');
+        const fill     = document.getElementById('progressFill');
+        const playIcon = document.getElementById('play-' + tuneKey);
+
+        // Show now playing bar
+        bar.style.display = 'flex';
+        nameEl.textContent = tuneName;
+        fill.style.width   = '0%';
+        currentPlay        = tuneKey;
+
+        // Set play icon to pulsing
+        if (playIcon) playIcon.classList.add('playing');
+
+        // Calculate total duration
+        const totalDuration = tune.notes.reduce((sum, n) => sum + n[1], 0);
+        let   startTime     = ctx.currentTime + 0.05;
+
+        tune.notes.forEach(([freq, dur]) => {
+            if (freq === 0) { startTime += dur; return; }
+
+            const osc  = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type      = tune.type;
+            osc.frequency.setValueAtTime(freq, startTime);
+
+            gain.gain.setValueAtTime(0.4, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(startTime);
+            osc.stop(startTime + dur);
+            stopNodes.push(osc);
+
+            startTime += dur;
+        });
+
+        // Progress bar animation
+        const startReal = Date.now();
+        progressInt = setInterval(() => {
+            const elapsed = (Date.now() - startReal) / 1000;
+            const pct     = Math.min((elapsed / totalDuration) * 100, 100);
+            fill.style.width = pct + '%';
+
+            if (pct >= 100) {
+                clearInterval(progressInt);
+                setTimeout(stopPreview, 300);
+            }
+        }, 50);
+    }
+
+    function stopPreview() {
+        // Stop all oscillators
+        stopNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+        stopNodes = [];
+
+        clearInterval(progressInt);
+
+        // Hide bar
+        const bar = document.getElementById('nowPlayingBar');
+        if (bar) bar.style.display = 'none';
+
+        // Reset all play icons
+        document.querySelectorAll('.tune-card__play').forEach(el => el.classList.remove('playing'));
+        currentPlay = null;
+    }
+
+    // Stop audio when form is submitted
+    document.querySelector('form').addEventListener('submit', stopPreview);
+</script>
+}

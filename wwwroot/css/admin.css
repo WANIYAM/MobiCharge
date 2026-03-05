@@ -1,0 +1,217 @@
+﻿/* =======================================================
+   GLOBAL ADMIN BASE
+======================================================= */
+
+.admin-body {
+    background: #e8e8ec;
+    font-family: var(--body-font);
+}
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =======================================================
+   SIDEBAR
+======================================================= */
+
+.admin-sidebar {
+    width: 260px;
+    background: linear-gradient(145deg, #2e2e38, #1c1c24);
+    color: #fff;
+    padding: 30px 20px;
+    box-shadow: 6px 0 18px rgba(0,0,0,0.4);
+}
+
+.sidebar-logo {
+    margin-bottom: 40px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+    .sidebar-menu li {
+        margin-bottom: 12px;
+    }
+
+    .sidebar-menu a {
+        display: block;
+        padding: 10px 14px;
+        border-radius: 10px;
+        color: #ddd;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+        .sidebar-menu a:hover {
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+        }
+
+/* =======================================================
+   MAIN AREA
+======================================================= */
+
+.admin-main {
+    flex: 1;
+    padding: 30px;
+}
+
+.admin-topbar {
+    background: linear-gradient(145deg, #ffffff, #ececf1);
+    padding: 18px 25px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 6px 6px 15px rgba(0,0,0,0.08), -6px -6px 15px rgba(255,255,255,0.9);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* =======================================================
+   SKEUOMORPHIC STAT CARDS
+======================================================= */
+
+.skeuo-card {
+    position: relative;
+    border-radius: 20px;
+    padding: 25px;
+    color: #fff;
+    overflow: hidden;
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.18), inset 0 2px 4px rgba(255,255,255,0.35);
+    transition: all 0.3s ease;
+}
+
+    .skeuo-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .skeuo-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40%;
+        background: linear-gradient( rgba(255,255,255,0.25), rgba(255,255,255,0.05) );
+        pointer-events: none;
+    }
+
+    .skeuo-card span {
+        font-size: 48px;
+        filter: drop-shadow(0 3px 5px rgba(0,0,0,0.35));
+    }
+
+/* Color Variants */
+
+.skeuo-primary {
+    background: linear-gradient( 145deg, hsl(var(--base)), hsl(var(--base-d-200)) );
+}
+
+.skeuo-success {
+    background: linear-gradient(145deg, #28a745, #1f8e5c);
+}
+
+.skeuo-warning {
+    background: linear-gradient(145deg, #ff9800, #e68900);
+}
+
+/* =======================================================
+   WHITE RAISED SURFACE (Mini Cards)
+======================================================= */
+
+.skeuo-surface {
+    background: linear-gradient(145deg, #ffffff, #f0f0f3);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 8px 8px 18px rgba(0,0,0,0.08), -8px -8px 18px rgba(255,255,255,0.9);
+    transition: 0.3s ease;
+}
+
+    .skeuo-surface:hover {
+        transform: translateY(-4px);
+    }
+
+/* =======================================================
+   PANEL (TABLE CONTAINER)
+======================================================= */
+
+.skeuo-panel {
+    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff, #f3f3f6);
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.08), -6px -6px 20px rgba(255,255,255,0.9);
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 18px 25px;
+    background: linear-gradient(145deg, #fafafa, #eaeaea);
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.05);
+}
+
+/* =======================================================
+   TABLE STYLE
+======================================================= */
+
+.skeuo-table thead {
+    background: linear-gradient(145deg, #ececec, #e2e2e2);
+}
+
+.skeuo-table th {
+    font-weight: 600;
+}
+
+.skeuo-table tbody tr {
+    transition: 0.2s ease;
+}
+
+    .skeuo-table tbody tr:hover {
+        background: rgba(0,0,0,0.03);
+    }
+
+/* =======================================================
+   DEPTH BADGES
+======================================================= */
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-weight: 500;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.15);
+}
+
+    .badge.bg-primary {
+        background: linear-gradient( 145deg, hsl(var(--base)), hsl(var(--base-d-200)) );
+    }
+
+    .badge.bg-success {
+        background: linear-gradient(145deg, #28a745, #1f8e5c);
+    }
+
+    .badge.bg-warning {
+        background: linear-gradient(145deg, #ffc107, #e0a800);
+    }
+
+    .badge.bg-danger {
+        background: linear-gradient(145deg, #dc3545, #b52a37);
+    }
+
+/* =======================================================
+   SKEUOMORPHIC BUTTON
+======================================================= */
+
+.skeuo-btn {
+    background: linear-gradient( 145deg, hsl(var(--base)), hsl(var(--base-d-200)) );
+    border: none;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.2);
+    transition: 0.2s ease;
+}
+
+    .skeuo-btn:hover {
+        opacity: 0.9;
+    }

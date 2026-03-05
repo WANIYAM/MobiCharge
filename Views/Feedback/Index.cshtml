@@ -1,0 +1,576 @@
+@model MobileRechargeApp.Models.Feedback
+@{
+    ViewData["Title"] = "Feedback";
+}
+
+<!--========================== Feedback Page Start ==========================-->
+<section class="sign__area">
+
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+    </div>
+
+    <div class="container">
+        <div class="row g-4 align-items-center">
+
+            <!-- ===== LEFT SIDE ===== -->
+            <div class="col-lg-6 mt-0 mb-5">
+                <div class="sign__left__blk">
+
+                    <div class="sign__label">
+                        <div class="footer__subs__label">
+                            <div class="footer__subs__shr">
+                                <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                <div class="footer__circle__text">
+                                    <p>Share your experience with us</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sign__title">
+                        <span>We Value Your</span>
+                        <h1>Send Us Your <span>Feedback</span></h1>
+                    </div>
+
+                   
+                    <div class="back__to__home">
+                        <a asp-controller="Home" asp-action="Index">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                            Back to Home
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ===== LEFT SIDE END ===== -->
+
+            <!-- ===== RIGHT SIDE FORM ===== -->
+            <div class="col-lg-6">
+                <div class="sign__wrap">
+
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="feedback__toast feedback__toast--success" id="successToast">
+                            <i class="las la-check-circle"></i>
+                            <span>@ViewBag.Success</span>
+                            <button class="feedback__toast__close" onclick="this.parentElement.remove()">
+                                <i class="las la-times"></i>
+                            </button>
+                        </div>
+                    }
+
+                    <form asp-action="Index" method="post" id="feedbackForm" novalidate>
+                        <div class="row g-0">
+
+                            <!-- Name -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single" id="field-name">
+                                    <label asp-for="Name" class="form-label form--label">
+                                        Name
+                                    </label>
+                                    <div class="input--group">
+                                        
+                                        <input asp-for="Name"
+                                               id="Name"
+                                               class="form-control form--control"
+                                               placeholder="Your full name"
+                                               autocomplete="name" />
+                                    </div>
+                                    <span class="feedback__error" id="err-Name">
+                                        <span asp-validation-for="Name"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single" id="field-email">
+                                    <label asp-for="Email" class="form-label form--label">
+                                        Email
+                                    </label>
+                                    <div class="input--group">
+                                     
+                                        <input asp-for="Email"
+                                               id="Email"
+                                               class="form-control form--control"
+                                               placeholder="you@example.com"
+                                               autocomplete="email" />
+                                    </div>
+                                    <span class="feedback__error" id="err-Email">
+                                        <span asp-validation-for="Email"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                           
+                            <!-- Message -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single" id="field-message">
+                                    <label asp-for="Message" class="form-label form--label">
+                                        Message
+                                    </label>
+                                    <div class="input--group" style="height:auto; min-height:110px; align-items:flex-start;">
+                                   
+                                        <textarea asp-for="Message"
+                                                  id="Message"
+                                                  class="form-control form--control"
+                                                  rows="4"
+                                                  style="resize:vertical; min-height:110px; padding-top:0.75rem;"
+                                                  placeholder="Tell us about your experience..."></textarea>
+                                    </div>
+                                    <div class="feedback__char-count">
+                                        <span id="charCount">0</span> / 500
+                                    </div>
+                                    <span asp-validation-for="Message" class="feedback__error" id="err-Message"></span>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single">
+                                    <button type="submit" class="common__btn" id="submitBtn">
+                                        <span>
+                                            Submit Feedback
+                                        </span>
+                                        <span>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </span>
+                                    </button>
+                                    <a asp-controller="Home" asp-action="Index" class="feedback__cancel">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- ===== RIGHT SIDE END ===== -->
+
+        </div>
+    </div>
+
+</section>
+<!--========================== Feedback Page End ==========================-->
+
+<style>
+    .sign__left__blk {
+        margin-top: 50px;
+    }
+
+    .sign__wrap {
+        width: 530px;
+        margin-top: 50px;
+    }
+
+    .sign__wrap__single {
+        margin-bottom: 0;
+        padding-bottom: 8px;
+    }
+
+   .col-lg-12 + .col-lg-12 {
+    margin-top: 2px;
+}
+
+    .form--label {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: hsl(var(--heading-color));
+    }
+
+    .input--group {
+        display: flex;
+        align-items: center;
+        height: 52px;
+        border-radius: 10px;
+        border: 1px solid hsl(var(--border-color));
+        overflow: hidden;
+        transition: 0.25s;
+        background:white;
+    }
+
+    .input--group:focus-within {
+        border-color: hsl(var(--base));
+        box-shadow: 0 0 0 2px hsl(var(--base) / 0.15);
+    }
+
+    .input--group .input-group-text {
+        background: hsl(var(--section-bg));
+        border: none;
+        color: hsl(var(--base));
+        padding: 0 16px;
+        font-size: 1rem;
+    }
+
+    .input--group .form--control {
+        border: none;
+        height: 100%;
+        padding: 0.75rem 0.75rem 0.75rem 5px;
+        background: transparent;
+        font-size: 0.9rem;
+    }
+
+    .input--group .form--control:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    .input--group .form--control::placeholder {
+        color: hsl(var(--text-color) / 0.38);
+    }
+
+    .sign__wrap__single.is-invalid .input--group {
+        border-color: hsl(0 90% 55%);
+        box-shadow: 0 0 0 2px hsl(0 90% 55% / 0.1);
+    }
+
+    .sign__wrap .common__btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+        padding: 0 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        width: 100%;
+        border: none;
+        cursor: pointer;
+    }
+
+    .sign__wrap .common__btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .sign__wrap .common__btn.loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.75;
+    }
+
+    .sign__wrap .common__btn.loading span:first-child {
+        opacity: 0;
+    }
+
+    .sign__wrap .common__btn.loading::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #fff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        animation: fbSpin 0.8s linear infinite;
+    }
+
+    @@keyframes fbSpin {
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .feedback__cancel {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 52px;
+        padding: 0 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        width: 100%;
+        border: 1px solid hsl(var(--border-color));
+        background: transparent;
+        color: hsl(var(--text-color));
+        font-size: 0.9rem;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 12px;
+    }
+
+    .feedback__cancel:hover {
+        border-color: hsl(var(--base));
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.04);
+        transform: translateY(-2px);
+    }
+
+    .feedback__error {
+        display: block;
+        font-size: 0.75rem;
+        color: hsl(0 90% 50%);
+        min-height: 1rem;
+        margin-top: 0.3rem;
+        font-weight: 500;
+    }
+
+    .feedback__error:empty {
+        display: none;
+    }
+
+    .feedback__char-count {
+        text-align: right;
+        font-size: 0.75rem;
+        color: hsl(var(--text-color) / 0.4);
+        margin-top: 0.3rem;
+    }
+
+    .feedback__char-count.near-limit { color: hsl(38 95% 45%); }
+    .feedback__char-count.at-limit   { color: hsl(0 90% 50%); }
+
+    .feedback__stars {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+    }
+
+    .feedback__star {
+        background: hsl(var(--section-bg));
+        border: 1px solid hsl(var(--border-color));
+        border-radius: 8px;
+        padding: 0.5rem 0.8rem;
+        cursor: pointer;
+        color: hsl(var(--border-color));
+        font-size: 1.3rem;
+        line-height: 1;
+        transition: all 0.15s;
+    }
+
+    .feedback__star:hover,
+    .feedback__star.active {
+        border-color: hsl(var(--base));
+        color: hsl(38 95% 50%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px hsl(var(--base) / 0.2);
+    }
+
+    .feedback__toast {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .feedback__toast--success {
+        background: hsl(var(--base) / 0.08);
+        border: 1px solid hsl(var(--base) / 0.2);
+        color: hsl(var(--base));
+    }
+
+    .feedback__toast__close {
+        margin-left: auto;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: inherit;
+        opacity: 0.6;
+        font-size: 1rem;
+        padding: 0;
+    }
+
+    .feedback__toast__close:hover { opacity: 1; }
+
+    .feedback__features {
+        margin: 2rem 0 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .feedback__feature__item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: hsl(var(--text-color));
+    }
+
+    .feedback__feature__icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 0.6rem;
+        background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    @@media (max-width: 1200px) {
+        .sign__wrap { width: 100%; max-width: 530px; }
+    }
+
+    @@media (max-width: 991px) {
+        .sign__left__blk { margin-top: 0; text-align: center; }
+        .feedback__features { align-items: center; }
+        .feedback__feature__item { justify-content: center; }
+        .sign__wrap { margin: 0 auto; }
+    }
+
+    @@media (max-width: 576px) {
+        .feedback__stars { flex-wrap: wrap; justify-content: center; }
+    }
+</style>
+
+<script>
+(function () {
+
+    function setValid(fieldEl) {
+        fieldEl.classList.remove('is-invalid');
+    }
+    function setInvalid(fieldEl, msg) {
+        fieldEl.classList.add('is-invalid');
+        const err = fieldEl.querySelector('.feedback__error');
+        if (err) err.textContent = msg;
+    }
+    function clearState(fieldEl) {
+        fieldEl.classList.remove('is-invalid');
+        const err = fieldEl.querySelector('.feedback__error');
+        if (err) err.textContent = '';
+    }
+
+    const nameEl    = document.getElementById('Name');
+    const emailEl   = document.getElementById('Email');
+    const msgEl     = document.getElementById('Message');
+    const ratingEl  = document.getElementById('Rating');
+    const form      = document.getElementById('feedbackForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const fieldName   = document.getElementById('field-name');
+    const fieldEmail  = document.getElementById('field-email');
+    const fieldMsg    = document.getElementById('field-message');
+    const fieldRating = document.getElementById('field-rating');
+    const ratingErrEl = document.getElementById('err-Rating');
+
+    function validateName() {
+        const v = (nameEl.value || '').trim();
+        if (!v)            { setInvalid(fieldName, 'Name is required.'); return false; }
+        if (v.length < 2)  { setInvalid(fieldName, 'Name must be at least 2 characters.'); return false; }
+        if (v.length > 100){ setInvalid(fieldName, 'Name must be under 100 characters.'); return false; }
+        var nameRx = new RegExp('^[A-Za-z \\-\\.\' ]+$');
+        if (!nameRx.test(v)) { setInvalid(fieldName, 'Name contains invalid characters.'); return false; }
+        setValid(fieldName); return true;
+    }
+
+    function validateEmail() {
+        const v = (emailEl.value || '').trim();
+        if (!v) { setInvalid(fieldEmail, 'Email address is required.'); return false; }
+        var atSign = String.fromCharCode(64);
+        var atIdx  = v.indexOf(atSign);
+        var dotIdx = v.lastIndexOf('.');
+        var spIdx  = v.indexOf(' ');
+        var emailOk = atIdx > 0 && dotIdx > atIdx + 1 && dotIdx < v.length - 2 && spIdx === -1;
+        if (!emailOk) { setInvalid(fieldEmail, 'Please enter a valid email address.'); return false; }
+        setValid(fieldEmail); return true;
+    }
+
+    function validateRating() {
+        if (parseInt(ratingEl.value || '0') === 0) {
+            fieldRating.classList.add('is-invalid');
+            ratingErrEl.style.display = 'block';
+            return false;
+        }
+        fieldRating.classList.remove('is-invalid');
+        ratingErrEl.style.display = 'none';
+        return true;
+    }
+
+    function validateMessage() {
+        const v = (msgEl.value || '').trim();
+        if (!v)            { setInvalid(fieldMsg, 'Please write a message before submitting.'); return false; }
+        if (v.length < 10) { setInvalid(fieldMsg, 'Message must be at least 10 characters.'); return false; }
+        if (v.length > 500){ setInvalid(fieldMsg, 'Message must be under 500 characters.'); return false; }
+        setValid(fieldMsg); return true;
+    }
+
+    nameEl.addEventListener('blur',  validateName);
+    emailEl.addEventListener('blur', validateEmail);
+    msgEl.addEventListener('blur',   validateMessage);
+
+    nameEl.addEventListener('focus',  () => clearState(fieldName));
+    emailEl.addEventListener('focus', () => clearState(fieldEmail));
+    msgEl.addEventListener('focus',   () => clearState(fieldMsg));
+
+    const charCount = document.getElementById('charCount');
+    const charWrap  = document.querySelector('.feedback__char-count');
+    msgEl.addEventListener('input', function () {
+        const len = this.value.length;
+        charCount.textContent = len;
+        charWrap.classList.toggle('near-limit', len >= 400 && len < 500);
+        charWrap.classList.toggle('at-limit',   len >= 500);
+    });
+
+    const stars = Array.from(document.querySelectorAll('.feedback__star'));
+    let ratingVal = 0;
+
+    function paintStars(upTo) {
+        stars.forEach((s, i) => s.classList.toggle('active', i < upTo));
+    }
+
+    stars.forEach((star, idx) => {
+        star.addEventListener('mouseenter', () => paintStars(idx + 1));
+        star.addEventListener('mouseleave', () => paintStars(ratingVal));
+        star.addEventListener('click', () => {
+            ratingVal = idx + 1;
+            ratingEl.value = ratingVal;
+            paintStars(ratingVal);
+            fieldRating.classList.remove('is-invalid');
+            ratingErrEl.style.display = 'none';
+        });
+        star.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                ratingVal = idx + 1;
+                ratingEl.value = ratingVal;
+                paintStars(ratingVal);
+            }
+        });
+    });
+
+    form.addEventListener('submit', function (e) {
+        const n  = validateName();
+        const em = validateEmail();
+        const r  = validateRating();
+        const m  = validateMessage();
+        if (!n || !em || !r || !m) {
+            e.preventDefault();
+            const firstErr = form.querySelector('.is-invalid');
+            if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+    });
+
+    const existingRating = parseInt(ratingEl.value || '0');
+    if (existingRating > 0) { ratingVal = existingRating; paintStars(ratingVal); }
+
+    const toast = document.getElementById('successToast');
+    if (toast) {
+        setTimeout(() => {
+            toast.style.transition = 'opacity .4s';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 400);
+        }, 4000);
+    }
+
+})();
+</script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

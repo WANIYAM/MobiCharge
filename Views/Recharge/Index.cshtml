@@ -1,0 +1,221 @@
+@model MobileRechargeApp.Models.RechargeViewModel
+@{
+    ViewData["Title"] = "Online Recharge";
+}
+
+<!--========================== Recharge Page Start ==========================-->
+<section class="sign__area">
+
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+        </div>
+        @* <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+        @* <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+
+        <div class="container">
+            <div class="row g-4 align-items-center">
+
+                <!-- ===== LEFT SIDE ===== -->
+                <div class="col-lg-6">
+                    <div class="sign__left__blk">
+
+                        <div class="sign__label">
+                            <div class="footer__subs__label">
+                                <div class="footer__subs__shr">
+                                    <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                        <div class="footer__circle__text">
+                                            <p>Recharge instantly and stay connected.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sign__title">
+                                <span>Fast &amp; Secure</span>
+                                <h1>Online <span>Recharge</span></h1>
+                            </div>
+
+                            <div class="back__to__home">
+                                <a href="/">
+                                    <i class="fa-solid fa-arrow-left-long"></i>
+                                    Back to Home
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ===== LEFT SIDE END ===== -->
+                    <!-- ===== RIGHT SIDE FORM ===== -->
+                    <div class="col-lg-6">
+                        <div class="sign__wrap">
+
+<form asp-action="Index" method="post">
+    <div class="row g-0">
+
+        <!-- Mobile Number -->
+        <div class="col-lg-12">
+            <div class="sign__wrap__single">
+                <label asp-for="MobileNumber" class="form-label form--label">
+                     Mobile Number
+                </label>
+
+                <div class="input--group d-flex align-items-center">
+                    
+
+                    <input asp-for="MobileNumber"
+                           class="form-control form--control"
+                           placeholder="Enter 10-digit mobile number"
+                           maxlength="10"
+                           inputmode="numeric"
+                           pattern="[0-9]{10}" />
+                </div>
+
+                <span asp-validation-for="MobileNumber"
+                      class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+<div class="col-lg-12">
+    <div class="sign__wrap__single">
+
+        <!-- Top Up -->
+        <button type="submit" name="planType" value="topup" class="common__btn">
+            <span>
+                Top Up Recharge
+            </span>
+            <span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+        </button>
+
+        <!-- Special -->
+        <button type="submit" name="planType" value="special" class="common__btn">
+            <span>
+                Special Recharge
+            </span>
+            <span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </span>
+        </button>
+
+    </div>
+</div>
+    </div>
+</form>
+                        </div>
+                    </div>
+                    <!-- ===== RIGHT SIDE END ===== -->
+
+                </div>
+            </div>
+
+        </section>
+        <!--========================== Recharge Page End ==========================-->
+
+        <style>
+    .sign__left__blk{
+        margin-top: 50px;
+    }
+    .sign__wrap {
+                width: 530px;
+                margin-top: 50px;
+            }
+
+.sign__wrap__single {
+    margin-bottom: 0;
+}
+.col-lg-12 + .col-lg-12 {
+    margin-top: 12px;
+}
+.sign__wrap__single .common__btn + .common__btn {
+    margin-top: 15px;
+}
+    .form--label {
+        margin-bottom: 10px;
+    }
+
+    .text-danger:empty {
+        display: none;
+    }
+
+    .row.g-0 > .col-lg-12 {
+        padding-bottom: 8px;
+    }
+
+    .col-lg-12 + .col-lg-12 {
+        margin-top: 10px;
+    }
+
+    .sign__wrap__single .common__btn + .common__btn {
+        margin-top: 10px;
+    }
+
+.sign__wrap .common__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 52px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+    .input--group {
+        width: 95%; 
+        margin: 0 auto;
+    }
+    .sign__wrap__single .common__btn + .common__btn {
+        margin-top: 12px;
+    }
+
+    .sign__wrap__single .common__btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 8px;
+    }
+
+        .sign__wrap__single .common__btn span:last-child {
+            display: flex;
+            align-items: center;
+        }
+.sign__wrap .common__btn:hover {
+    transform: translateY(-2px);
+}
+
+.input--group {
+    display: flex;
+    align-items: center;
+    height: 52px;
+    border-radius: 10px;
+    border: 1px solid hsl(var(--border-color));
+    overflow: hidden;
+    transition: 0.25s;
+}
+.input--group:focus-within {
+    border-color: hsl(var(--base));
+    box-shadow: 0 0 0 2px hsl(var(--base) / 0.15);
+}
+
+.input--group .input-group-text {
+    background: hsl(var(--section-bg));
+    border: none;
+    color: hsl(var(--base));
+    padding: 0 16px;
+}
+
+.input--group .form--control {
+    border: none;
+    height: 100%;
+    padding-left: 10px;
+}
+
+.input--group .form--control:focus {
+    box-shadow: none;
+}
+        </style>
+
+        @section Scripts {
+            @await Html.PartialAsync("_ValidationScriptsPartial")
+        }

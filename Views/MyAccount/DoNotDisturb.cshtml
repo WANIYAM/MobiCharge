@@ -1,0 +1,499 @@
+@{
+    ViewData["Title"] = "Do Not Disturb";
+    bool isDndActive = ViewBag.DndActive ?? false;
+    string action = ViewBag.Action ?? "";
+}
+
+<section class="account-area">
+    <div class="container" style="padding-top: 140px; padding-bottom: 60px;">
+
+        <!-- Breadcrumb -->
+        <div class="hero__wrap__users" style="margin-bottom: 30px; justify-content: flex-start;" data-aos="fade-up">
+            <div class="hero__wrap__users__img">
+                <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-4.jpg" alt="user"></span>
+            </div>
+            <div class="hero__wrap__users__title">
+                <span>
+                    <a href="/MyAccount" style="color: inherit; text-decoration: none;">My Account</a>
+                    <i class="las la-angle-right" style="margin: 0 10px;"></i>
+                    Do Not Disturb
+                </span>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+
+            <!-- ═══ LEFT — Main DND Toggle ═══ -->
+            <div class="col-lg-5">
+                <div class="transactions-panel h-100">
+                    <div class="panel-header">
+                        <h5 class="mb-0">
+                            <i class="las la-bell-slash" style="color: hsl(var(--base));"></i>
+                            Do Not Disturb
+                        </h5>
+                        <span class="dnd-status-badge @(isDndActive ? "active" : "inactive")" id="statusBadge">
+                            @(isDndActive ? "● Active" : "○ Inactive")
+                        </span>
+                    </div>
+
+                    <div class="p-4 text-center">
+
+                        @if (ViewBag.Message != null)
+                        {
+                            <div class="alert-msg @(action == "activate" ? "success" : "warning")" id="alertMsg">
+                                <i class="las @(action == "activate" ? "la-check-circle" : "la-times-circle")"></i>
+                                @ViewBag.Message
+                            </div>
+                        }
+
+                        <!-- Phone icon with DND ring animation -->
+                        <div class="dnd-phone-wrap @(isDndActive ? "dnd-on" : "dnd-off")" id="dndPhoneWrap">
+                            <div class="dnd-rings">
+                                <div class="dnd-ring r1"></div>
+                                <div class="dnd-ring r2"></div>
+                                <div class="dnd-ring r3"></div>
+                            </div>
+                            <div class="dnd-icon-circle" id="dndIconCircle">
+                                <i class="las @(isDndActive ? "la-bell-slash" : "la-bell")" id="dndBellIcon"></i>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-3 mb-1" style="font-weight:700;">
+                            DND is <span id="dndStatusText" style="color: @(isDndActive ? "hsl(var(--base))" : "hsl(0 100% 50%)")">
+                                @(isDndActive ? "Active" : "Inactive")
+                            </span>
+                        </h4>
+                        <p style="color: hsl(var(--text-color)); font-size: 13px; margin-bottom: 28px;">
+                            @(isDndActive ? "Promotional calls & SMS are blocked" : "You are receiving all calls & messages")
+                        </p>
+
+                        <!-- Big Toggle Switch -->
+                        <form method="post" id="dndForm">
+                            <input type="hidden" name="action" id="dndAction" value="@(isDndActive ? "deactivate" : "activate")" />
+                            <label class="big-toggle @(isDndActive ? "on" : "")" id="bigToggle" onclick="toggleDnd()">
+                                <span class="big-toggle__track">
+                                    <span class="big-toggle__knob">
+                                        <i class="las @(isDndActive ? "la-bell-slash" : "la-bell")" id="toggleIcon"></i>
+                                    </span>
+                                </span>
+                                <span class="big-toggle__label" id="toggleLabel">
+                                    @(isDndActive ? "Tap to Deactivate" : "Tap to Activate")
+                                </span>
+                            </label>
+                        </form>
+
+                        <!-- Simulate Incoming Call Button -->
+                        <button class="sim-call-btn mt-4" onclick="simulateCall()">
+                            <i class="las la-phone-volume"></i>
+                            Simulate Incoming Call
+                        </button>
+                        <p style="font-size: 11px; color: hsl(var(--text-color)); margin-top: 8px;">
+                            See how DND handles an incoming call
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ RIGHT — Settings ═══ -->
+            <div class="col-lg-7">
+                <div class="row g-4">
+
+                    <!-- Block Categories -->
+                    <div class="col-12">
+                        <div class="transactions-panel">
+                            <div class="panel-header">
+                                <h6 class="mb-0">
+                                    <i class="las la-shield-alt" style="color: hsl(var(--base));"></i>
+                                    Block Categories
+                                </h6>
+                                <small class="text-muted">Select what to block</small>
+                            </div>
+                            <div class="p-4">
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <label class="block-category active">
+                                            <input type="checkbox" checked />
+                                            <div class="block-cat__icon" style="background:hsl(var(--base)/0.1); color:hsl(var(--base));">
+                                                <i class="las la-phone-slash"></i>
+                                            </div>
+                                            <div>
+                                                <div class="block-cat__name">Promo Calls</div>
+                                                <div class="block-cat__desc">Marketing calls</div>
+                                            </div>
+                                            <div class="block-cat__check"><i class="las la-check"></i></div>
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="block-category active">
+                                            <input type="checkbox" checked />
+                                            <div class="block-cat__icon" style="background:hsl(270 100% 60%/0.1); color:hsl(270 100% 50%);">
+                                                <i class="las la-sms"></i>
+                                            </div>
+                                            <div>
+                                                <div class="block-cat__name">Promo SMS</div>
+                                                <div class="block-cat__desc">Ad messages</div>
+                                            </div>
+                                            <div class="block-cat__check"><i class="las la-check"></i></div>
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="block-category">
+                                            <input type="checkbox" />
+                                            <div class="block-cat__icon" style="background:hsl(40 100% 50%/0.1); color:hsl(40 100% 40%);">
+                                                <i class="las la-university"></i>
+                                            </div>
+                                            <div>
+                                                <div class="block-cat__name">Banking SMS</div>
+                                                <div class="block-cat__desc">Bank alerts</div>
+                                            </div>
+                                            <div class="block-cat__check"><i class="las la-check"></i></div>
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="block-category">
+                                            <input type="checkbox" />
+                                            <div class="block-cat__icon" style="background:hsl(0 96% 63%/0.1); color:hsl(0 96% 63%);">
+                                                <i class="las la-shopping-bag"></i>
+                                            </div>
+                                            <div>
+                                                <div class="block-cat__name">Shopping</div>
+                                                <div class="block-cat__desc">Offer messages</div>
+                                            </div>
+                                            <div class="block-cat__check"><i class="las la-check"></i></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Schedule -->
+                    <div class="col-12">
+                        <div class="transactions-panel">
+                            <div class="panel-header">
+                                <h6 class="mb-0">
+                                    <i class="las la-clock" style="color: hsl(var(--base));"></i>
+                                    DND Schedule
+                                </h6>
+                                <label class="mini-toggle" id="scheduleToggle" onclick="toggleSchedule()">
+                                    <span class="mini-toggle__track">
+                                        <span class="mini-toggle__knob"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="p-4" id="scheduleBody">
+                                <p style="font-size:13px; color:hsl(var(--text-color)); margin-bottom:16px;">
+                                    Automatically activate DND during these hours every day
+                                </p>
+                                <div class="schedule-row">
+                                    <div class="schedule-input">
+                                        <label>From</label>
+                                        <input type="time" value="22:00" id="fromTime" />
+                                    </div>
+                                    <div class="schedule-arrow"><i class="las la-arrow-right"></i></div>
+                                    <div class="schedule-input">
+                                        <label>To</label>
+                                        <input type="time" value="08:00" id="toTime" />
+                                    </div>
+                                    <button class="save-schedule-btn" onclick="saveSchedule()">Save</button>
+                                </div>
+                                <div id="scheduleMsg" style="display:none; margin-top:12px; font-size:13px; color:hsl(var(--base));">
+                                    <i class="las la-check-circle"></i> Schedule saved! DND will auto-activate at <span id="scheduleDisplay"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="col-12">
+                        <div style="background: hsl(var(--base)/0.05); border:1px solid hsl(var(--base)/0.15); border-radius:16px; padding:16px 20px; font-size:13px; color:hsl(var(--text-color));">
+                            <i class="las la-info-circle" style="color:hsl(var(--base)); margin-right:8px;"></i>
+                            DND activation may take up to 24 hours. Emergency calls and transactional messages are always delivered.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/MyAccount" class="common__btn" style="background:transparent; border:1px solid hsl(var(--border-color)); color:hsl(var(--text-color));">
+                <span><i class="las la-arrow-left me-2"></i>Back to My Account</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══ Incoming Call Simulator Overlay ═══ -->
+<div class="call-overlay" id="callOverlay">
+    <div class="call-screen" id="callScreen">
+
+        <!-- Blocked State -->
+        <div id="callBlocked" style="display:none;">
+            <div class="call-blocked-icon">
+                <i class="las la-shield-alt"></i>
+            </div>
+            <div class="call-label-blocked">CALL BLOCKED</div>
+            <div class="call-number">+91 98765 43210</div>
+            <div class="call-name">Telemarketer</div>
+            <div class="call-blocked-msg">DND is active — this call was silently blocked</div>
+        </div>
+
+        <!-- Ringing State -->
+        <div id="callRinging">
+            <div class="call-avatar">
+                <i class="las la-user"></i>
+            </div>
+            <div class="call-name">Telemarketer</div>
+            <div class="call-number">+91 98765 43210</div>
+            <div class="call-label-ringing">Incoming call...</div>
+
+            <div class="call-actions">
+                <div class="call-btn decline" onclick="declineCall()">
+                    <i class="las la-phone-slash"></i>
+                </div>
+                <div class="call-btn accept" onclick="acceptCall()">
+                    <i class="las la-phone"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+    /* ── DND Phone Animation ── */
+    .dnd-phone-wrap { position:relative; width:120px; height:120px; margin:0 auto 10px; }
+
+    .dnd-rings { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+    .dnd-ring  { position:absolute; border-radius:50%; border:2px solid hsl(var(--base)/0.2); animation:ringPulse 2s infinite; }
+    .dnd-ring.r1 { width:80px;  height:80px;  animation-delay:0s; }
+    .dnd-ring.r2 { width:100px; height:100px; animation-delay:0.4s; }
+    .dnd-ring.r3 { width:120px; height:120px; animation-delay:0.8s; }
+
+    .dnd-on .dnd-ring { border-color: hsl(var(--base)/0.2); }
+    .dnd-off .dnd-ring { border-color: hsl(0 100% 50%/0.15); animation: none; opacity:0.3; }
+
+    @@keyframes ringPulse {
+        0%   { transform:scale(0.8); opacity:0.8; }
+        100% { transform:scale(1.2); opacity:0; }
+    }
+
+    .dnd-icon-circle {
+        position:relative; z-index:2;
+        width:70px; height:70px; border-radius:50%;
+        background: hsl(var(--base)/0.1);
+        display:flex; align-items:center; justify-content:center;
+        font-size:32px; color:hsl(var(--base));
+        margin: 25px auto 0;
+    }
+
+    /* ── Big Toggle ── */
+    .big-toggle { display:flex; flex-direction:column; align-items:center; gap:12px; cursor:pointer; }
+    .big-toggle__track {
+        width:80px; height:40px; border-radius:20px;
+        background: hsl(0 0% 85%);
+        position:relative; transition:0.3s;
+        display:flex; align-items:center;
+    }
+    .big-toggle.on .big-toggle__track { background: hsl(var(--base)); }
+
+    .big-toggle__knob {
+        width:34px; height:34px; border-radius:50%;
+        background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.2);
+        position:absolute; left:3px;
+        display:flex; align-items:center; justify-content:center;
+        font-size:16px; color:hsl(0 0% 60%);
+        transition:0.3s;
+    }
+    .big-toggle.on .big-toggle__knob { left:43px; color:hsl(var(--base)); }
+
+    .big-toggle__label { font-size:13px; font-weight:600; color:hsl(var(--text-color)); }
+
+    /* ── DND Status Badge ── */
+    .dnd-status-badge { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+    .dnd-status-badge.active   { background:hsl(var(--base)/0.1);    color:hsl(var(--base)); }
+    .dnd-status-badge.inactive { background:hsl(0 100% 50%/0.1); color:hsl(0 100% 50%); }
+
+    /* ── Simulate Call Button ── */
+    .sim-call-btn {
+        background: transparent;
+        border: 1px solid hsl(var(--border-color));
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-size: 13px;
+        cursor: pointer;
+        color: hsl(var(--text-color));
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .sim-call-btn:hover { border-color:hsl(var(--base)); color:hsl(var(--base)); }
+
+    /* ── Block Categories ── */
+    .block-category {
+        display:flex; align-items:center; gap:10px;
+        padding:12px; border-radius:12px;
+        border:2px solid hsl(var(--border-color));
+        cursor:pointer; transition:0.2s;
+        position:relative;
+    }
+    .block-category input[type="checkbox"] { position:absolute; opacity:0; width:0; height:0; }
+    .block-category.active { border-color:hsl(var(--base)); background:hsl(var(--base)/0.03); }
+    .block-cat__icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .block-cat__name { font-size:13px; font-weight:600; color:hsl(var(--heading-color)); }
+    .block-cat__desc { font-size:11px; color:hsl(var(--text-color)); }
+    .block-cat__check { margin-left:auto; width:20px; height:20px; border-radius:50%; background:hsl(var(--base)/0.1); color:hsl(var(--base)); display:flex; align-items:center; justify-content:center; font-size:11px; opacity:0; transition:0.2s; }
+    .block-category.active .block-cat__check { opacity:1; }
+
+    /* ── Schedule ── */
+    .mini-toggle { cursor:pointer; }
+    .mini-toggle__track { width:44px; height:24px; border-radius:12px; background:hsl(0 0% 85%); display:block; position:relative; transition:0.3s; }
+    .mini-toggle__knob  { width:20px; height:20px; border-radius:50%; background:#fff; position:absolute; top:2px; left:2px; transition:0.3s; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
+    .mini-toggle.on .mini-toggle__track { background:hsl(var(--base)); }
+    .mini-toggle.on .mini-toggle__knob  { left:22px; }
+
+    .schedule-row { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .schedule-input { display:flex; flex-direction:column; gap:4px; }
+    .schedule-input label { font-size:11px; font-weight:600; color:hsl(var(--text-color)); }
+    .schedule-input input[type="time"] { padding:8px 12px; border:1px solid hsl(var(--border-color)); border-radius:8px; font-size:14px; color:hsl(var(--heading-color)); background:#fff; }
+    .schedule-arrow { color:hsl(var(--text-color)); font-size:16px; }
+    .save-schedule-btn { padding:8px 16px; background:hsl(var(--base)); color:#fff; border:none; border-radius:8px; font-size:13px; cursor:pointer; margin-left:4px; }
+
+    /* ── Alert Messages ── */
+    .alert-msg { padding:12px 16px; border-radius:12px; margin-bottom:16px; font-size:14px; display:flex; align-items:center; gap:8px; }
+    .alert-msg.success { background:hsl(var(--base)/0.1); border-left:4px solid hsl(var(--base)); color:hsl(var(--base)); }
+    .alert-msg.warning { background:hsl(40 100% 50%/0.1); border-left:4px solid hsl(40 100% 50%); color:hsl(40 100% 40%); }
+
+    /* ── Call Overlay ── */
+    .call-overlay {
+        position:fixed; inset:0; z-index:9999;
+        background:rgba(0,0,0,0.7);
+        display:none; align-items:center; justify-content:center;
+        backdrop-filter:blur(6px);
+    }
+    .call-overlay.show { display:flex; }
+
+    .call-screen {
+        width:300px; border-radius:40px; overflow:hidden;
+        background:linear-gradient(160deg, #1a1a2e, #16213e);
+        padding:40px 24px 36px;
+        text-align:center;
+        box-shadow:0 30px 80px rgba(0,0,0,0.5);
+        position:relative;
+    }
+
+    /* Ringing */
+    .call-avatar {
+        width:90px; height:90px; border-radius:50%;
+        background:linear-gradient(135deg, hsl(var(--base)/0.3), hsl(var(--base-two)/0.3));
+        margin:0 auto 16px;
+        display:flex; align-items:center; justify-content:center;
+        font-size:44px; color:#fff;
+        animation:callPulse 1s infinite alternate;
+    }
+    @@keyframes callPulse {
+        from { box-shadow:0 0 0 0 hsl(var(--base)/0.4); }
+        to   { box-shadow:0 0 0 20px hsl(var(--base)/0); }
+    }
+
+    .call-name         { font-size:22px; font-weight:700; color:#fff; margin-bottom:4px; }
+    .call-number       { font-size:14px; color:rgba(255,255,255,0.6); margin-bottom:8px; }
+    .call-label-ringing { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:32px; }
+
+    .call-actions { display:flex; justify-content:center; gap:40px; }
+    .call-btn { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; cursor:pointer; transition:0.2s; }
+    .call-btn.decline { background:hsl(0 100% 50%); color:#fff; }
+    .call-btn.accept  { background:hsl(180 70% 38%); color:#fff; animation:callPulse 1s infinite alternate; }
+    .call-btn:hover   { transform:scale(1.1); }
+
+    /* Blocked */
+    .call-blocked-icon {
+        width:90px; height:90px; border-radius:50%;
+        background:hsl(var(--base)/0.2); border:3px solid hsl(var(--base)/0.4);
+        margin:0 auto 16px;
+        display:flex; align-items:center; justify-content:center;
+        font-size:44px; color:hsl(var(--base));
+    }
+    .call-label-blocked { font-size:13px; font-weight:700; letter-spacing:2px; color:hsl(var(--base)); margin-bottom:8px; }
+    .call-blocked-msg { font-size:13px; color:rgba(255,255,255,0.6); margin-top:16px; margin-bottom:28px; line-height:1.5; }
+
+    .close-overlay-btn {
+        background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+        color:#fff; padding:10px 24px; border-radius:20px; cursor:pointer; font-size:14px; margin-top:8px;
+    }
+</style>
+
+@section Scripts {
+<script>
+    var isDndActive = @(isDndActive ? "true" : "false");
+
+    // ── Toggle DND ─────────────────────────────────────────────────────────
+    function toggleDnd() {
+        // Submit the form
+        document.getElementById('dndForm').submit();
+    }
+
+    // ── Block Category toggle ──────────────────────────────────────────────
+    document.querySelectorAll('.block-category input[type="checkbox"]').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+            var label = this.closest('.block-category');
+            if (this.checked) {
+                label.classList.add('active');
+            } else {
+                label.classList.remove('active');
+            }
+        });
+    });
+
+    // ── Schedule Toggle ────────────────────────────────────────────────────
+    function toggleSchedule() {
+        var toggle = document.getElementById('scheduleToggle');
+        toggle.classList.toggle('on');
+    }
+
+    function saveSchedule() {
+        var from    = document.getElementById('fromTime').value;
+        var to      = document.getElementById('toTime').value;
+        var msg     = document.getElementById('scheduleMsg');
+        var display = document.getElementById('scheduleDisplay');
+        display.textContent = from + ' to ' + to;
+        msg.style.display = 'block';
+    }
+
+    // ── Call Simulator ─────────────────────────────────────────────────────
+    function simulateCall() {
+        var overlay  = document.getElementById('callOverlay');
+        var ringing  = document.getElementById('callRinging');
+        var blocked  = document.getElementById('callBlocked');
+
+        ringing.style.display = 'block';
+        blocked.style.display = 'none';
+        overlay.classList.add('show');
+
+        if (isDndActive) {
+            // DND is ON — auto block after 1.5 seconds
+            setTimeout(function() {
+                ringing.style.display = 'none';
+                blocked.style.display = 'block';
+            }, 1500);
+        }
+        // If DND is OFF — ringing stays, user manually declines/accepts
+    }
+
+    function declineCall() {
+        document.getElementById('callOverlay').classList.remove('show');
+    }
+
+    function acceptCall() {
+        document.getElementById('callOverlay').classList.remove('show');
+    }
+</script>
+}

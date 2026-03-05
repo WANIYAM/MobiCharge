@@ -1,0 +1,363 @@
+@model MobileRechargeApp.Models.PostpaidBillViewModel
+@{
+    ViewData["Title"] = "Post Bill Payment";
+}
+
+<section class="sign__area">
+    <div class="sign__bg"><img src="~/assets/images/sign/sign-bg.webp" alt="bg"></div>
+    <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+    <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+
+    <div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+        <div class="row g-4 align-items-start">
+
+            <!-- ===== LEFT PANEL ===== -->
+            <div class="col-lg-4">
+                <div class="sign__left__blk">
+                    <div class="sign__label">
+                        <div class="footer__subs__label">
+                            <div class="footer__subs__shr">
+                                <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                <div class="footer__circle__text">
+                                    <p>Postpaid bill management</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sign__title">
+                        <span>Postpaid Account</span>
+                        <h1>Your <span>Bill</span></h1>
+                        <p class="mt-3" style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            <i class="las la-mobile-alt"></i> @Model.MobileNumber
+                        </p>
+                        <p style="color:rgba(255,255,255,0.7); font-size:14px;">
+                            <i class="las la-user"></i> @Model.FullName
+                        </p>
+                    </div>
+                    <div class="back__to__home">
+                        <a href="/MyAccount">
+                            <i class="fa-solid fa-arrow-left-long"></i> Back to My Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== RIGHT PANEL ===== -->
+            <div class="col-lg-8">
+
+                @* ===== CURRENT BILL CARD ===== *@
+                <div class="bill-card mb-4">
+
+                    <!-- Bill Header -->
+                    <div class="bill-card__header">
+                        <div>
+                            <div class="bill-card__label">Current Bill</div>
+                            <div class="bill-card__cycle">
+                                <i class="las la-calendar-alt"></i>
+                                Billing Cycle: @Model.BillingCycle
+                            </div>
+                        </div>
+                        @if (Model.IsPaid)
+                        {
+                            <span class="bill-status paid">
+                                <i class="las la-check-circle"></i> Paid
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="bill-status due">
+                                <i class="las la-exclamation-circle"></i>
+                                Due by @Model.DueDate.ToString("dd MMM yyyy")
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Usage Breakdown -->
+                    <div class="bill-card__body">
+                        <h6 class="section-label">Usage Breakdown</h6>
+
+                        <div class="usage-row">
+                            <div class="usage-item">
+                                <div class="usage-icon calls"><i class="las la-phone"></i></div>
+                                <div class="usage-info">
+                                    <span>Call Charges</span>
+                                    <small>Voice calls this month</small>
+                                </div>
+                                <div class="usage-amount">Rs. @Model.CallCharges</div>
+                            </div>
+                            <div class="usage-item">
+                                <div class="usage-icon data"><i class="las la-wifi"></i></div>
+                                <div class="usage-info">
+                                    <span>Data Charges</span>
+                                    <small>Mobile data usage</small>
+                                </div>
+                                <div class="usage-amount">Rs. @Model.DataCharges</div>
+                            </div>
+                            <div class="usage-item">
+                                <div class="usage-icon sms"><i class="las la-sms"></i></div>
+                                <div class="usage-info">
+                                    <span>SMS Charges</span>
+                                    <small>Text messages sent</small>
+                                </div>
+                                <div class="usage-amount">Rs. @Model.SmsCharges</div>
+                            </div>
+                            <div class="usage-item">
+                                <div class="usage-icon rent"><i class="las la-sim-card"></i></div>
+                                <div class="usage-info">
+                                    <span>Monthly Rent</span>
+                                    <small>@Model.PlanName</small>
+                                </div>
+                                <div class="usage-amount">Rs. @Model.BaseRent</div>
+                            </div>
+                        </div>
+
+                        <!-- Totals -->
+                        <div class="bill-totals">
+                            <div class="bill-total-row">
+                                <span>Subtotal</span>
+                                <span>Rs. @(Model.CallCharges + Model.DataCharges + Model.SmsCharges + Model.BaseRent)</span>
+                            </div>
+                            <div class="bill-total-row">
+                                <span>GST (17%)</span>
+                                <span>Rs. @Model.Taxes</span>
+                            </div>
+                            <div class="bill-total-row grand">
+                                <span>Total Amount Due</span>
+                                <span>Rs. @Model.TotalAmount</span>
+                            </div>
+                        </div>
+
+                        <!-- Pay Button -->
+                        @if (!Model.IsPaid)
+                        {
+                            <form asp-action="PostpaidPay" asp-controller="Recharge" method="post" class="mt-4">
+                                <input type="hidden" name="mobileNumber"   value="@Model.MobileNumber" />
+                                <input type="hidden" name="amount"         value="@Model.TotalAmount" />
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold mb-2">
+                                        <i class="las la-credit-card" style="color:hsl(var(--base));"></i>
+                                        Select Payment Method
+                                    </label>
+                                    <select name="paymentMethod" class="form-control form--control" required style="height:54px;">
+                                        <option value="">-- Choose Payment Method --</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                        <option value="Debit Card">Debit Card</option>
+                                        <option value="Net Banking">Net Banking</option>
+                                        <option value="Easypaisa">UPI</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="common__btn w-100" style="justify-content:space-between;">
+                                    <span>
+                                        <i class="las la-check-circle me-2"></i>
+                                        Pay Rs. @Model.TotalAmount Now
+                                    </span>
+                                    <span><i class="fa-solid fa-arrow-right"></i></span>
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="paid-notice">
+                                <i class="las la-check-circle"></i>
+                                This month's bill has been paid. Your next bill will be generated on
+                                <strong>@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("dd MMM yyyy"))</strong>.
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @* ===== PAST BILLS ===== *@
+                @if (Model.PastBills.Any())
+                {
+                    <div class="bill-card">
+                        <div class="bill-card__header">
+                            <h6 class="mb-0">
+                                <i class="las la-history" style="color:hsl(var(--base));"></i>
+                                Payment History
+                            </h6>
+                            <span class="badge-custom" style="background:hsl(var(--base)/0.1); color:hsl(var(--base));">
+                                @Model.PastBills.Count() payments
+                            </span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" style="margin:0;">
+                                <thead>
+                                    <tr>
+                                        <th>Txn ID</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Method</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var txn in Model.PastBills)
+                                    {
+                                        <tr>
+                                            <td><strong class="txn-id">TXN@(txn.TxnId.ToString("D6"))</strong></td>
+                                            <td>@txn.TxnDate.ToString("dd MMM yyyy")</td>
+                                            <td><strong style="color:hsl(var(--base));">Rs. @txn.Amount</strong></td>
+                                            <td>@txn.PaymentMethod</td>
+                                            <td>
+                                                <span class="badge-custom" style="background:hsl(112 100% 40%/0.1); color:hsl(112 100% 40%);">
+                                                    <i class="las la-check-circle"></i> @txn.Status
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ── Bill Card ── */
+    .bill-card {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow: hidden;
+        border: 1px solid hsl(var(--border-color));
+    }
+
+    .bill-card__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        border-bottom: 1px solid hsl(var(--border-color));
+        background: hsl(var(--section-bg));
+    }
+
+    .bill-card__label {
+        font-weight: 700;
+        font-size: 16px;
+        color: hsl(var(--heading-color));
+        margin-bottom: 4px;
+    }
+
+    .bill-card__cycle {
+        font-size: 13px;
+        color: hsl(var(--text-color));
+    }
+
+    .bill-card__body { padding: 28px; }
+
+    /* ── Status Badges ── */
+    .bill-status {
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .bill-status.paid {
+        background: hsl(112 100% 40% / 0.1);
+        color: hsl(112 100% 40%);
+    }
+
+    .bill-status.due {
+        background: hsl(0 100% 50% / 0.1);
+        color: hsl(0 100% 50%);
+    }
+
+    /* ── Usage Breakdown ── */
+    .section-label {
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        margin-bottom: 16px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .usage-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+    .usage-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        background: hsl(var(--section-bg));
+        border-radius: 12px;
+        border: 1px solid hsl(var(--border-color));
+    }
+
+    .usage-icon {
+        width: 42px; height: 42px;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    .usage-icon.calls { background: hsl(200 100% 50% / 0.1); color: hsl(200 100% 40%); }
+    .usage-icon.data  { background: hsl(270 100% 60% / 0.1); color: hsl(270 100% 50%); }
+    .usage-icon.sms   { background: hsl(40  100% 50% / 0.1); color: hsl(40  100% 40%); }
+    .usage-icon.rent  { background: hsl(var(--base) / 0.1);  color: hsl(var(--base));  }
+
+    .usage-info { flex: 1; }
+    .usage-info span  { display: block; font-weight: 600; font-size: 14px; color: hsl(var(--heading-color)); }
+    .usage-info small { color: hsl(var(--text-color)); font-size: 12px; }
+
+    .usage-amount { font-weight: 700; font-size: 15px; color: hsl(var(--heading-color)); }
+
+    /* ── Totals ── */
+    .bill-totals {
+        border-top: 1px solid hsl(var(--border-color));
+        padding-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bill-total-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        color: hsl(var(--text-color));
+    }
+
+    .bill-total-row.grand {
+        font-size: 18px;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        padding-top: 12px;
+        border-top: 2px solid hsl(var(--border-color));
+        margin-top: 4px;
+    }
+
+    .bill-total-row.grand span:last-child { color: hsl(var(--base)); }
+
+    /* ── Paid Notice ── */
+    .paid-notice {
+        margin-top: 24px;
+        background: hsl(112 100% 40% / 0.08);
+        border: 1px solid hsl(112 100% 40% / 0.2);
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: hsl(112 100% 30%);
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .paid-notice i { font-size: 22px; }
+
+    /* ── Table ── */
+    .table th { font-weight: 600; color: hsl(var(--heading-color)); background: hsl(var(--section-bg)); padding: 14px 20px; }
+    .table td { padding: 14px 20px; vertical-align: middle; border-bottom: 1px solid hsl(var(--border-color) / 0.5); }
+    .txn-id   { font-weight: 600; color: hsl(var(--heading-color)); }
+</style>

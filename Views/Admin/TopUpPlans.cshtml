@@ -1,0 +1,92 @@
+﻿@model IEnumerable<MobileRechargeApp.Models.TopUpPlan>
+@{
+    ViewData["Title"] = "Top Up Plans";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mb-4" style="border-radius: 1rem; padding: 1rem 1.5rem; border-left: 4px solid hsl(var(--base));">
+        <i class="las la-check-circle" style="color: hsl(var(--base));"></i>
+        @TempData["Success"]
+    </div>
+}
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1" style="font-family: 'ClashDisplay-Variable', sans-serif;">
+            <i class="las la-mobile" style="color: hsl(var(--base));"></i>
+            Top Up Plans
+        </h2>
+        <p class="text-muted mb-0">Manage talk time and validity plans</p>
+    </div>
+    <a href="/Admin/AddTopUpPlan" class="btn-view" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none; padding: 0.75rem 1.5rem;">
+        <i class="las la-plus-circle"></i>
+        Add New Plan
+    </a>
+</div>
+
+<!-- Plans Grid -->
+<div class="row g-4">
+    @if (!Model.Any())
+    {
+        <div class="col-12">
+            <div class="transactions-panel p-5 text-center">
+                <i class="las la-mobile" style="font-size: 4rem; color: hsl(var(--text-color) / 0.2);"></i>
+                <h4 class="mt-3 mb-2">No Top Up Plans Found</h4>
+                <p class="text-muted mb-4">Get started by adding your first top up plan</p>
+                <a href="/Admin/AddTopUpPlan" class="btn-view" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none; display: inline-flex;">
+                    <i class="las la-plus-circle"></i>
+                    Add New Plan
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (var plan in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="stat-card" style="padding: 1.5rem; display: block;">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="stat-icon" style="width: 3rem; height: 3rem; font-size: 1.5rem;">
+                            <i class="las la-sim-card"></i>
+                        </div>
+                        <span class="badge-custom" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base));">
+                            ID: #@plan.PlanId
+                        </span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 class="mb-0" style="font-size: 2rem;">Rs. @plan.Amount</h3>
+                        <span class="badge-custom" style="background: hsl(var(--base-two) / 0.1); color: hsl(var(--base-two));">
+                            Talk Time: Rs. @plan.TalkTime
+                        </span>
+                    </div>
+                    
+                    <p class="mb-3" style="color: hsl(var(--text-color));">@plan.Description</p>
+                    
+                    <div class="d-flex gap-3 mb-3">
+                        <div>
+                            <small class="text-muted d-block">Validity</small>
+                            <strong>@plan.Validity Days</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="/Admin/EditTopUpPlan/@plan.PlanId"
+                               class="btn-view" style="background: hsl(var(--base-two)); color: hsl(var(--heading-color)); border: none; flex: 1;">
+                            <i class="las la-edit"></i> Edit
+                        </a>
+                        <a href="/Admin/DeleteTopUpPlan/@plan.PlanId"
+                               class="btn-view" style="background: hsl(var(--danger) / 0.1); color: hsl(var(--danger)); border: none; flex: 1;"
+                               onclick="return confirm('Are you sure you want to delete this plan?')">
+                            <i class="las la-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

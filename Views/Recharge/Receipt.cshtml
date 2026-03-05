@@ -1,0 +1,226 @@
+﻿@model MobileRechargeApp.Models.Transaction
+@{
+    ViewData["Title"] = "Receipt";
+}
+
+<section class="sign__area">
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+    </div>
+    @* <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+    @* <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+
+                <div id="receipt" class="receipt-box">
+
+                    <!-- Success Section -->
+                    <div class="text-center mb-4">
+
+                        <div class="stat-icon">
+                            <i class="las la-check-circle"></i>
+                        </div>
+
+                        <h4 class="mt-3">Payment Successful</h4>
+                        <p class="text-dark small">
+                            Your recharge has been processed successfully
+                        </p>
+
+                    </div>
+
+                    <!-- Receipt Card -->
+                    <div class="receipt-card">
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <small>Transaction Receipt</small>
+
+                            <span class="badge-custom">
+                                <i class="las la-check-circle"></i>
+                                @Model.Status
+                            </span>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="receipt-details">
+
+                            <div class="d-flex justify-content-between">
+                                <span>Transaction ID</span>
+                                <strong>TXN@(Model.TxnId.ToString("D6"))</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Mobile Number</span>
+                                <strong>@Model.MobileNumber</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Plan Type</span>
+                                <strong>
+                                    @(Model.PlanType == "topup" ? "Top Up" : "Special Plan")
+                                </strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between amount-row">
+                                <span>Amount Paid</span>
+                                <strong>Rs. @Model.Amount</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Payment Method</span>
+                                <strong>@Model.PaymentMethod</strong>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Date & Time</span>
+                                <strong>
+                                    @Model.TxnDate.ToString("dd-MM-yyyy HH:mm:ss")
+                                </strong>
+                            </div>
+
+                        </div>
+
+                        <!-- QR Section -->
+                        <div class="text-center mt-3 pt-3 border-top">
+
+                            <small class="text-dark">Scan to verify</small>
+
+                            <div class="qr-box">
+                                <i class="las la-qrcode"></i>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <p class="text-center mt-3 small text-dark">
+                        <i class="las la-heart"></i>
+                        Thank you for using MobiCharge!
+                    </p>
+                    <!-- Action Buttons --> <div class="d-flex gap-3 mt-4">
+                        <button onclick="window.print()" class="common__btn" style="flex: 1;"> 
+                            <span style="width:200px;"><i class="las la-print"></i> Print Receipt</span> 
+                            <span><i class="fa-solid fa-print"></i></span> 
+                        </button> <a href="/" class="common__btn" style="flex: 1;"> 
+                                <span style="width:200px;"><i class="las la-home"></i> Go to Home</span> 
+                                <span><i class="fa-solid fa-arrow-right"></i></span> </a>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* .sign__wrap{
+    /* ===== Receipt Container ===== */
+
+    .receipt-box {
+        max-width: 600px;
+        margin: 40px auto;
+        text-align: center;
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+    }
+
+    /* ===== Success Icon ===== */
+
+    .stat-icon {
+        width: 85px;
+        height: 85px;
+        margin: auto;
+        border-radius: 50%;
+        background: hsl(var(--base) / 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .stat-icon i {
+            font-size: 40px;
+            color: hsl(var(--base));
+        }
+
+    /* ===== Receipt Card ===== */
+
+    .receipt-card {
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        border: 1px solid #eee;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+
+    /* ===== Receipt Details ===== */
+
+    .receipt-details {
+        margin-top: 10px;
+    }
+
+        .receipt-details .d-flex {
+            padding: 10px 0;
+            border-bottom: 1px dashed #f1f1f1;
+        }
+
+        .receipt-details span {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .receipt-details strong {
+            font-size: 15px;
+        }
+
+    /* Amount */
+
+    .amount-row strong {
+        color: hsl(var(--base));
+        font-size: 20px;
+    }
+
+    /* ===== QR Section ===== */
+
+    .qr-box {
+        width: 70px;
+        height: 70px;
+        margin: auto;
+        border-radius: 12px;
+        background: hsl(var(--base) / 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .qr-box i {
+            font-size: 32px;
+        }
+
+    /* ===== Print Mode ===== */
+
+    @@media print {
+
+        body * {
+            visibility: hidden;
+        }
+
+        #receipt, #receipt * {
+            visibility: visible;
+        }
+
+        #receipt {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: white !important;
+            padding: 15px;
+        }
+
+        .common__btn {
+            display: none !important;
+        }
+    }
+</style>

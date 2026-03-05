@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Post Bill Payment";
+}
+
+<section class="sign__area">
+    <div class="sign__bg">
+        <img src="~/assets/images/sign/sign-bg.webp" alt="img">
+        </div>
+        <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+        <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+
+        <div class="container">
+            <div class="row justify-content-center align-items-center" style="min-height:70vh;">
+                <div class="col-lg-8">
+                    <div class="sign__wrap text-center" style="padding: 60px 40px;">
+
+                        <!-- Info Icon -->
+                        <div class="stat-icon" style="width: 120px; height: 120px; margin: 0 auto 30px; border-radius: 30px;">
+                            <i class="las la-info-circle" style="font-size: 60px;"></i>
+                        </div>
+
+                        <h2 style="font-weight:700; margin-bottom: 16px; font-size: 2.5rem;">
+                            You're on a <span style="color: hsl(var(--base));">Prepaid</span> Plan
+                        </h2>
+
+                        <p style="color: hsl(var(--text-color)); font-size: 16px; max-width: 500px; margin: 0 auto 32px; line-height: 1.7;">
+                            Post Bill Payment is only available for <strong>Postpaid</strong> customers.
+                            Your account <strong>(@User.Identity!.Name)</strong> is registered as a
+                            <strong>Prepaid</strong> customer — you don't have a monthly bill to pay.
+                        </p>
+
+                        <!-- Info Box -->
+                        <div style="background: hsl(var(--base) / 0.05); border: 1px solid hsl(var(--base) / 0.2); border-radius: 20px; padding: 25px; margin-bottom: 35px; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 40px; height: 40px; background: hsl(var(--base) / 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    <i class="las la-info-circle" style="color: hsl(var(--base)); font-size: 20px;"></i>
+                                </div>
+                                <p style="margin:0; font-size:14px; color: hsl(var(--text-color));">
+                                    As a prepaid customer, you can recharge your mobile anytime using
+                                    <strong>Top Up</strong> or <strong>Special Recharge</strong> plans.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                            <a href="/Recharge" class="common__btn">
+                                <span><i class="las la-phone-volume me-2"></i>Go to Recharge</span>
+                                <span><i class="fa-solid fa-arrow-right"></i></span>
+                            </a>
+                            <a href="/MyAccount" class="common__btn" style="background: transparent; border: 1px solid hsl(var(--border-color));">
+                                <span style="color: hsl(var(--text-color));">My Account</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

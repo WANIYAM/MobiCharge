@@ -1,0 +1,269 @@
+@model IEnumerable<MobileRechargeApp.Models.AdminUserViewModel>
+@{
+    ViewData["Title"] = "Registered Users";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-success-bar">
+        <i class="las la-check-circle"></i> @TempData["Success"]
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1" style="font-family:'ClashDisplay-Variable',sans-serif;">
+            <i class="las la-users" style="color:hsl(var(--base));"></i> Registered Users
+        </h2>
+        <p class="text-muted mb-0">Create, edit and manage platform users</p>
+    </div>
+    <div class="d-flex gap-2 align-items-center">
+        <span class="happy-users-badge" style="padding:0.5rem 1.5rem;">
+            <i class="las la-user"></i><span>@Model.Count() Users</span>
+        </span>
+        <a href="/Admin/CreateUser" class="btn-action btn-create">
+            <i class="las la-user-plus"></i> Add User
+        </a>
+    </div>
+</div>
+
+<div class="transactions-panel">
+
+    <!-- Panel header with per-page control -->
+    <div class="panel-header">
+        <h5 class="mb-0">
+            <i class="las la-users-cog" style="color:hsl(var(--base));"></i> User Management
+        </h5>
+        <div class="pg-controls-top">
+            <span class="pg-info-text">Show</span>
+            <select id="perPageSelect" class="pg-per-page" onchange="initPagination()">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+            <span class="pg-info-text">per page</span>
+            <span class="pg-page-label" id="page-label"></span>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th><th>Full Name</th><th>Mobile Number</th>
+                    <th>Plan Type</th><th>Role</th><th>Status</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <i class="las la-user-slash"></i>
+                                <p class="mt-2">No users yet</p>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                @{ int count = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr class="pg-row">
+                        <td>@count</td>
+                        <td>
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <div class="user-mini-avatar">@item.FullName.Substring(0,1).ToUpper()</div>
+                                <strong>@item.FullName</strong>
+                            </div>
+                        </td>
+                        <td><span class="mobile-number"><i class="las la-phone-alt"></i> @item.User.UserName</span></td>
+                        <td>
+                            @if (item.PlanType == "Postpaid")
+                            { <span class="badge-custom badge-postpaid"><i class="las la-calendar"></i> Postpaid</span> }
+                            else if (item.PlanType == "Prepaid")
+                            { <span class="badge-custom badge-topup"><i class="las la-sim-card"></i> Prepaid</span> }
+                            else
+                            { <span class="badge-custom" style="background:hsl(0 0% 50%/0.1);color:hsl(0 0% 40%);">@item.PlanType</span> }
+                        </td>
+                        <td>
+                            @if (item.Role == "Admin")
+                            { <span class="badge-custom" style="background:hsl(270 100% 60%/0.1);color:hsl(270 100% 45%);"><i class="las la-user-shield"></i> Admin</span> }
+                            else
+                            { <span class="badge-custom badge-success"><i class="las la-user"></i> User</span> }
+                        </td>
+                        <td>
+                            @if (item.User.LockoutEnd != null && item.User.LockoutEnd > DateTimeOffset.Now)
+                            { <span class="badge-custom" style="background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);"><i class="las la-lock"></i> Locked</span> }
+                            else
+                            { <span class="badge-custom badge-success"><i class="las la-check-circle"></i> Active</span> }
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <a href="/Admin/EditUser/@item.User.Id" class="btn-action btn-edit">
+                                    <i class="las la-edit"></i> Edit
+                                </a>
+                                @if (item.Role != "Admin")
+                                {
+                                    <form method="post" action="/Admin/DeleteUser" style="margin:0;"
+                                          onsubmit="return confirm('Delete @item.User.UserName? This cannot be undone.');">
+                                        <input type="hidden" name="id" value="@item.User.Id" />
+                                        <button type="submit" class="btn-action btn-delete">
+                                            <i class="las la-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ── Pagination footer ── -->
+    <div class="pg-bar" id="pg-bar">
+        <span class="pg-summary" id="pg-summary"></span>
+        <div class="pg-btns" id="pg-btns"></div>
+    </div>
+
+</div>
+
+<style>
+    /* ── existing styles ── */
+    .alert-success-bar { background:hsl(var(--base)/0.1); border-left:4px solid hsl(var(--base)); border-radius:12px; padding:12px 18px; margin-bottom:20px; color:hsl(var(--base)); display:flex; align-items:center; gap:10px; }
+    .user-mini-avatar { width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,hsl(var(--base)),hsl(var(--base-two)));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0; }
+    .action-btns { display:flex;gap:8px;flex-wrap:wrap; }
+    .btn-action { display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:0.2s; }
+    .btn-create { background:hsl(var(--base)/0.1);color:hsl(var(--base));border:1px solid hsl(var(--base)/0.3); }
+    .btn-create:hover { background:hsl(var(--base));color:#fff; }
+    .btn-edit { background:hsl(40 100% 50%/0.1);color:hsl(40 100% 35%);border:1px solid hsl(40 100% 50%/0.3); }
+    .btn-edit:hover { background:hsl(40 100% 50%);color:#fff; }
+    .btn-delete { background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);border:1px solid hsl(0 100% 50%/0.3); }
+    .btn-delete:hover { background:hsl(0 100% 50%);color:#fff; }
+
+    /* ── per-page control in header ── */
+    .pg-controls-top { display:flex; align-items:center; gap:6px; }
+    .pg-info-text { font-size:12px; color:hsl(var(--text-color)/.6); font-weight:500; }
+    .pg-per-page { border:1px solid hsl(var(--border-color)); border-radius:8px; padding:4px 8px; font-size:12px; background:hsl(var(--section-bg)); color:hsl(var(--heading-color)); cursor:pointer; outline:none; transition:.15s; }
+    .pg-per-page:focus { border-color:hsl(var(--base)); }
+    .pg-page-label { font-size:12px; font-weight:600; color:hsl(var(--text-color)/.5); margin-left:4px; }
+
+    /* ── pagination footer bar ── */
+    .pg-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-top:1px solid hsl(var(--border-color)/.5); background:hsl(var(--section-bg)); flex-wrap:wrap; gap:8px; }
+    .pg-summary { font-size:12px; color:hsl(var(--text-color)/.55); font-weight:500; }
+    .pg-btns { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+
+    /* ── page buttons ── */
+    .pg-btn {
+        display:inline-flex; align-items:center; justify-content:center;
+        min-width:32px; height:32px; padding:0 8px;
+        border-radius:8px; border:1px solid hsl(var(--border-color));
+        background:hsl(var(--white)); color:hsl(var(--text-color));
+        font-size:12px; font-weight:600; cursor:pointer; transition:all .18s;
+    }
+    .pg-btn:hover:not(:disabled):not(.pg-btn--on) {
+        border-color:hsl(var(--base)); color:hsl(var(--base));
+        background:hsl(var(--base)/.07);
+    }
+    .pg-btn--on {
+        background:linear-gradient(135deg,hsl(var(--base)),hsl(var(--base-two)));
+        color:#fff; border-color:transparent;
+        box-shadow:0 3px 10px hsl(var(--base)/.3);
+    }
+    .pg-btn--nav { font-size:14px; }
+    .pg-btn:disabled { opacity:.3; cursor:not-allowed; }
+    .pg-dots { display:inline-flex; align-items:center; justify-content:center; min-width:32px; height:32px; font-size:13px; color:hsl(var(--text-color)/.35); }
+</style>
+
+<script>
+(function () {
+    let page = 1;
+
+    const perPageEl  = () => document.getElementById('perPageSelect');
+    const rows       = () => Array.from(document.querySelectorAll('#table-body .pg-row'));
+    const perPage    = () => parseInt(perPageEl().value) || 10;
+
+    function initPagination() { page = 1; render(); }
+
+    function render() {
+        const pp    = perPage();
+        const all   = rows();
+        const total = all.length;
+        const pages = Math.max(1, Math.ceil(total / pp));
+        if (page > pages) page = pages;
+
+        const from = (page - 1) * pp;
+        const to   = Math.min(from + pp, total);
+
+        all.forEach((r, i) => r.style.display = (i >= from && i < to) ? '' : 'none');
+
+        // Summary text
+        document.getElementById('pg-summary').textContent =
+            total === 0 ? 'No records' : `Showing ${from + 1}–${to} of ${total} users`;
+
+        // Header page label
+        document.getElementById('page-label').textContent =
+            total > 0 ? `· Page ${page}/${pages}` : '';
+
+        // Hide bar if single page
+        document.getElementById('pg-bar').style.display =
+            (pages <= 1 && total <= pp) ? 'none' : 'flex';
+
+        buildBtns(pages);
+    }
+
+    function buildBtns(pages) {
+        const wrap = document.getElementById('pg-btns');
+        wrap.innerHTML = '';
+
+        // ‹ Prev
+        const prev = mkBtn('&#8249;', 'pg-btn pg-btn--nav', page === 1);
+        prev.onclick = () => { if (page > 1) { page--; render(); } };
+        wrap.appendChild(prev);
+
+        // Smart page numbers
+        pageNums(page, pages).forEach(p => {
+            if (p === '…') {
+                const d = document.createElement('span');
+                d.className = 'pg-dots'; d.textContent = '…';
+                wrap.appendChild(d);
+            } else {
+                const b = mkBtn(p, 'pg-btn' + (p === page ? ' pg-btn--on' : ''), false);
+                b.onclick = () => { page = p; render(); };
+                wrap.appendChild(b);
+            }
+        });
+
+        // › Next
+        const next = mkBtn('&#8250;', 'pg-btn pg-btn--nav', page === pages);
+        next.onclick = () => { if (page < pages) { page++; render(); } };
+        wrap.appendChild(next);
+    }
+
+    function mkBtn(html, cls, disabled) {
+        const b = document.createElement('button');
+        b.type = 'button'; b.innerHTML = html;
+        b.className = cls; b.disabled = disabled;
+        return b;
+    }
+
+    // Always show: 1, last, current-1, current, current+1 + ellipsis gaps
+    function pageNums(cur, total) {
+        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+        const set = new Set([1, total, cur]);
+        if (cur > 1) set.add(cur - 1);
+        if (cur < total) set.add(cur + 1);
+        const sorted = [...set].sort((a, b) => a - b);
+        const out = []; let prev = 0;
+        sorted.forEach(n => { if (n - prev > 1) out.push('…'); out.push(n); prev = n; });
+        return out;
+    }
+
+    document.addEventListener('DOMContentLoaded', render);
+    window.initPagination = initPagination;
+})();
+</script>

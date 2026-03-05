@@ -1,0 +1,142 @@
+﻿@model MobileRechargeApp.Models.ContactViewModel
+@{
+    ViewData["Title"] = "Contact Us"; 
+}
+
+<section class="banner__area">
+    @* <div class="banner__bg"><img src="~/assets/images/banner-bg.png" alt="img"></div> *@
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="banner__topbar">
+                    <div class="banner__title">
+                        <h2>Get In Touch <span>With Us</span></h2> 
+                    </div>
+                    <div class="banner__btn">
+                        <a href="/" class="common__btn"><span>Back to Home</span><span><i class="fa-solid fa-arrow-right"></i></span></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="banner__thumb">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48370.110629433824!2d-74.40696409246594!3d40.73712277683827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3ae9831bd6bb7%3A0x22b27c2ed4173034!2sMillburn%2C%20NJ%2C%20USA!5e0!3m2!1sen!2sbd!4v1730537899995!5m2!1sen!2sbd" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact__info">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="contact__info__single">
+                    <span><i class="fa-solid fa-phone"></i></span> 
+                    <h4>Phone Number</h4>
+                    <p>
+                        <a href="tel:+923001234567">+92 300 1234567</a> 
+                        <a href="tel:+923009876543">+92 300 9876543</a> 
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="contact__info__single">
+                    <span><i class="fa-solid fa-envelope"></i></span> 
+                    <h4>Email Address</h4>
+                    <p>
+                        <a href="mailto:support@yoursite.com">support@yoursite.com</a> 
+                        <a href="mailto:info@yoursite.com">info@yoursite.com</a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="contact__info__single">
+                    <span><i class="fa-solid fa-location-dot"></i></span> 
+                    <h4>Our Location</h4>
+                    <p>Karachi, Sindh, Pakistan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact__form">
+    @* <div class="contact__bg"><img src="~/assets/images/yellow-sp.png" alt="img"></div>  *@
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact__form__title">
+                    <h2>Have a Question? Let's <span>Talk</span></h2> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contact__form__main">
+                    <form asp-controller="Home" asp-action="Contact" method="POST">
+                        @Html.AntiForgeryToken()
+                        <div class="row g-5">
+
+                            <div class="col-lg-6 col-md-6">
+                                <div class="contact__form__main__single">
+                                    <label asp-for="Name" class="form-label form--label">Full Name</label> 
+                                    <input asp-for="Name" class="form-control form--control" placeholder="Enter Name"> 
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="contact__form__main__single">
+                                        <label asp-for="Email" class="form-label form--label">Email Address</label> 
+                                        <input asp-for="Email" class="form-control form--control" placeholder="Enter Email"> 
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="contact__form__main__single">
+                                            <label asp-for="Phone" class="form-label form--label">Phone Number</label>
+                                            <input asp-for="Phone" class="form-control form--control" placeholder="Phone Number"> 
+                                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="contact__form__main__single">
+                                                <label asp-for="Subject" class="form-label form--label">Subject</label> 
+                                                <input asp-for="Subject" class="form-control form--control" placeholder="Enter Subject"> 
+                                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="contact__form__main__single">
+                                                    <label asp-for="Message" class="form-label form--label">Message</label> 
+                                                    <textarea asp-for="Message" class="form-control form--control" placeholder="Type Message"></textarea> 
+                                                    <span asp-validation-for="Message" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <div class="contact__form__main__single">
+                                                    <button type="submit" class="common__btn">
+                                                        <span>Submit Now</span><span><i class="fa-solid fa-arrow-right"></i></span> 
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                @section Scripts {
+                    @{
+                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                    }
+                }

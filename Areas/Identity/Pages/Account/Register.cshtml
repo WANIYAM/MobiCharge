@@ -1,0 +1,268 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<section class="sign__area">
+
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+    </div>
+
+    <div class="container">
+        <div class="row g-4 align-items-center">
+
+            <!-- LEFT SIDE -->
+            <div class="col-lg-6">
+                <div class="sign__left__blk">
+                    <div class="sign__label">
+                        <div class="footer__subs__label">
+                            <div class="footer__subs__shr">
+                                <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                <div class="footer__circle__text">
+                                    <p>Your trusted platform for instant mobile recharge &amp; bill payment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sign__title">
+                        <span>Create Account</span>
+                        <h1>Start Your <span>Journey</span></h1>
+                        <p class="text-dark mt-3">
+                            Your mobile number will be your username.
+                        </p>
+                    </div>
+                    <div class="back__to__home">
+                        <a href="/">
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE FORM -->
+            <div class="col-lg-6">
+                <div class="sign__wrap">
+
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger py-2 small"
+                             role="alert"></div>
+
+                        <div class="row g-2 mt-4">
+
+                            <!-- Mobile Number -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.MobileNumber" class="form-label form--label">
+                                        Mobile Number
+                                    </label>
+                                    <input asp-for="Input.MobileNumber"
+                                           class="form-control form--control"
+                                           placeholder="Enter 10-digit mobile number"
+                                           maxlength="10"
+                                           inputmode="numeric" />
+                                    <span asp-validation-for="Input.MobileNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.FullName" class="form-label form--label">
+                                      Full Name
+                                    </label>
+                                    <input asp-for="Input.FullName"
+                                           class="form-control form--control"
+                                           placeholder="Enter your full name" />
+                                    <span asp-validation-for="Input.FullName" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Plan Type -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label class="form-label form--label">
+                                         Select Your Plan Type
+                                    </label>
+
+                                    <div class="plan-type-selector">
+
+                                        <label class="plan-type-option">
+                                            <input type="radio" asp-for="Input.PlanType" value="Prepaid" />
+                                            <div class="plan-type-card">
+                                                <div class="plan-type-icon">
+                                                    <i class="las la-bolt"></i>
+                                                </div>
+                                                <div class="plan-type-name">Prepaid</div>
+                                                <div class="plan-type-desc">Pay before use</div>
+                                            </div>
+                                        </label>
+
+                                        <label class="plan-type-option">
+                                            <input type="radio" asp-for="Input.PlanType" value="Postpaid" />
+                                            <div class="plan-type-card">
+                                                <div class="plan-type-icon">
+                                                    <i class="las la-file-invoice-dollar"></i>
+                                                </div>
+                                                <div class="plan-type-name">Postpaid</div>
+                                                <div class="plan-type-desc">Pay monthly</div>
+                                            </div>
+                                        </label>
+
+                                    </div>
+
+                                    <span asp-validation-for="Input.PlanType" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.Password" class="form-label form--label">
+                                       Password
+                                    </label>
+                                    <input asp-for="Input.Password"
+                                           type="password"
+                                           class="form-control form--control"
+                                           placeholder="Minimum 6 characters"
+                                           autocomplete="new-password" />
+                                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.ConfirmPassword" class="form-label form--label">
+                                       Confirm Password
+                                    </label>
+                                    <input asp-for="Input.ConfirmPassword"
+                                           type="password"
+                                           class="form-control form--control"
+                                           placeholder="Re-enter your password"
+                                           autocomplete="new-password" />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Submit --> <div class="col-lg-12">
+                                <div class="sign__wrap__single"> 
+                                    <button type="submit" class="common__btn w-100" style="justify-content:space-between;"> 
+                                        <span>Create Account</span> <span><i class="fa-solid fa-arrow-right"></i></span>
+                                        </button>
+                                        </div>
+                                        </div> 
+                                        <!-- Already have account -->
+                                        
+                                        <div class="col-lg-12"> 
+                                            <div class="sign__already">
+                                                <p> Already have an account? <a asp-page="/Account/Login" asp-area="Identity">Log In</a> 
+                                                    </p>
+                                                    </div> 
+                                                    </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    
+    .row {
+        --bs-gutter-y: 0.6rem;
+    }
+
+    .sign__wrap__single {
+        margin-bottom: 0;
+    }
+
+    .form--label {
+        margin-bottom: 4px;
+        font-weight: 500;
+    }
+
+    .text-danger.small {
+        margin-top: 3px;
+        display: block;
+    }
+
+    .plan-type-selector {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    .plan-type-option input[type="radio"] {
+        display: none;
+    }
+
+    .plan-type-card {
+        border: 2px solid #1DA5A5;
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        /* background: rgba(0, 199, 103, 0.05); */
+    }
+
+        /* Hover state */
+        .plan-type-card:hover {
+            border-color: #00324D;
+            /* background: rgba(0, 199, 103, 0.10); */
+        }
+
+    /* Selected state */
+    .plan-type-option input:checked + .plan-type-card {
+        border-color: #1DA5A5;
+        /* background: rgba(0, 199, 103, 0.18); */
+        box-shadow: 0 0 0 1px #1DA5A5;
+    }
+
+    /* Plan icons */
+    .plan-type-icon {
+        font-size: 22px;
+        margin-bottom: 4px;
+        color: #1DA5A5;
+    }
+
+    /* Plan text */
+    .plan-type-name {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .plan-type-desc {
+        font-size: 11px;
+        opacity: 0.7;
+    }
+    .form-control:focus {
+        border-color: #1DA5A5 !important;
+        box-shadow: 0 0 0 1px #1DA5A5 !important;
+        outline: none !important;
+    }
+
+    .form-control {
+        box-shadow: none;
+    }
+
+    .form-control {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

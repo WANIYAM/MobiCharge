@@ -1,0 +1,215 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<section class="sign__area">
+
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+    </div>
+    <div class="container">
+        <div class="row g-4 align-items-center">
+
+            <!-- ===== Left Panel ===== -->
+            <div class="col-lg-6">
+                <div class="sign__left__blk">
+
+                    <div class="sign__label">
+                        <div class="footer__subs__label">
+                            <div class="footer__subs__shr">
+                                <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                <div class="footer__circle__text">
+                                    <p>Your trusted platform for instant mobile recharge &amp; bill payment.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sign__title">
+                        <span>Login to Your Account</span>
+                        <h1>Hello, Welcome <span>Back!</span></h1>
+                    </div>
+
+                    <div class="back__to__home">
+                        <a href="/"><i class="fa-solid fa-arrow-left-long"></i> Back to Home</a>
+                    </div>
+
+                </div>
+            </div>
+            <!-- ===== Left Panel End ===== -->
+
+            <!-- ===== Right Panel — Form ===== -->
+            <div class="col-lg-6">
+                <div class="sign__wrap">
+
+                    <form id="account" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="row g-2">
+
+                            <!-- Validation Summary -->
+                            <div class="col-12">
+                                <div asp-validation-summary="ModelOnly"
+                                     class="text-danger small"
+                                     role="alert"></div>
+                            </div>
+
+                            <!-- Mobile / Email -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.Email" class="form-label form--label">
+                                        Mobile Number
+                                    </label>
+                                    <input asp-for="Input.Email"
+                                           class="form-control form--control"
+                                           type="text"
+                                           placeholder="Enter mobile number"
+                                           autocomplete="username"
+                                           required />
+                                    <span asp-validation-for="Input.Email"
+                                          class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="col-12">
+                                <div class="sign__wrap__single">
+                                    <label asp-for="Input.Password" class="form-label form--label">
+                                       Password
+                                    </label>
+                                    <input asp-for="Input.Password"
+                                           type="password"
+                                           class="form-control form--control"
+                                           autocomplete="current-password"
+                                           placeholder="Enter your password"
+                                           required />
+                                    <span asp-validation-for="Input.Password"
+                                          class="text-danger small"></span>
+                                </div>
+                            </div>
+
+                            <!-- Remember + Forgot -->
+                            <div class="col-12">
+                                <div class="sign__forgot">
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               asp-for="Input.RememberMe" />
+                                        <label asp-for="Input.RememberMe"
+                                               class="form-check-label"></label>
+                                    </div>
+
+                                    <a asp-page="./ForgotPassword"
+                                       class="forgot-link">
+                                        Forgot Password?
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Login Button -->
+                            <div class="col-12">
+                                <button id="login-submit"
+                                        type="submit"
+                                        class="common__btn w-100">
+                                    <span style="width:100%;">Log In</span>
+                                    <span><i class="fa-solid fa-arrow-right"></i></span>
+                                </button>
+                            </div>
+
+                            <!-- Register -->
+                            <div class="col-lg-12">
+                                <div class="sign__already">
+                                <p> Don't have an account? 
+                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"> Register </a>
+                                    </p> </div> 
+                                    </div>
+
+                        </div>
+                    </form>
+                    <!-- External Login Separate -->
+                    @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                    {
+                        <div class="external-login mt-3 text-center">
+                            <p class="form--label mb-2 small">Or log in with</p>
+
+                            <form asp-page="./ExternalLogin"
+                                  asp-route-returnUrl="@Model.ReturnUrl"
+                                  method="post">
+                                @Html.AntiForgeryToken()
+
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit"
+                                            class="common__btn me-2 mb-2"
+                                            name="provider"
+                                            value="@provider.Name">
+                                        <span>@provider.DisplayName</span>
+                                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                                    </button>
+                                }
+                            </form>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <!-- ===== Right Panel End ===== -->
+
+        </div>
+    </div>
+</section>
+<style>
+    #account .row {
+        --bs-gutter-y: 0.6rem;
+    }
+
+    #account .sign__wrap__single {
+        margin-bottom: 0;
+    }
+
+    #account .form--label {
+        margin-bottom: 4px;
+        font-weight: 500;
+    }
+
+    #account .text-danger.small {
+        margin-top: 3px;
+        display: block;
+    }
+
+    #account .sign__forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4px;
+    }
+
+    #account p {
+        margin-bottom: 0;
+    }
+
+    .external-login {
+        margin-top: 12px;
+    }
+    #account .form-control:focus {
+        border-color: #1DA5A5 !important;
+        box-shadow: 0 0 0 0.1rem #1DA5A5 !important;
+        outline: none !important;
+    }
+
+    #account .form-check-input:focus {
+        border-color: #1DA5A5 !important;
+        box-shadow: 0 0 0 0.1rem #1DA5A5 !important;
+    }
+
+    #account .form-check-input:checked {
+        background-color: #1DA5A5;
+        border-color: #1DA5A5;
+    }
+</style>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,402 @@
+@using MobileRechargeApp.Models
+@{
+    ViewData["Title"] = "My Account";
+    bool   isDnd      = (bool)(ViewBag.DndActive ?? false);
+    string planType   = ViewBag.PlanType ?? "Prepaid";
+    string tune       = ViewBag.SelectedTune ?? "Not Set";
+    var    txns       = ViewBag.Transactions as IEnumerable<Transaction> ?? new List<Transaction>();
+}
+
+<section class="account-area">
+    <div class="container" style="padding-top: 140px; padding-bottom: 60px;">
+
+        <!-- Breadcrumb -->
+        <div class="hero__wrap__users" style="margin-bottom: 30px;" data-aos="fade-up">
+            <div class="hero__wrap__users__img">
+                <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
+                <span><img src="~/assets/images/hero/user-4.jpg" alt="user"></span>
+            </div>
+            <div class="hero__wrap__users__title">
+                <span>Your Account Dashboard</span>
+            </div>
+        </div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner" style="margin-bottom: 40px;">
+            <div class="welcome-content">
+                <div style="display:flex; align-items:center; gap:25px;">
+                    <div class="user-avatar" style="width:80px; height:80px; font-size:32px;">
+                        @(ViewBag.FullName?.ToString().Substring(0, 1).ToUpper() ?? "U")
+                    </div>
+                    <div>
+                        <h1 style="font-size:2.2rem; margin-bottom:5px;">
+                            Welcome back, <span style="font-weight:700;">@ViewBag.FullName</span>!
+                        </h1>
+                        <p style="display:flex; align-items:center; gap:10px; font-size:1.1rem; margin:0;">
+                            <i class="las la-mobile-alt" style="color:hsl(var(--base));"></i>
+                            @ViewBag.MobileNumber
+                            <span class="plan-pill @(planType == "Postpaid" ? "postpaid" : "prepaid")">
+                                @planType
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="happy-users-badge">
+                <i class="las la-user-check"></i>
+                <div>
+                    <span>@DateTime.Now.ToString("dd MMM")</span>
+                    <small>Logged In</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ STATUS CARDS ROW ═══ -->
+        <div class="row g-3 mb-5">
+
+            <!-- DND Status -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/MyAccount/DoNotDisturb" class="status-card @(isDnd ? "status-on" : "status-off")">
+                    <div class="status-card__icon">
+                        <i class="las @(isDnd ? "la-bell-slash" : "la-bell")"></i>
+                    </div>
+                    <div class="status-card__body">
+                        <div class="status-card__label">Do Not Disturb</div>
+                        <div class="status-card__value @(isDnd ? "text-success" : "text-muted")">
+                            @(isDnd ? "● Active" : "○ Inactive")
+                        </div>
+                    </div>
+                    <div class="status-card__arrow"><i class="las la-angle-right"></i></div>
+                </a>
+            </div>
+
+            <!-- Caller Tune Status -->
+            <div class="col-lg-3 col-md-6">
+                <a href="/MyAccount/CallerTunes" class="status-card @(tune != "Not Set" ? "status-on" : "")">
+                    <div class="status-card__icon">
+                        <i class="las la-music"></i>
+                    </div>
+                    <div class="status-card__body">
+                        <div class="status-card__label">Caller Tune</div>
+                        <div class="status-card__value @(tune != "Not Set" ? "text-success" : "text-muted")">
+                            @(tune != "Not Set" ? "● " + tune : "○ Not Set")
+                        </div>
+                    </div>
+                    <div class="status-card__arrow"><i class="las la-angle-right"></i></div>
+                </a>
+            </div>
+
+            @if (planType == "Postpaid")
+            {
+                <!-- Bill Status — Postpaid only -->
+                <div class="col-lg-3 col-md-6">
+                    <a href="/Recharge/Postpaid" class="status-card @((bool)(ViewBag.BillIsPaid ?? false) ? "status-on" : "status-due")">
+                        <div class="status-card__icon">
+                            <i class="las la-file-invoice"></i>
+                        </div>
+                        <div class="status-card__body">
+                            <div class="status-card__label">Current Bill</div>
+                            <div class="status-card__value">
+                                @if ((bool)(ViewBag.BillIsPaid ?? false))
+                                {
+                                    <span class="text-success">● Paid</span>
+                                }
+                                else
+                                {
+                                    <span style="color:hsl(0 100% 50%)">● Rs. @ViewBag.BillTotal due @ViewBag.BillDueDate</span>
+                                }
+                            </div>
+                        </div>
+                        <div class="status-card__arrow"><i class="las la-angle-right"></i></div>
+                    </a>
+                </div>
+
+                <!-- Plan Type -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="status-card status-postpaid">
+                        <div class="status-card__icon">
+                            <i class="las la-sim-card"></i>
+                        </div>
+                        <div class="status-card__body">
+                            <div class="status-card__label">Plan Type</div>
+                            <div class="status-card__value" style="color:hsl(40 100% 40%);">
+                                ● Postpaid Unlimited
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- Prepaid Plan -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="status-card">
+                        <div class="status-card__icon">
+                            <i class="las la-sim-card"></i>
+                        </div>
+                        <div class="status-card__body">
+                            <div class="status-card__label">Plan Type</div>
+                            <div class="status-card__value text-success">● Prepaid</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <div class="col-lg-3 col-md-6">
+                    <a href="/MyAccount/EditProfile" class="status-card">
+                        <div class="status-card__icon">
+                            <i class="las la-user-edit"></i>
+                        </div>
+                        <div class="status-card__body">
+                            <div class="status-card__label">Profile</div>
+                            <div class="status-card__value text-success">● Active</div>
+                        </div>
+                        <div class="status-card__arrow"><i class="las la-angle-right"></i></div>
+                    </a>
+                </div>
+            }
+
+        </div>
+
+        <!-- ═══ SERVICES GRID ═══ -->
+        <div class="feature__title" style="margin-bottom:30px;">
+            <h2 data-aos="fade-up-left">Our <span>Services</span></h2>
+            <span class="brand__line" style="width:200px;"></span>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <a href="/Recharge" class="service-card">
+                    <div class="stat-icon" style="margin-bottom:20px;"><i class="las la-mobile"></i></div>
+                    <h4 style="font-size:1.5rem; margin-bottom:10px;">Online Recharge</h4>
+                    <p style="color:hsl(var(--text-color)/0.8); margin-bottom:20px; flex:1;">Recharge your mobile with Top Up or Special plans instantly.</p>
+                    <div style="display:flex; align-items:center; gap:10px; color:hsl(var(--base)); font-weight:600;">
+                        <span>Recharge Now</span><i class="las la-arrow-right" style="transition:0.3s;"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <a href="/Recharge/Postpaid" class="service-card">
+                    <div class="stat-icon" style="margin-bottom:20px;"><i class="las la-credit-card"></i></div>
+                    <h4 style="font-size:1.5rem; margin-bottom:10px;">Post Bill Payment</h4>
+                    <p style="color:hsl(var(--text-color)/0.8); margin-bottom:20px; flex:1;">
+                        @(planType == "Postpaid" ? "Pay your postpaid bill quickly and securely." : "You are on a Prepaid plan.")
+                    </p>
+                    <div style="display:flex; align-items:center; gap:10px; color:hsl(var(--base)); font-weight:600;">
+                        <span>@(planType == "Postpaid" ? "Pay Bill" : "View")</span><i class="las la-arrow-right" style="transition:0.3s;"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <a href="/MyAccount/DoNotDisturb" class="service-card">
+                    <div class="stat-icon" style="margin-bottom:20px;"><i class="las la-bell-slash"></i></div>
+                    <h4 style="font-size:1.5rem; margin-bottom:10px;">Do Not Disturb</h4>
+                    <p style="color:hsl(var(--text-color)/0.8); margin-bottom:20px; flex:1;">
+                        Status: <strong style="color:@(isDnd ? "hsl(var(--base))" : "hsl(0 100% 50%)")">@(isDnd ? "Active" : "Inactive")</strong>
+                    </p>
+                    <div style="display:flex; align-items:center; gap:10px; color:hsl(var(--base)); font-weight:600;">
+                        <span>Manage DND</span><i class="las la-arrow-right" style="transition:0.3s;"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <a href="/MyAccount/CallerTunes" class="service-card">
+                    <div class="stat-icon" style="margin-bottom:20px;"><i class="las la-music"></i></div>
+                    <h4 style="font-size:1.5rem; margin-bottom:10px;">Caller Tunes</h4>
+                    <p style="color:hsl(var(--text-color)/0.8); margin-bottom:20px; flex:1;">
+                        Active: <strong style="color:hsl(var(--base));">@tune</strong>
+                    </p>
+                    <div style="display:flex; align-items:center; gap:10px; color:hsl(var(--base)); font-weight:600;">
+                        <span>Change Tune</span><i class="las la-arrow-right" style="transition:0.3s;"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <a href="/MyAccount/EditProfile" class="service-card">
+                    <div class="stat-icon" style="margin-bottom:20px;"><i class="las la-user-edit"></i></div>
+                    <h4 style="font-size:1.5rem; margin-bottom:10px;">Edit Profile</h4>
+                    <p style="color:hsl(var(--text-color)/0.8); margin-bottom:20px; flex:1;">Update your profile information and password.</p>
+                    <div style="display:flex; align-items:center; gap:10px; color:hsl(var(--base)); font-weight:600;">
+                        <span>Edit Profile</span><i class="las la-arrow-right" style="transition:0.3s;"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ═══ RECENT TRANSACTIONS ═══ -->
+        <div class="brand__title" style="margin-top:60px; margin-bottom:30px;">
+            <span class="brand__line"></span>
+            <h2>Recent Activity</h2>
+            <span class="brand__line"></span>
+        </div>
+
+        <div class="transactions-panel">
+            <div class="panel-header">
+                <h5><i class="las la-history"></i> Last 5 Transactions</h5>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Mobile</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!txns.Any())
+                        {
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:40px; color:hsl(var(--text-color));">
+                                    <i class="las la-receipt" style="font-size:40px; display:block; margin-bottom:10px;"></i>
+                                    No transactions yet
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var txn in txns)
+                            {
+                                <tr>
+                                    <td data-label="Date">@txn.TxnDate.ToString("dd MMM yyyy")</td>
+                                    <td data-label="Type">
+                                        @if (txn.PlanType == "topup")
+                                        {
+                                            <span class="badge-custom badge-topup"><i class="las la-sim-card"></i> Top Up</span>
+                                        }
+                                        else if (txn.PlanType == "postpaid")
+                                        {
+                                            <span class="badge-custom badge-postpaid"><i class="las la-calendar"></i> Postpaid</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-custom badge-special"><i class="las la-star"></i> Special</span>
+                                        }
+                                    </td>
+                                    <td data-label="Mobile">@txn.MobileNumber</td>
+                                    <td data-label="Amount"><strong style="color:hsl(var(--base));">Rs. @txn.Amount</strong></td>
+                                    <td data-label="Status">
+                                        <span class="badge-custom badge-success"><i class="las la-check-circle"></i> @txn.Status</span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* ── Plan Pill ── */
+    .plan-pill { padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
+    .plan-pill.postpaid { background:hsl(40 100% 46%/0.1); color:hsl(40 100% 40%); }
+    .plan-pill.prepaid  { background:hsl(var(--base)/0.1);  color:hsl(var(--base)); }
+
+    /* ── Status Cards ── */
+    .status-card {
+        display:flex; align-items:center; gap:14px;
+        background:#fff;
+        border:2px solid hsl(var(--border-color));
+        border-radius:16px; padding:16px;
+        text-decoration:none;
+        transition:all 0.3s;
+        cursor:pointer;
+    }
+    .status-card:hover { border-color:hsl(var(--base)); transform:translateY(-3px); box-shadow:0 8px 24px hsl(var(--base)/0.1); }
+    .status-card.status-on   { border-color:hsl(var(--base)/0.4); background:hsl(var(--base)/0.02); }
+    .status-card.status-due  { border-color:hsl(0 100% 50%/0.4); background:hsl(0 100% 50%/0.02); }
+    .status-card.status-postpaid { border-color:hsl(40 100% 46%/0.4); background:hsl(40 100% 46%/0.02); }
+
+    .status-card__icon {
+        width:44px; height:44px; border-radius:12px;
+        background:hsl(var(--base)/0.1); color:hsl(var(--base));
+        display:flex; align-items:center; justify-content:center;
+        font-size:22px; flex-shrink:0;
+    }
+    .status-card__body  { flex:1; min-width:0; }
+    .status-card__label { font-size:11px; font-weight:600; color:hsl(var(--text-color)); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px; }
+    .status-card__value { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .status-card__arrow { color:hsl(var(--text-color)); font-size:16px; flex-shrink:0; }
+    .text-success { color:hsl(var(--base)) !important; }
+    .text-muted   { color:hsl(var(--text-color)) !important; }
+
+    /* ── Service Cards ── */
+    .service-card {
+        background:#fff; border-radius:24px; padding:30px;
+        display:flex; flex-direction:column; height:100%;
+        text-decoration:none; color:inherit;
+        border:1px solid hsl(var(--border-color));
+        box-shadow:var(--card-shadow);
+        transition:all 0.3s; position:relative; overflow:hidden;
+    }
+    .service-card::before {
+        content:''; position:absolute; top:0; left:0; right:0; height:3px;
+        background:linear-gradient(90deg, hsl(var(--base)), hsl(var(--base-two)));
+        opacity:0; transition:0.3s;
+    }
+    .service-card:hover { transform:translateY(-8px); box-shadow:var(--hover-shadow); }
+    .service-card:hover::before { opacity:1; }
+    .service-card:hover .las.la-arrow-right { transform:translateX(5px); }
+
+    .stat-icon {
+        width:60px; height:60px; border-radius:18px;
+        background:linear-gradient(135deg, hsl(var(--base)/0.1), hsl(var(--base-two)/0.1));
+        display:flex; align-items:center; justify-content:center;
+        font-size:30px; color:hsl(var(--base));
+    }
+
+    /* ── Welcome Banner ── */
+    .user-avatar {
+        border-radius:50%; background:linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0;
+    }
+
+    /* ── Misc ── */
+    .feature__title { display:flex; align-items:center; gap:20px; margin-bottom:40px; }
+    .feature__title h2 { font-size:2.5rem; font-weight:600; margin-bottom:0; }
+    .feature__title h2 span { font-weight:300; color:hsl(var(--text-color)); }
+    .brand__line { flex:1; height:2px; background:linear-gradient(90deg, hsl(var(--base)/0.3), transparent); }
+    .brand__title { display:flex; align-items:center; gap:20px; }
+    .brand__title h2 { margin:0; white-space:nowrap; font-size:1.8rem; }
+
+    .transactions-panel { background:hsl(var(--white)); border-radius:24px; box-shadow:var(--card-shadow); border:1px solid hsl(var(--border-color)); overflow:hidden; }
+    .panel-header { padding:20px 25px; border-bottom:1px solid hsl(var(--border-color)); background:hsl(var(--section-bg)); display:flex; align-items:center; justify-content:space-between; }
+    .panel-header h5 { margin-bottom:0; display:flex; align-items:center; gap:10px; font-size:1.2rem; }
+    .panel-header h5 i { color:hsl(var(--base)); }
+
+    .table { margin:0; }
+    .table thead th { background:hsl(var(--section-bg)); padding:15px 25px; font-weight:600; font-size:0.9rem; color:hsl(var(--heading-color)); border-bottom:1px solid hsl(var(--border-color)); text-transform:uppercase; letter-spacing:0.5px; }
+    .table tbody td { padding:15px 25px; vertical-align:middle; color:hsl(var(--text-color)); border-bottom:1px solid hsl(var(--border-color)/0.5); }
+    .table tbody tr:hover { background:hsl(var(--section-bg)); }
+
+    .badge-custom { padding:6px 12px; border-radius:30px; font-size:0.8rem; font-weight:500; display:inline-flex; align-items:center; gap:6px; }
+    .badge-topup    { background:hsl(var(--base)/0.1);      color:hsl(var(--base)); }
+    .badge-special  { background:hsl(var(--base-two)/0.1);  color:hsl(var(--base-two)); }
+    .badge-postpaid { background:hsl(40 100% 46%/0.1);      color:hsl(40 100% 46%); }
+    .badge-success  { background:hsl(180 70% 38%/0.1);     color:hsl(180 70% 38%); }
+
+    @@media (max-width:991px) {
+        .welcome-banner { flex-direction:column; text-align:center; padding:30px; }
+        .welcome-content > div { flex-direction:column !important; text-align:center; }
+        .feature__title { flex-direction:column; text-align:center; }
+        .brand__line, .brand__title .brand__line { display:none; }
+    }
+    @@media (max-width:767px) {
+        .table thead { display:none; }
+        .table tbody tr { display:block; padding:15px; border-bottom:1px solid hsl(var(--border-color)); }
+        .table tbody td { display:flex; align-items:center; justify-content:space-between; padding:8px 0; border:none; }
+        .table tbody td:before { content:attr(data-label); font-weight:600; color:hsl(var(--heading-color)); }
+    }
+</style>

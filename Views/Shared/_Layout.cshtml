@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - MobileRecharge</title>
+
+    <link rel="shortcut icon" href="~/assets/images/logo/favicon.png">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/fontasosome.min.css">
+    <link rel="stylesheet" href="~/assets/css/clash-display.css">
+    <link rel="stylesheet" href="~/assets/css/nice-select.css">
+    <link rel="stylesheet" href="~/assets/css/aos.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/slick.css">
+    <link rel="stylesheet" href="~/assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/main.css">
+    <style>
+        /* ── Teal Cyan Theme Override ── */
+        :root {
+            --base-h: 180;
+            --base-s: 70%;
+            --base-l: 38%;
+            --base: var(--base-h) var(--base-s) var(--base-l);
+            --base-d-100: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.1);
+            --base-d-200: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.2);
+            --base-d-300: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.3);
+            --base-two-h: 200;
+            --base-two-s: 85%;
+            --base-two-l: 48%;
+            --base-two: var(--base-two-h) var(--base-two-s) var(--base-two-l);
+        }
+
+        /* ── Button text → white ── */
+        .common__btn,
+        .banner__btn,
+        .btn-view,
+        .btn-submit,
+        .pay-btn,
+        .btn--base,
+        .btn-base,
+        .cmn-btn,
+        [class*="btn--base"] {
+            color: #ffffff !important;
+        }
+        .common__btn:hover,
+        .banner__btn:hover,
+        .btn-view:hover,
+        .btn-submit:hover,
+        .pay-btn:hover,
+        .btn--base:hover,
+        .cmn-btn:hover {
+            color: #ffffff !important;
+        }
+
+        /* ── Banner / Hero text colors ── */
+        /* Heading span accents → teal */
+        .banner__title span,
+        .hero__title span,
+        .section__title span,
+        .sign__title span,
+        .recharge__title span,
+        h1 span, h2 span {
+            color: hsl(var(--base)) !important;
+        }
+
+        /* Banner subtitle / badge label */
+        .banner__label,
+        .hero__label,
+        .footer__subs__label,
+        .section__label span {
+            color: hsl(var(--base)) !important;
+        }
+
+        /* Banner buttons → teal gradient */
+        .btn--base,
+        .btn-base,
+        [class*="btn--base"],
+        .cmn-btn {
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))) !important;
+            border-color: hsl(var(--base)) !important;
+        }
+        .btn--base:hover,
+        .btn-base:hover,
+        .cmn-btn:hover {
+            background: linear-gradient(135deg, hsl(var(--base-two)), hsl(var(--base))) !important;
+        }
+
+        /* Nav active link */
+        .header .nav-item.active .nav-link,
+        .header .nav-link:hover {
+            color: hsl(var(--base)) !important;
+        }
+
+        /* Footer accent links */
+        .footer a:hover,
+        .footer__link a:hover {
+            color: hsl(var(--base)) !important;
+        }
+
+        /* Icon accent color */
+        .icon--base,
+        [class*="icon--base"] {
+            color: hsl(var(--base)) !important;
+        }
+
+        /* Highlight / badge */
+        .badge--base,
+        .badge-base {
+            background: hsl(var(--base)) !important;
+        }
+
+        /* Input focus ring */
+        .form--control:focus,
+        .form-control:focus {
+            border-color: hsl(var(--base)) !important;
+            box-shadow: 0 0 0 3px hsl(var(--base) / 0.15) !important;
+        }
+    </style>
+    <link rel="stylesheet" href="~/css/site.css">
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+
+    <!--==================== Preloader ====================-->
+    <div class="preloader">
+        <div class="animation-container">
+            <div class="lightning-container">
+                <div class="lightning white"></div>
+                <div class="lightning red"></div>
+            </div>
+            <div class="boom-container">
+                <div class="shape circle big white"></div>
+                <div class="shape circle white"></div>
+                <div class="shape triangle big yellow"></div>
+                <div class="shape disc white"></div>
+                <div class="shape triangle blue"></div>
+            </div>
+            <div class="boom-container second">
+                <div class="shape circle big white"></div>
+                <div class="shape circle white"></div>
+                <div class="shape disc white"></div>
+                <div class="shape triangle blue"></div>
+            </div>
+        </div>
+    </div>
+    <!--==================== Preloader End ====================-->
+
+    <div class="body-overlay"></div>
+    <div class="sidebar-overlay"></div>
+    <a class="scroll-top"><i class="fas fa-angle-double-up"></i></a>
+    <div class="cursor"></div>
+
+    <!--==================== Header ====================-->
+    @if (!User.IsInRole("Admin"))
+    {
+        <header class="header" id="header">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+
+                    <a class="navbar-brand logo" href="/">
+                        <img src="~/assets/images/logo/logo.png" alt="MobileRecharge">
+                    </a>
+
+                    <button class="navbar-toggler header-button" type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span id="hiddenNav"><i class="las la-bars"></i></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <!-- ========================================== -->
+                            <!-- USER NAV: Home | Recharge | My Account | Bill Payment | More▾ | [Logout] -->
+                            <!-- ========================================== -->
+                            <ul class="navbar-nav nav-menu ms-auto me-auto align-items-lg-center">
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/"><span data-hover="Home">Home</span></a>
+                                </li>
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Recharge" && ViewContext.RouteData.Values["action"]?.ToString() != "Postpaid" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/Recharge"><span data-hover="Recharge">Recharge</span></a>
+                                </li>
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "MyAccount" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/MyAccount"><span data-hover="My Account">My Account</span></a>
+                                </li>
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Postpaid" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/Recharge/Postpaid"><span data-hover="Bill Payment">Bill Payment</span></a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        More <span class="nav-item__icon"><i class="las la-angle-down"></i></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Feedback">
+                                                <span data-hover="Feedback">Feedback</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/About">
+                                                <span data-hover="About Us">About Us</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/Contact">
+                                                <span data-hover="Contact">Contact</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/CustomerCare">
+                                                <span data-hover="Customer Care">Customer Care</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/SiteMap">
+                                                <span data-hover="Site Map">Site Map</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                            <div class="navbar__widgets">
+                                <div class="navbar__widgets__btn">
+                                    <form asp-area="Identity" asp-page="/Account/Logout"
+                                          asp-route-returnUrl="/" method="post" style="display:inline;">
+                                        <button type="submit" class="common__btn">
+                                            <span>Logout</span>
+                                            <span><i class="fa-solid fa-arrow-right"></i></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- ========================================== -->
+                            <!-- GUEST NAV: Home | Online Recharge | Feedback | More▾ | [Sign In] -->
+                            <!-- ========================================== -->
+                            <ul class="navbar-nav nav-menu ms-auto me-auto align-items-lg-center">
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/"><span data-hover="Home">Home</span></a>
+                                </li>
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Recharge" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/Recharge"><span data-hover="Online Recharge">Online Recharge</span></a>
+                                </li>
+
+                                <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Feedback" ? "active" : "")">
+                                    <a class="nav-link flip-animate" href="/Feedback"><span data-hover="Feedback">Feedback</span></a>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        More <span class="nav-item__icon"><i class="las la-angle-down"></i></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/About">
+                                                <span data-hover="About Us">About Us</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/Contact">
+                                                <span data-hover="Contact">Contact</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/CustomerCare">
+                                                <span data-hover="Customer Care">Customer Care</span>
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-menu__list">
+                                            <a class="dropdown-item dropdown-menu__link flip-animate" href="/Home/SiteMap">
+                                                <span data-hover="Site Map">Site Map</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                            <div class="navbar__widgets">
+                                <div class="navbar__widgets__btn">
+                                    <a href="/Identity/Account/Login" class="common__btn">
+                                        <span>Sign In</span>
+                                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </nav>
+            </div>
+        </header>
+    }
+    <!--==================== Header End ====================-->
+
+    <main class="overflow-hidden">
+        <div id="smooth-wrapper">
+            <div id="smooth-content">
+
+                @RenderBody()
+
+                <!--==================== Footer ====================-->
+                @if (!User.IsInRole("Admin"))
+                {
+                    <footer class="footer__area">
+
+                        <div class="footer__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+                        <div class="footer__sp2"><img src="~/assets/images/footer/fs-2.png" alt="img"></div>
+                        <div class="footer__sp3"><img src="~/assets/images/footer/star.png" alt="img"></div>
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="footer__subs">
+                                        <div class="footer__subs__title">
+                                            <h2>Stay Updated With <span>Our Services</span></h2>
+                                        </div>
+                                        <form action="#" method="post">
+                                            <div class="footer__subs__form">
+                                                <input type="email" placeholder="Enter your email address" required>
+                                                <button type="submit">
+                                                    <i class="fa-solid fa-paper-plane"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-4 mt-4">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="footer__address">
+                                        <h4>Head Office</h4>
+                                        <p>Karachi, Pakistan</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 d-flex justify-content-center">
+                                    <div class="footer__address text-center">
+                                        <h4>Contact Us</h4>
+                                        <p>+92 300 1234567</p>
+                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0f7c7a7f7f607d7b4f76607a7d7c667b6a216c6062">[email&#160;protected]</a></p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 d-flex justify-content-end">
+                                    <div class="footer__address text-end">
+                                        <h4>Working Hours</h4>
+                                        <p>Mon - Sat: 9:00 AM - 7:00 PM</p>
+                                        <p>Sunday: Closed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="footer__menu">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="footer__menu__wrap">
+                                            <div class="footer__menu__wrap__item">
+                                                <ul>
+                                                    <li><a href="/Home/About">About Us</a></li>
+                                                    <li><span><i class="fa-solid fa-circle"></i></span></li>
+                                                    <li><a href="/Feedback">Feedback</a></li>
+                                                    <li><span><i class="fa-solid fa-circle"></i></span></li>
+                                                    <li><a href="/Recharge">Online Recharge</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="footer__menu__wrap__item">
+                                                <ul>
+                                                    <li><a href="/Home/CustomerCare">Customer Care</a></li>
+                                                    <li><span><i class="fa-solid fa-circle"></i></span></li>
+                                                    <li><a href="/Home/SiteMap">Site Map</a></li>
+                                                    <li><span><i class="fa-solid fa-circle"></i></span></li>
+                                                    <li><a href="/Home/Contact">Contact</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="footer__bottombar">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="footer__bottombar__wrap">
+                                            <div class="footer__social">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa-brands fa-facebook-f"></i> Facebook</a></li>
+                                                    <li><a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a></li>
+                                                    <li><a href="#"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="footer__copy">
+                                                <span>
+                                                    Copyright &copy; @DateTime.Now.Year
+                                                    <a href="/">MobiCharge</a>.
+                                                    All rights reserved.
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </footer>
+                }
+                <!--==================== Footer End ====================-->
+
+            </div>
+        </div>
+    </main>
+
+    <script src="~/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="~/assets/js/boostrap.bundle.min.js"></script>
+    <script src="~/assets/js/gsap.min.js"></script>
+    <script src="~/assets/js/ScrollTrigger.min.js"></script>
+    <script src="~/assets/js/ScrollToPlugin.min.js"></script>
+    <script src="~/assets/js/slick.min.js"></script>
+    <script src="~/assets/js/aos.js"></script>
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.nice-select.min.js"></script>
+    <script src="~/assets/js/waypoints.min.js"></script>
+    <script src="~/assets/js/counter.min.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

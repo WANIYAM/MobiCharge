@@ -1,0 +1,135 @@
+@model MobileRechargeApp.Models.CreateUserViewModel
+@{
+    ViewData["Title"] = "Create User";
+    Layout = "_AdminLayout";
+}
+
+<!-- ── Page Header ─────────────────────────────────────────────── -->
+<div class="lv-page-hdr">
+    <div class="lv-page-hdr__left">
+        <div class="lv-page-hdr__icon">
+            <i class="las la-user-plus"></i>
+        </div>
+        <div>
+            <h2 class="lv-page-hdr__title">Create New User</h2>
+            <p class="lv-page-hdr__sub">Add a new user account to the platform</p>
+        </div>
+    </div>
+    <div class="lv-page-hdr__right">
+        <a href="/Admin/Users" class="lv-btn lv-btn--ghost">
+            <i class="las la-arrow-left"></i> Back to Users
+        </a>
+    </div>
+</div>
+
+<!-- ── Form Card ──────────────────────────────────────────────── -->
+<div class="lv-card lv-form-card">
+    <div class="lv-card__hdr">
+        <div class="lv-card__hdr-left">
+            <span class="lv-card__dot"></span>
+            <span class="lv-card__title">User Details</span>
+        </div>
+    </div>
+
+    <div class="lv-form-body">
+        <form asp-action="CreateUser" method="post">
+            <div asp-validation-summary="All" class="lv-form-error"></div>
+
+            <!-- Full Name -->
+            <div class="lv-field">
+                <label class="lv-label">
+                    Full Name <span class="lv-required">*</span>
+                </label>
+                <div class="lv-input-wrap">
+                    <span class="lv-input-ico"><i class="las la-user"></i></span>
+                    <input asp-for="FullName" class="lv-input" placeholder="e.g. Ahmed Khan" />
+                </div>
+                <span asp-validation-for="FullName" class="lv-error-msg"></span>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="lv-field">
+                <label class="lv-label">
+                    Mobile Number <span class="lv-required">*</span>
+                </label>
+                <div class="lv-input-wrap">
+                    <span class="lv-input-ico"><i class="las la-phone-alt"></i></span>
+                    <input asp-for="MobileNumber" class="lv-input" placeholder="10-digit mobile number" maxlength="10" />
+                </div>
+                <span asp-validation-for="MobileNumber" class="lv-error-msg"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="lv-field">
+                <label class="lv-label">Email <span class="lv-optional">(optional)</span></label>
+                <div class="lv-input-wrap">
+                    <span class="lv-input-ico"><i class="las la-envelope"></i></span>
+                    <input asp-for="Email" class="lv-input" placeholder="user@example.com" />
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="lv-field">
+                <label class="lv-label">
+                    Password <span class="lv-required">*</span>
+                </label>
+                <div class="lv-input-wrap">
+                    <span class="lv-input-ico"><i class="las la-lock"></i></span>
+                    <input asp-for="Password" type="password" class="lv-input" placeholder="Minimum 6 characters" />
+                </div>
+                <span asp-validation-for="Password" class="lv-error-msg"></span>
+            </div>
+
+            <!-- Plan Type -->
+            <div class="lv-field">
+                <label class="lv-label">Plan Type <span class="lv-required">*</span></label>
+                <div class="lv-plan-grid">
+                    <label class="lv-plan-opt">
+                        <input type="radio" asp-for="PlanType" value="Prepaid" checked />
+                        <div class="lv-plan-opt__card">
+                            <div class="lv-plan-opt__icon" style="background:hsl(var(--base)/.12);color:hsl(var(--base));">
+                                <i class="las la-sim-card"></i>
+                            </div>
+                            <div class="lv-plan-opt__text">
+                                <strong>Prepaid</strong>
+                                <small>Pay before use</small>
+                            </div>
+                            <span class="lv-plan-opt__check"><i class="las la-check"></i></span>
+                        </div>
+                    </label>
+                    <label class="lv-plan-opt">
+                        <input type="radio" asp-for="PlanType" value="Postpaid" />
+                        <div class="lv-plan-opt__card">
+                            <div class="lv-plan-opt__icon" style="background:hsl(var(--base-two)/.12);color:hsl(var(--base-two));">
+                                <i class="las la-calendar-check"></i>
+                            </div>
+                            <div class="lv-plan-opt__text">
+                                <strong>Postpaid</strong>
+                                <small>Pay monthly bill</small>
+                            </div>
+                            <span class="lv-plan-opt__check"><i class="las la-check"></i></span>
+                        </div>
+                    </label>
+                </div>
+                <span asp-validation-for="PlanType" class="lv-error-msg"></span>
+            </div>
+
+            <!-- Submit -->
+            <div class="lv-form-actions">
+                <button type="submit" class="lv-btn lv-btn--primary lv-btn--lg">
+                    <i class="las la-user-plus"></i> Create User
+                </button>
+                <a href="/Admin/Users" class="lv-btn lv-btn--ghost lv-btn--lg">
+                    Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("_LevelUpStyles")
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

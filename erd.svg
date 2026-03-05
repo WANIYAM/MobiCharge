@@ -1,0 +1,312 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1220" height="1157"
+     viewBox="0 0 1220 1157">
+
+  <!-- Background -->
+  <rect width="1220" height="1157" fill="#f1f5f9"/>
+
+  <!-- Dot grid -->
+  <defs>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="0.8" fill="#cbd5e1"/>
+    </pattern>
+  </defs>
+  <rect width="1220" height="1157" fill="url(#g)"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1220" height="50" fill="#0f172a"/>
+  <text x="20" y="31"
+        font-family="Menlo,Consolas,monospace"
+        font-size="15" font-weight="700" fill="#f8fafc">
+    MobileRechargeApp &#8212; Entity Relationship Diagram
+  </text>
+  <text x="1200" y="31" text-anchor="end"
+        font-family="Menlo,Consolas,monospace"
+        font-size="11" fill="#64748b">
+    ASP.NET Core 8 &#183; SQL Server &#183; EF Core
+  </text>
+
+  <path d="M 210 335 L 210 365 L 210 365 L 210 395" stroke="#4f46e5" stroke-width="1.8" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="210" cy="335" r="3.5" fill="white" stroke="#4f46e5" stroke-width="1.8"/>
+<polygon points="210,395 206,387 214,387" fill="#4f46e5"/>
+<rect x="194" y="356" width="33" height="17" rx="4" fill="white" stroke="#4f46e5" stroke-width="1.2"/>
+<text x="210" y="369" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#4f46e5">1:N</text>
+<path d="M 610 220 L 810 220 L 810 442 L 388 442" stroke="#7c3aed" stroke-width="1.8" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="610" cy="220" r="3.5" fill="white" stroke="#7c3aed" stroke-width="1.8"/>
+<polygon points="388,442 384,450 392,450" fill="#7c3aed"/>
+<rect x="794" y="322" width="33" height="17" rx="4" fill="white" stroke="#7c3aed" stroke-width="1.2"/>
+<text x="810" y="335" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#7c3aed">1:N</text>
+<path d="M 370 152 L 410 152 L 410 465 L 450 465" stroke="#0284c7" stroke-width="1.8" fill="none"  stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="370" cy="152" r="3.5" fill="white" stroke="#0284c7" stroke-width="1.8"/>
+<polygon points="450,465 446,457 454,457" fill="#0284c7"/>
+<rect x="394" y="299" width="33" height="17" rx="4" fill="white" stroke="#0284c7" stroke-width="1.2"/>
+<text x="410" y="312" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#0284c7">1:N</text>
+<path d="M 210 487 L 210 540 L 210 540 L 210 593" stroke="#059669" stroke-width="1.8" fill="none" stroke-dasharray="8 4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="210" cy="487" r="3.5" fill="white" stroke="#059669" stroke-width="1.8"/>
+<polygon points="210,593 206,585 214,585" fill="#059669"/>
+<rect x="190" y="531" width="40" height="17" rx="4" fill="white" stroke="#059669" stroke-width="1.2"/>
+<text x="210" y="544" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#059669">soft</text>
+<path d="M 450 640 L 410 640 L 410 663 L 370 663" stroke="#d97706" stroke-width="1.8" fill="none" stroke-dasharray="8 4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="450" cy="640" r="3.5" fill="white" stroke="#d97706" stroke-width="1.8"/>
+<polygon points="370,663 378,659 378,667" fill="#d97706"/>
+<rect x="394" y="642" width="33" height="17" rx="4" fill="white" stroke="#d97706" stroke-width="1.2"/>
+<text x="410" y="655" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#d97706">~FK</text>
+<path d="M 850 640 L 410 640 L 410 709 L 370 709" stroke="#ea580c" stroke-width="1.8" fill="none" stroke-dasharray="8 4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="850" cy="640" r="3.5" fill="white" stroke="#ea580c" stroke-width="1.8"/>
+<polygon points="370,709 378,705 378,713" fill="#ea580c"/>
+<rect x="394" y="665" width="33" height="17" rx="4" fill="white" stroke="#ea580c" stroke-width="1.2"/>
+<text x="410" y="678" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="10" font-weight="600" fill="#ea580c">~FK</text>
+<rect x="53" y="108" width="320" height="230" rx="10" fill="#00000018"/>
+<rect x="50" y="105" width="320" height="230" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+<rect x="50" y="105" width="320" height="36" rx="10" fill="#2563eb"/>
+<rect x="50" y="131" width="320" height="10" fill="#2563eb"/>
+<text x="210" y="129" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">AspNetUsers</text>
+<rect x="51" y="141" width="318" height="23" fill="#f8fafc"/>
+<rect x="60" y="146" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="71" y="156" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="88" y="156" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="360" y="156" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(450)</text>
+<rect x="60" y="169" width="22" height="13" rx="3" fill="#7c3aed"/>
+<text x="71" y="179" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">UK</text>
+<text x="88" y="179" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">UserName</text>
+<text x="360" y="179" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(256)</text>
+<rect x="51" y="187" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="202" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Email</text>
+<text x="360" y="202" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(256)</text>
+<text x="60" y="225" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">PasswordHash</text>
+<text x="360" y="225" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="51" y="233" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="248" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">PhoneNumber</text>
+<text x="360" y="248" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="60" y="271" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">LockoutEnd</text>
+<text x="360" y="271" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">datetimeoffset</text>
+<rect x="51" y="279" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="294" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">LockoutEnabled</text>
+<text x="360" y="294" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">bit</text>
+<text x="60" y="317" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">AccessFailedCount</text>
+<text x="360" y="317" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<line x1="51" y1="164" x2="369" y2="164" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="187" x2="369" y2="187" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="210" x2="369" y2="210" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="233" x2="369" y2="233" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="256" x2="369" y2="256" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="279" x2="369" y2="279" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="302" x2="369" y2="302" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="51" y="325" width="318" height="10" fill="#f8fafc"/>
+<rect x="50" y="325" width="320" height="11" rx="10" fill="none" stroke="#2563eb" stroke-width="2"/>
+<rect x="453" y="108" width="320" height="115" rx="10" fill="#00000018"/>
+<rect x="450" y="105" width="320" height="115" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<rect x="450" y="105" width="320" height="36" rx="10" fill="#7c3aed"/>
+<rect x="450" y="131" width="320" height="10" fill="#7c3aed"/>
+<text x="610" y="129" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">AspNetRoles</text>
+<rect x="451" y="141" width="318" height="23" fill="#f8fafc"/>
+<rect x="460" y="146" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="471" y="156" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="488" y="156" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="760" y="156" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(450)</text>
+<text x="460" y="179" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Name</text>
+<text x="760" y="179" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(256)</text>
+<rect x="451" y="187" width="318" height="23" fill="#f8fafc"/>
+<rect x="460" y="192" width="22" height="13" rx="3" fill="#7c3aed"/>
+<text x="471" y="202" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">UK</text>
+<text x="488" y="202" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">NormalizedName</text>
+<text x="760" y="202" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(256)</text>
+<line x1="451" y1="164" x2="769" y2="164" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="187" x2="769" y2="187" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="451" y="210" width="318" height="10" fill="#f8fafc"/>
+<rect x="450" y="210" width="320" height="11" rx="10" fill="none" stroke="#7c3aed" stroke-width="2"/>
+<rect x="53" y="398" width="320" height="92" rx="10" fill="#00000018"/>
+<rect x="50" y="395" width="320" height="92" rx="10" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+<rect x="50" y="395" width="320" height="36" rx="10" fill="#4f46e5"/>
+<rect x="50" y="421" width="320" height="10" fill="#4f46e5"/>
+<text x="210" y="419" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">AspNetUserRoles</text>
+<rect x="51" y="431" width="318" height="23" fill="#f8fafc"/>
+<rect x="60" y="436" width="22" height="13" rx="3" fill="#3b82f6"/>
+<text x="71" y="446" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">FK</text>
+<text x="88" y="446" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">UserId</text>
+<text x="360" y="446" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(450)</text>
+<rect x="60" y="459" width="22" height="13" rx="3" fill="#3b82f6"/>
+<text x="71" y="469" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">FK</text>
+<text x="88" y="469" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">RoleId</text>
+<text x="360" y="469" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(450)</text>
+<line x1="51" y1="454" x2="369" y2="454" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="51" y="477" width="318" height="10" fill="#f8fafc"/>
+<rect x="50" y="477" width="320" height="11" rx="10" fill="none" stroke="#4f46e5" stroke-width="2"/>
+<rect x="453" y="398" width="320" height="138" rx="10" fill="#00000018"/>
+<rect x="450" y="395" width="320" height="138" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+<rect x="450" y="395" width="320" height="36" rx="10" fill="#0284c7"/>
+<rect x="450" y="421" width="320" height="10" fill="#0284c7"/>
+<text x="610" y="419" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">AspNetUserClaims</text>
+<rect x="451" y="431" width="318" height="23" fill="#f8fafc"/>
+<rect x="460" y="436" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="471" y="446" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="488" y="446" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="760" y="446" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<rect x="460" y="459" width="22" height="13" rx="3" fill="#3b82f6"/>
+<text x="471" y="469" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">FK</text>
+<text x="488" y="469" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">UserId</text>
+<text x="760" y="469" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(450)</text>
+<rect x="451" y="477" width="318" height="23" fill="#f8fafc"/>
+<text x="460" y="492" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">ClaimType</text>
+<text x="760" y="492" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="460" y="515" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">ClaimValue</text>
+<text x="760" y="515" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<line x1="451" y1="454" x2="769" y2="454" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="477" x2="769" y2="477" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="500" x2="769" y2="500" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="451" y="523" width="318" height="10" fill="#f8fafc"/>
+<rect x="450" y="523" width="320" height="11" rx="10" fill="none" stroke="#0284c7" stroke-width="2"/>
+<rect x="53" y="596" width="320" height="230" rx="10" fill="#00000018"/>
+<rect x="50" y="593" width="320" height="230" rx="10" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+<rect x="50" y="593" width="320" height="36" rx="10" fill="#059669"/>
+<rect x="50" y="619" width="320" height="10" fill="#059669"/>
+<text x="210" y="617" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">Transactions</text>
+<rect x="51" y="629" width="318" height="23" fill="#f8fafc"/>
+<rect x="60" y="634" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="71" y="644" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="88" y="644" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">TxnId</text>
+<text x="360" y="644" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<rect x="60" y="657" width="29" height="13" rx="3" fill="#94a3b8"/>
+<text x="74" y="667" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">~FK</text>
+<text x="95" y="667" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">MobileNumber</text>
+<text x="360" y="667" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="51" y="675" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="690" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">PlanType</text>
+<text x="360" y="690" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="60" y="703" width="29" height="13" rx="3" fill="#94a3b8"/>
+<text x="74" y="713" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">~FK</text>
+<text x="95" y="713" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">PlanId</text>
+<text x="360" y="713" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<rect x="51" y="721" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="736" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Amount</text>
+<text x="360" y="736" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">decimal(18,2)</text>
+<text x="60" y="759" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">PaymentMethod</text>
+<text x="360" y="759" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="51" y="767" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="782" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Status</text>
+<text x="360" y="782" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="60" y="805" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">TxnDate</text>
+<text x="360" y="805" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">datetime2</text>
+<line x1="51" y1="652" x2="369" y2="652" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="675" x2="369" y2="675" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="698" x2="369" y2="698" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="721" x2="369" y2="721" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="744" x2="369" y2="744" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="767" x2="369" y2="767" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="790" x2="369" y2="790" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="51" y="813" width="318" height="10" fill="#f8fafc"/>
+<rect x="50" y="813" width="320" height="11" rx="10" fill="none" stroke="#059669" stroke-width="2"/>
+<rect x="453" y="596" width="320" height="207" rx="10" fill="#00000018"/>
+<rect x="450" y="593" width="320" height="207" rx="10" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+<rect x="450" y="593" width="320" height="36" rx="10" fill="#d97706"/>
+<rect x="450" y="619" width="320" height="10" fill="#d97706"/>
+<text x="610" y="617" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">TopUpPlans</text>
+<rect x="451" y="629" width="318" height="23" fill="#f8fafc"/>
+<rect x="460" y="634" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="471" y="644" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="488" y="644" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="760" y="644" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<text x="460" y="667" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Name</text>
+<text x="760" y="667" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="451" y="675" width="318" height="23" fill="#f8fafc"/>
+<text x="460" y="690" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Amount</text>
+<text x="760" y="690" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">decimal(18,2)</text>
+<text x="460" y="713" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Validity</text>
+<text x="760" y="713" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="451" y="721" width="318" height="23" fill="#f8fafc"/>
+<text x="460" y="736" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Data</text>
+<text x="760" y="736" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="460" y="759" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Calls</text>
+<text x="760" y="759" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="451" y="767" width="318" height="23" fill="#f8fafc"/>
+<text x="460" y="782" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Description</text>
+<text x="760" y="782" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<line x1="451" y1="652" x2="769" y2="652" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="675" x2="769" y2="675" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="698" x2="769" y2="698" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="721" x2="769" y2="721" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="744" x2="769" y2="744" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="451" y1="767" x2="769" y2="767" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="451" y="790" width="318" height="10" fill="#f8fafc"/>
+<rect x="450" y="790" width="320" height="11" rx="10" fill="none" stroke="#d97706" stroke-width="2"/>
+<rect x="853" y="596" width="320" height="207" rx="10" fill="#00000018"/>
+<rect x="850" y="593" width="320" height="207" rx="10" fill="#ffffff" stroke="#ea580c" stroke-width="2"/>
+<rect x="850" y="593" width="320" height="36" rx="10" fill="#ea580c"/>
+<rect x="850" y="619" width="320" height="10" fill="#ea580c"/>
+<text x="1010" y="617" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">SpecialPlans</text>
+<rect x="851" y="629" width="318" height="23" fill="#f8fafc"/>
+<rect x="860" y="634" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="871" y="644" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="888" y="644" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="1160" y="644" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<text x="860" y="667" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Name</text>
+<text x="1160" y="667" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="851" y="675" width="318" height="23" fill="#f8fafc"/>
+<text x="860" y="690" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Amount</text>
+<text x="1160" y="690" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">decimal(18,2)</text>
+<text x="860" y="713" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Validity</text>
+<text x="1160" y="713" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="851" y="721" width="318" height="23" fill="#f8fafc"/>
+<text x="860" y="736" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Data</text>
+<text x="1160" y="736" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="860" y="759" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Feature</text>
+<text x="1160" y="759" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="851" y="767" width="318" height="23" fill="#f8fafc"/>
+<text x="860" y="782" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Description</text>
+<text x="1160" y="782" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<line x1="851" y1="652" x2="1169" y2="652" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="851" y1="675" x2="1169" y2="675" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="851" y1="698" x2="1169" y2="698" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="851" y1="721" x2="1169" y2="721" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="851" y1="744" x2="1169" y2="744" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="851" y1="767" x2="1169" y2="767" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="851" y="790" width="318" height="10" fill="#f8fafc"/>
+<rect x="850" y="790" width="320" height="11" rx="10" fill="none" stroke="#ea580c" stroke-width="2"/>
+<rect x="53" y="886" width="320" height="184" rx="10" fill="#00000018"/>
+<rect x="50" y="883" width="320" height="184" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+<rect x="50" y="883" width="320" height="36" rx="10" fill="#dc2626"/>
+<rect x="50" y="909" width="320" height="10" fill="#dc2626"/>
+<text x="210" y="907" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="13" font-weight="700" fill="#ffffff">Feedbacks</text>
+<rect x="51" y="919" width="318" height="23" fill="#f8fafc"/>
+<rect x="60" y="924" width="22" height="13" rx="3" fill="#f59e0b"/>
+<text x="71" y="934" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="88" y="934" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Id</text>
+<text x="360" y="934" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<text x="60" y="957" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Name</text>
+<text x="360" y="957" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="51" y="965" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="980" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Email</text>
+<text x="360" y="980" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<text x="60" y="1003" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Message</text>
+<text x="360" y="1003" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">nvarchar(MAX)</text>
+<rect x="51" y="1011" width="318" height="23" fill="#f8fafc"/>
+<text x="60" y="1026" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">Rating</text>
+<text x="360" y="1026" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">int</text>
+<text x="60" y="1049" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="600" fill="#1e293b">SubmittedAt</text>
+<text x="360" y="1049" text-anchor="end" font-family="Menlo,Consolas,monospace" font-size="10" fill="#64748b">datetime2</text>
+<line x1="51" y1="942" x2="369" y2="942" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="965" x2="369" y2="965" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="988" x2="369" y2="988" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="1011" x2="369" y2="1011" stroke="#e2e8f0" stroke-width="0.8"/>
+<line x1="51" y1="1034" x2="369" y2="1034" stroke="#e2e8f0" stroke-width="0.8"/>
+<rect x="51" y="1057" width="318" height="10" fill="#f8fafc"/>
+<rect x="50" y="1057" width="320" height="11" rx="10" fill="none" stroke="#dc2626" stroke-width="2"/>
+<rect x="1009" y="1001" width="187" height="140" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+<rect x="1010" y="1002" width="185" height="24" rx="8" fill="#1e293b"/>
+<rect x="1010" y="1018" width="185" height="8" fill="#1e293b"/>
+<text x="1102" y="1018" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="11" font-weight="700" fill="#ffffff">Legend</text>
+<rect x="1020" y="1034" width="22" height="14" rx="3" fill="#f59e0b"/>
+<text x="1031" y="1044" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">PK</text>
+<text x="1050" y="1045" font-family="Menlo,Consolas,monospace" font-size="10" fill="#475569">Primary Key</text>
+<rect x="1020" y="1056" width="22" height="14" rx="3" fill="#3b82f6"/>
+<text x="1031" y="1066" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">FK</text>
+<text x="1050" y="1067" font-family="Menlo,Consolas,monospace" font-size="10" fill="#475569">Foreign Key</text>
+<rect x="1020" y="1078" width="22" height="14" rx="3" fill="#7c3aed"/>
+<text x="1031" y="1088" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">UK</text>
+<text x="1050" y="1089" font-family="Menlo,Consolas,monospace" font-size="10" fill="#475569">Unique Key</text>
+<rect x="1020" y="1100" width="29" height="14" rx="3" fill="#94a3b8"/>
+<text x="1034" y="1110" text-anchor="middle" font-family="Menlo,Consolas,monospace" font-size="8" font-weight="700" fill="#ffffff">~FK</text>
+<text x="1057" y="1111" font-family="Menlo,Consolas,monospace" font-size="10" fill="#475569">Soft / no constraint</text>
+<line x1="1020" y1="1129" x2="1050" y2="1129" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="5 3"/>
+<text x="1058" y="1133" font-family="Menlo,Consolas,monospace" font-size="10" fill="#475569">- - -  Soft relationship</text>
+</svg>

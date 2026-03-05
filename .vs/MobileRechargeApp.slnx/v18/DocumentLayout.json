@@ -1,0 +1,277 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Eproject\\MobileRechargeApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\recharge\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\payment.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\recharge\\specialplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\specialplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\recharge\\topupplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\topupplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\contact.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\customercare.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\customercare.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\home\\sitemap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\home\\sitemap.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\recharge\\receipt.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\receipt.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\recharge\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\views\\feedback\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\feedback\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\wwwroot\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:wwwroot\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAAAMwAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T19:22:36.975Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAM8AAAAAAAAAAAAAAN0AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T19:20:13.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "bootstrap-grid.css.map",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+              "RelativeDocumentMoniker": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+              "RelativeToolTip": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAADw3QEAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-03-04T19:14:52.668Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Feedback\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Feedback\\Index.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Feedback\\Index.cshtml",
+              "RelativeToolTip": "Views\\Feedback\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T19:11:49.306Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SiteMap.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\SiteMap.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\SiteMap.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\SiteMap.cshtml",
+              "RelativeToolTip": "Views\\Home\\SiteMap.cshtml",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAwCMAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T19:11:35.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Privacy.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Privacy.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Privacy.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Privacy.cshtml",
+              "RelativeToolTip": "Views\\Home\\Privacy.cshtml",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAwEEAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T19:11:23.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "main.css",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\wwwroot\\assets\\css\\main.css",
+              "RelativeDocumentMoniker": "wwwroot\\assets\\css\\main.css",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\wwwroot\\assets\\css\\main.css",
+              "RelativeToolTip": "wwwroot\\assets\\css\\main.css",
+              "ViewState": "AgIAAHADAAAAAAAAAAAowIMDAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-04T18:57:36.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CustomerCare.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\CustomerCare.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\CustomerCare.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\CustomerCare.cshtml",
+              "RelativeToolTip": "Views\\Home\\CustomerCare.cshtml",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAwEEAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:21:10.867Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Contact.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Contact.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Contact.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Contact.cshtml",
+              "RelativeToolTip": "Views\\Home\\Contact.cshtml",
+              "ViewState": "AgIAADQAAAAAAAAAAAAWwEEAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:21:04.1Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "About.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\About.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\About.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\About.cshtml",
+              "RelativeToolTip": "Views\\Home\\About.cshtml",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAwGwAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:16:56.063Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TopUpPlans.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\TopUpPlans.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\TopUpPlans.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\TopUpPlans.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\TopUpPlans.cshtml",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAAAJQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:12:09.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SpecialPlans.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\SpecialPlans.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\SpecialPlans.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\SpecialPlans.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\SpecialPlans.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:12:04.044Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Receipt.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Receipt.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\Receipt.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Receipt.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\Receipt.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:11:50.055Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Payment.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Payment.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\Payment.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Payment.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\Payment.cshtml",
+              "ViewState": "AgIAACMBAAAAAAAAAAAAADEBAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:11:17.281Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\Index.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Recharge\\Index.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T18:10:31.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAABABAAAAAAAAAAAewB0BAACPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-04T17:28:19.431Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+﻿@model MobileRechargeApp.Models.SpecialPlan
+@{
+    ViewData["Title"] = "Add Special Plan";
+    Layout = "_AdminLayout";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="transactions-panel">
+            <div class="panel-header">
+                <h5 class="mb-0">
+                    <i class="las la-plus-circle" style="color: hsl(var(--base));"></i>
+                    Add New Special Plan
+                </h5>
+            </div>
+            <div class="p-4">
+                <form asp-action="AddSpecialPlan" method="post">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-2">Amount (Rs.)</label>
+                        <div class="input-group">
+                            <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
+                                <i class="las la-money-bill"></i>
+                            </span>
+                            <input asp-for="Amount" class="form-control" placeholder="e.g. 149"
+                                   style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
+                        </div>
+                        <span asp-validation-for="Amount" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-2">Description</label>
+                        <input asp-for="Description" class="form-control" placeholder="e.g. 1GB Data + 100 SMS"
+                               style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-2">Validity (Days)</label>
+                        <input asp-for="Validity" class="form-control" placeholder="e.g. 28"
+                               style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
+                        <span asp-validation-for="Validity" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-2">Benefits</label>
+                        <input asp-for="Benefits" class="form-control" placeholder="e.g. Data + SMS Pack"
+                               style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
+                        <span asp-validation-for="Benefits" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-4">
+                        <button type="submit" class="btn-view" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none; padding: 0.75rem 2rem;">
+                            <i class="las la-save"></i>
+                            Save Plan
+                        </button>
+                        <a href="/Admin/SpecialPlans" class="btn-view" style="background: hsl(var(--section-bg)); color: hsl(var(--text-color)); border: 1px solid hsl(var(--border-color));">
+                            <i class="las la-times"></i>
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

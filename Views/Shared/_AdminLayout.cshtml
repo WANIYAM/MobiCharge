@@ -1,0 +1,889 @@
+@{
+    Layout = null;
+    var title = ViewData["Title"] ?? "Admin Panel";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@title - HavioTop Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+    <style>
+        /* =======================================================
+           HAVIOTOP ADMIN DASHBOARD - Complete with Sidebar
+           Using exact template styles and colors
+        ======================================================= */
+
+        :root {
+            --base-h: 180;
+            --base-s: 70%;
+            --base-l: 38%;
+            --base: var(--base-h) var(--base-s) var(--base-l);
+            --base-d-100: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.1);
+            --base-d-200: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.2);
+            --base-d-300: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.3);
+            
+            --base-two-h: 200;
+            --base-two-s: 85%;
+            --base-two-l: 48%;
+            --base-two: var(--base-two-h) var(--base-two-s) var(--base-two-l);
+            
+            --white: 0 0% 100%;
+            --heading-color: 0 0% 16%;
+            --text-color: 0 0% 33%;
+            --black: 0 0% 0%;
+            --border-color: 0 0% 88%;
+            --section-bg: 0 0% 98%;
+            --background-color: var(--white);
+            
+            --box-shadow: 0px 2px 15px hsl(var(--black) / 0.05);
+            --card-shadow: 0 10px 40px hsl(var(--black) / 0.08);
+            --hover-shadow: 0 20px 60px hsl(var(--black) / 0.12);
+            --sidebar-shadow: 10px 0 30px hsl(var(--black) / 0.05);
+        }
+
+        /* Global Styles - Matching template */
+        .admin-body {
+            font-family: "Poppins", sans-serif;
+            background: hsl(var(--section-bg));
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: "ClashDisplay-Variable", sans-serif;
+            color: hsl(var(--heading-color));
+            font-weight: 600;
+        }
+
+        /* ================= LAYOUT Wrapper ================= */
+        .admin-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR - Like template navigation ================= */
+        .admin-sidebar {
+            width: 300px;
+            background: hsl(var(--white));
+            border-right: 1px solid hsl(var(--border-color));
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: var(--sidebar-shadow);
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid hsl(var(--border-color) / 0.5);
+        }
+
+        .sidebar-logo h4 {
+            margin-bottom: 0.25rem;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .sidebar-logo p {
+            font-size: 0.875rem;
+            color: hsl(var(--text-color) / 0.6);
+            margin-bottom: 0;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            color: hsl(var(--text-color));
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.25rem;
+            width: 1.5rem;
+            color: hsl(var(--base));
+            transition: 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background: hsl(var(--base) / 0.05);
+            color: hsl(var(--heading-color));
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu a:hover i {
+            color: hsl(var(--base-two));
+        }
+
+        .sidebar-menu .active a {
+            background: linear-gradient(135deg, hsl(var(--base) / 0.1), hsl(var(--base-two) / 0.1));
+            color: hsl(var(--heading-color));
+            font-weight: 600;
+        }
+
+        .sidebar-menu .active a i {
+            color: hsl(var(--base));
+        }
+
+        .sidebar-menu .active a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            border-radius: 0 4px 4px 0;
+        }
+
+        .sidebar-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid hsl(var(--border-color) / 0.5);
+        }
+
+        .sidebar-footer a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            color: hsl(var(--danger));
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .sidebar-footer a i {
+            font-size: 1.25rem;
+            width: 1.5rem;
+        }
+
+        .sidebar-footer a:hover {
+            background: hsl(var(--danger) / 0.05);
+        }
+
+        /* ✅ Logout button styled like sidebar links */
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            color: #dc3545;
+            font-weight: 500;
+            font-family: inherit;
+            font-size: 1rem;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+        }
+
+        .logout-btn i {
+            font-size: 1.25rem;
+            width: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .logout-btn:hover {
+            background: rgba(220, 53, 69, 0.06);
+        }
+
+        /* ================= MAIN CONTENT AREA ================= */
+        .admin-main {
+            flex: 1;
+            margin-left: 300px;
+            padding: 2rem;
+        }
+
+        /* ================= HEADER - Like template navbar ================= */
+        .admin-header {
+            background: hsl(var(--white));
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid hsl(var(--border-color));
+        }
+
+        .header-title h2 {
+            margin-bottom: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-title h2 i {
+            color: hsl(var(--base));
+        }
+
+        .header-widgets {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .header-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: hsl(var(--section-bg));
+            padding: 0.5rem 1rem;
+            border-radius: 2.5rem;
+            color: hsl(var(--text-color));
+            font-size: 0.875rem;
+        }
+
+        .header-date i {
+            color: hsl(var(--base));
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: hsl(var(--section-bg));
+            padding: 0.5rem 1rem;
+            border-radius: 2.5rem;
+        }
+
+        .user-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: hsl(var(--white));
+            font-size: 1.2rem;
+        }
+
+        .user-info {
+            line-height: 1.3;
+        }
+
+        .user-info strong {
+            display: block;
+            font-size: 0.9375rem;
+            color: hsl(var(--heading-color));
+        }
+
+        .user-info span {
+            font-size: 0.75rem;
+            color: hsl(var(--text-color) / 0.7);
+        }
+
+        /* ================= WELCOME BANNER - Like hero section ================= */
+        .welcome-banner {
+            background: hsl(var(--white));
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid hsl(var(--border-color));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, hsl(var(--base) / 0.02));
+            pointer-events: none;
+        }
+
+        .welcome-content h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .welcome-content h1 span {
+            display: block;
+            font-weight: 300;
+            color: hsl(var(--text-color));
+        }
+
+        .welcome-content p {
+            color: hsl(var(--text-color) / 0.8);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .happy-users-badge {
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            color: hsl(var(--white));
+            padding: 0.75rem 2rem;
+            border-radius: 3.125rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 10px 30px hsl(var(--base) / 0.3);
+        }
+
+        .happy-users-badge i {
+            font-size: 1.5rem;
+        }
+
+        .happy-users-badge div {
+            text-align: center;
+        }
+
+        .happy-users-badge span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .happy-users-badge small {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        /* ================= STATS CARDS ================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: hsl(var(--white));
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid hsl(var(--border-color));
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .stat-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, hsl(var(--base) / 0.1), hsl(var(--base-two) / 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: hsl(var(--base));
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-content p {
+            color: hsl(var(--text-color) / 0.7);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-content h3 {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-link {
+            color: hsl(var(--base));
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-link:hover {
+            gap: 0.5rem;
+            color: hsl(var(--base-d-200));
+        }
+
+        /* ================= QUICK STATS CARDS ================= */
+        .quick-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-stat-card {
+            background: hsl(var(--white));
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--box-shadow);
+            border: 1px solid hsl(var(--border-color));
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: 0.3s;
+        }
+
+        .quick-stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .quick-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, hsl(var(--base) / 0.05), hsl(var(--base-two) / 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: hsl(var(--base));
+        }
+
+        .quick-content h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-content p {
+            font-size: 0.875rem;
+            color: hsl(var(--text-color) / 0.7);
+            margin-bottom: 0.25rem;
+        }
+
+        .quick-content a {
+            color: hsl(var(--base));
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* ================= TRANSACTIONS PANEL ================= */
+        .transactions-panel {
+            background: hsl(var(--white));
+            border-radius: 1.5rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid hsl(var(--border-color));
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid hsl(var(--border-color));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: hsl(var(--section-bg));
+        }
+
+        .panel-header h5 {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .panel-header h5 i {
+            color: hsl(var(--base));
+        }
+
+        .btn-view {
+            background: transparent;
+            border: 1px solid hsl(var(--border-color));
+            padding: 0.5rem 1.25rem;
+            border-radius: 2.5rem;
+            color: hsl(var(--text-color));
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-view:hover {
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            color: hsl(var(--white));
+            border-color: transparent;
+        }
+
+        /* ================= TABLE STYLES ================= */
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: hsl(var(--section-bg));
+            padding: 1rem 1.5rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: hsl(var(--heading-color));
+            border-bottom: 1px solid hsl(var(--border-color));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            vertical-align: middle;
+            font-size: 0.9375rem;
+            color: hsl(var(--text-color));
+            border-bottom: 1px solid hsl(var(--border-color) / 0.5);
+        }
+
+        .table tbody tr:hover {
+            background: hsl(var(--section-bg));
+        }
+
+        .txn-id {
+            font-weight: 600;
+            color: hsl(var(--heading-color));
+        }
+
+        .mobile-number {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mobile-number i {
+            color: hsl(var(--base));
+        }
+
+        /* ================= BADGES ================= */
+        .badge-custom {
+            padding: 0.4rem 1rem;
+            border-radius: 2.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .badge-topup {
+            background: hsl(var(--base) / 0.1);
+            color: hsl(var(--base));
+        }
+
+        .badge-special {
+            background: hsl(var(--base-two) / 0.1);
+            color: hsl(var(--base-two));
+        }
+
+        .badge-postpaid {
+            background: hsl(40 100% 46% / 0.1);
+            color: hsl(40 100% 46%);
+        }
+
+        .badge-success {
+            background: hsl(180 70% 38% / 0.1);
+            color: hsl(180 70% 38%);
+        }
+
+        .amount {
+            font-weight: 600;
+            color: hsl(var(--heading-color));
+        }
+
+        /* ================= EMPTY STATE ================= */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: hsl(var(--text-color) / 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: hsl(var(--text-color) / 0.5);
+            margin-bottom: 0;
+        }
+
+
+        /* View Website Button */
+        .view-site-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+            color: #fff !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 2.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px hsl(var(--base) / 0.3);
+        }
+        .view-site-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px hsl(var(--base) / 0.4);
+        }
+        .view-site-btn i { font-size: 1rem; }
+
+        /* ================= RESPONSIVE ================= */
+        @@media (max-width: 1200px) {
+            .admin-sidebar {
+                width: 280px;
+            }
+            .admin-main {
+                margin-left: 280px;
+            }
+        }
+
+        @@media (max-width: 991px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s;
+                z-index: 1000;
+            }
+            .admin-sidebar.show {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+            }
+            .stats-grid,
+            .quick-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @@media (max-width: 767px) {
+            .admin-main {
+                padding: 1rem;
+            }
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            .header-widgets {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .stats-grid,
+            .quick-stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .table thead {
+                display: none;
+            }
+            .table tbody tr {
+                display: block;
+                padding: 1rem;
+                border-bottom: 1px solid hsl(var(--border-color));
+            }
+            .table tbody td {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border: none;
+            }
+            .table tbody td:before {
+                content: attr(data-label);
+                font-weight: 600;
+                color: hsl(var(--heading-color));
+                margin-right: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="admin-body">
+
+    <div class="admin-wrapper">
+        
+        <!-- ================= SIDEBAR - Like template navigation ================= -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-logo">
+                <h4>⚡ HavioTop</h4>
+                <p>Admin Dashboard</p>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard" ? "active" : "")">
+                    <a href="/Admin/Dashboard">
+                        <i class="las la-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Users" ? "active" : "")">
+                    <a href="/Admin/Users">
+                        <i class="las la-users"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Transactions" ? "active" : "")">
+                    <a href="/Admin/Transactions">
+                        <i class="las la-exchange-alt"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "TopUpPlans" || ViewContext.RouteData.Values["action"]?.ToString()?.StartsWith("AddTopUp") == true || ViewContext.RouteData.Values["action"]?.ToString()?.StartsWith("EditTopUp") == true ? "active" : "")">
+                    <a href="/Admin/TopUpPlans">
+                        <i class="las la-mobile"></i>
+                        <span>TopUp Plans</span>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "SpecialPlans" || ViewContext.RouteData.Values["action"]?.ToString()?.StartsWith("AddSpecial") == true || ViewContext.RouteData.Values["action"]?.ToString()?.StartsWith("EditSpecial") == true ? "active" : "")">
+                    <a href="/Admin/SpecialPlans">
+                        <i class="las la-star"></i>
+                        <span>Special Plans</span>
+                    </a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Feedbacks" ? "active" : "")">
+                    <a href="/Admin/Feedbacks">
+                        <i class="las la-comments"></i>
+                        <span>Feedbacks</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" style="margin:0;">
+                    <button type="submit" class="logout-btn">
+                        <i class="las la-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <div class="admin-main">
+
+            <!-- ================= HEADER ================= -->
+            <header class="admin-header">
+                <div class="header-title">
+                    <h2>
+                        <i class="las la-@(ViewData["Title"]?.ToString().ToLower() == "dashboard" ? "tachometer-alt" : "cog")"></i>
+                        @ViewData["Title"]
+                    </h2>
+                </div>
+
+                <div class="header-widgets">
+                    <a href="/" target="_blank" class="view-site-btn" title="Open website in new tab">
+                        <i class="las la-external-link-alt"></i>
+                        <span>View Website</span>
+                    </a>
+                    <div class="header-date">
+                        <i class="las la-calendar"></i>
+                        <span>@DateTime.Now.ToString("dddd, dd MMM yyyy")</span>
+                    </div>
+                    <div class="header-user">
+                        <div class="user-avatar">
+                            <i class="las la-user-shield"></i>
+                        </div>
+                        <div class="user-info">
+                            <strong>Admin</strong>
+                            <span>Super Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ================= WELCOME BANNER ================= -->
+            <div class="welcome-banner">
+                <div class="welcome-content">
+                    <h1>Online Mobile<br>Recharge & Bill<br><span>Management Dashboard</span></h1>
+                    <p>
+                        <i class="las la-check-circle" style="color: hsl(var(--base));"></i>
+                        Monitor and manage your recharge business
+                    </p>
+                </div>
+                <div class="happy-users-badge">
+                    <i class="las la-users"></i>
+                    <div>
+                        <span>@ViewBag.TotalUsers</span>
+                        <small>Happy Users</small>
+                    </div>
+                </div>
+            </div>
+
+            <main>
+                @RenderBody()
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Mobile sidebar toggle (optional) -->
+    <button class="sidebar-toggle d-lg-none" onclick="toggleSidebar()" style="position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none; box-shadow: var(--card-shadow); z-index: 1001; display: none;">
+        <i class="las la-bars"></i>
+    </button>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.admin-sidebar').classList.toggle('show');
+        }
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+﻿@model IEnumerable<MobileRechargeApp.Models.SpecialPlan>
+@{
+    ViewData["Title"] = "Special Recharge Plans";
+}
+
+<section class="sign__area">
+    <div class="sign__bg">
+        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
+    </div>
+        @* <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+        @* <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+
+        <div class="container">
+            <div class="row g-4 align-items-start">
+
+                <!-- LEFT SIDE -->
+                <div class="col-lg-5">
+                    <div class="sign__left__blk mt-4">
+
+                        <div class="sign__label">
+                            <div class="footer__subs__label">
+                                <div class="footer__subs__shr">
+                                    <img src="~/assets/images/logo/icon-dark.png" alt="img">
+                                        <div class="footer__circle__text">
+                                            <p>Special combo plans with extra benefits.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sign__title">
+                                <span>Exclusive Offers</span>
+                                <h1>Special <span>Plans</span></h1>
+                                <div class="hero__wrap__users" style="margin-top: 20px; justify-content: flex-start;">
+                                    <div class="hero__wrap__users__img">
+                                        <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
+                                        <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
+                                        <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
+                                    </div>
+                                    <div class="hero__wrap__users__title">
+                                        <span>Mobile: <strong>@ViewBag.Mobile</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="back__to__home">
+                                <a asp-controller="Recharge" asp-action="Index">
+                                    <i class="fa-solid fa-arrow-left-long"></i>
+                                    Change Number
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- LEFT SIDE END -->
+                    <!-- RIGHT SIDE CARDS -->
+                   <div class="col-lg-7">
+    <div class="sign__wrap mt-5" style="box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; background: #fff;">
+        <div class="panel-header" style="border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+            <h5 class="mb-0">
+                Special Combo Plans
+            </h5>
+            <span class="badge-custom" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base)); font-weight: 600;">
+                @Model.Count() Plans Available
+            </span>
+        </div>
+
+        <form asp-action="Payment" method="get">
+            <input type="hidden" name="mobile" value="@ViewBag.Mobile" />
+            <input type="hidden" name="planType" value="special" />
+
+            <div style="padding: 25px; max-height: 550px; overflow-y: auto;">
+                <div class="row g-3 justify-content-center">
+                    @foreach (var plan in Model)
+                    {
+                        <div class="col-md-6">
+                            <label class="plan-card">
+                                <input type="radio" name="planId" value="@plan.PlanId" required />
+                                <div class="plan-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="plan-id-tag">#@plan.PlanId</span>
+                                        <span class="plan-amount">Rs. @plan.Amount</span>
+                                    </div>
+
+                                    <h6 class="plan-title">@plan.Description</h6>
+
+                                    <div class="plan-details-grid">
+                                        <div class="detail-box">
+                                            <i class="las la-history"></i>
+                                            <div>
+                                                <small>Validity</small>
+                                                <strong>@plan.Validity Days</strong>
+                                            </div>
+                                        </div>
+                                        <div class="detail-box">
+                                            <i class="las la-bolt"></i>
+                                            <div>
+                                                <small>Benefits</small>
+                                                <strong>@plan.Benefits</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="panel-header" style="border-radius: 0 0 12px 12px;">
+                <div class="d-flex gap-3 w-100">
+                    <button type="submit" class="common__btn w-100" style="flex: 1;">
+                        <span style="width:100%;">Proceed to Payment</span>
+                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+                    <!-- RIGHT SIDE END -->
+
+                </div>
+            </div>
+
+        </section>
+
+       <style>
+    .plan-card {
+        border: 1px solid #edf0f2;
+        border-radius: 16px;
+        padding: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fff;
+        display: block;
+        height: 100%;
+        position: relative;
+    }
+
+    .plan-card input {
+        display: none;
+    }
+
+    /* Subtle hover effect */
+    .plan-card:hover {
+        border-color: hsl(var(--base) / 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    /* Active selection state */
+    .plan-card:has(input:checked) {
+        border: 2px solid hsl(var(--base));
+        background: hsl(var(--base) / 0.02);
+    }
+
+    .plan-id-tag {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #999;
+        text-transform: uppercase;
+    }
+
+    .plan-amount {
+        font-size: 1.4rem;
+        font-weight: 400;
+        /* color: hsl(var(--base)); */
+    }
+
+    .plan-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .plan-details-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 15px;
+        border-top: 1px dashed #eee;
+    }
+
+    .detail-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .detail-box i {
+        font-size: 1.2rem;
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.1);
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .detail-box small {
+        display: block;
+        color: #888;
+        font-size: 0.7rem;
+        line-height: 1;
+    }
+
+    .detail-box strong {
+        font-size: 0.85rem;
+        color: #444;
+    }
+
+    /* Custom Scrollbar for the plans list */
+    div::-webkit-scrollbar {
+        width: 5px;
+    }
+    div::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 10px;
+    }
+</style>
