@@ -52,29 +52,50 @@
 <form asp-action="Index" method="post">
     <div class="row g-0">
 
-        <!-- Mobile Number -->
-        <div class="col-lg-12">
-            <div class="sign__wrap__single">
-                <label asp-for="MobileNumber" class="form-label form--label">
-                     Mobile Number
-                </label>
+       <!-- Mobile Number -->
+<div class="col-lg-12">
+    <div class="sign__wrap__single">
+        <label asp-for="MobileNumber" class="form-label form--label">
+            Mobile Number
+        </label>
 
-                <div class="input--group d-flex align-items-center">
-                    
+        <div class="input--group d-flex align-items-center">
 
-                    <input asp-for="MobileNumber"
-                           class="form-control form--control"
-                           placeholder="Enter 10-digit mobile number"
-                           maxlength="10"
-                           inputmode="numeric"
-                           pattern="[0-9]{10}" />
-                </div>
+            @if (ViewBag.LoggedInMobile != null)
+            {
+                <input asp-for="MobileNumber"
+                       class="form-control form--control"
+                       placeholder="Enter 10-digit mobile number"
+                       maxlength="10"
+                       inputmode="numeric"
+                       pattern="[0-9]{10}"
+                       value="@ViewBag.LoggedInMobile"
+                       readonly="readonly" />
+            }
+            else
+            {
+                <input asp-for="MobileNumber"
+                       class="form-control form--control"
+                       placeholder="Enter 10-digit mobile number"
+                       maxlength="10"
+                       inputmode="numeric"
+                       pattern="[0-9]{10}" />
+            }
 
-                <span asp-validation-for="MobileNumber"
-                      class="text-danger small"></span>
-            </div>
         </div>
 
+        @if (ViewBag.LoggedInMobile != null)
+        {
+            <small class="text-muted mt-1 d-block">
+                <i class="las la-check-circle" style="color:hsl(var(--base));"></i>
+                Logged in as @ViewBag.LoggedInMobile
+            </small>
+        }
+
+        <span asp-validation-for="MobileNumber"
+              class="text-danger small"></span>
+    </div>
+</div>
         <!-- Buttons -->
 <div class="col-lg-12">
     <div class="sign__wrap__single">

@@ -1,221 +1,182 @@
-﻿@model IEnumerable<MobileRechargeApp.Models.SpecialPlan>
+@model IEnumerable<MobileRechargeApp.Models.SpecialPlan>
 @{
-    ViewData["Title"] = "Special Recharge Plans";
+    ViewData["Title"] = "Special Plans";
+    Layout = "_Layout";
 }
 
-<section class="sign__area">
-    <div class="sign__bg">
-        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
-    </div>
-        @* <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
-        @* <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+@section Styles {
+<style>
+    .plans-page {
+        min-height: 100vh;
+        background: #0a0f0f;
+        padding: 100px 0 60px;
+        position: relative;
+        overflow: hidden;
+    }
+    .plans-page::before {
+        content: '';
+        position: absolute;
+        top: -200px; left: -100px;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, hsl(200 85% 48% / 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
 
-        <div class="container">
-            <div class="row g-4 align-items-start">
+    .plans-header { text-align: center; margin-bottom: 40px; }
+    .plans-header h6 {
+        font-size: 11px; font-weight: 800; letter-spacing: 3px;
+        text-transform: uppercase; color: hsl(180 70% 45%); margin-bottom: 10px;
+    }
+    .plans-header h1 {
+        font-size: 36px; font-weight: 800; color: #fff;
+        font-family: 'ClashDisplay-Variable', sans-serif; margin-bottom: 10px;
+    }
+    .plans-header h1 span { color: hsl(200 85% 55%); }
+    .plans-header p { color: #4a7070; font-size: 14px; }
+    .mobile-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: hsl(180 70% 38% / 0.1);
+        border: 1px solid hsl(180 70% 38% / 0.3);
+        border-radius: 30px; padding: 6px 16px;
+        font-size: 13px; color: hsl(180 70% 55%);
+        margin-bottom: 30px; font-family: 'Menlo', monospace;
+    }
 
-                <!-- LEFT SIDE -->
-                <div class="col-lg-5">
-                    <div class="sign__left__blk mt-4">
+    .plans-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 20px; margin-bottom: 30px;
+    }
+    .plan-card {
+        background: #0e1818;
+        border: 1.5px solid #1a2e2e;
+        border-radius: 18px; padding: 24px;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(.4,0,.2,1);
+        position: relative; overflow: hidden;
+    }
+    .plan-card::before {
+        content: ''; position: absolute;
+        top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, hsl(200 85% 48%), hsl(180 70% 38%));
+        opacity: 0; transition: opacity 0.25s;
+    }
+    .plan-card:hover {
+        border-color: hsl(200 85% 48% / 0.5);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px hsl(200 85% 48% / 0.1);
+    }
+    .plan-card:hover::before { opacity: 1; }
 
-                        <div class="sign__label">
-                            <div class="footer__subs__label">
-                                <div class="footer__subs__shr">
-                                    <img src="~/assets/images/logo/icon-dark.png" alt="img">
-                                        <div class="footer__circle__text">
-                                            <p>Special combo plans with extra benefits.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    /* Special badge */
+    .special-badge {
+        position: absolute; top: 14px; right: 14px;
+        background: linear-gradient(135deg, hsl(200 85% 48%), hsl(180 70% 38%));
+        color: #fff; font-size: 9px; font-weight: 800;
+        letter-spacing: 1px; text-transform: uppercase;
+        padding: 3px 10px; border-radius: 20px;
+    }
 
-                            <div class="sign__title">
-                                <span>Exclusive Offers</span>
-                                <h1>Special <span>Plans</span></h1>
-                                <div class="hero__wrap__users" style="margin-top: 20px; justify-content: flex-start;">
-                                    <div class="hero__wrap__users__img">
-                                        <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
-                                        <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
-                                        <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
-                                    </div>
-                                    <div class="hero__wrap__users__title">
-                                        <span>Mobile: <strong>@ViewBag.Mobile</strong></span>
-                                    </div>
-                                </div>
-                            </div>
+    .plan-price { margin-bottom: 16px; }
+    .plan-price .currency { font-size: 14px; color: hsl(200 85% 55%); font-weight: 700; vertical-align: top; line-height: 2; }
+    .plan-price .amount {
+        font-size: 42px; font-weight: 900; color: #fff;
+        font-family: 'ClashDisplay-Variable', sans-serif; line-height: 1;
+    }
+    .plan-name {
+        font-size: 15px; font-weight: 800; color: #c0d8d8;
+        margin-bottom: 14px; padding-bottom: 14px;
+        border-bottom: 1px solid #1a2e2e;
+    }
+    .plan-features { list-style: none; padding: 0; margin: 0 0 20px; }
+    .plan-features li {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; color: #5a8080; padding: 5px 0;
+    }
+    .plan-features li i { color: hsl(200 85% 55%); font-size: 15px; flex-shrink: 0; }
+    .plan-features li span { color: #a0c0c0; }
 
-                            <div class="back__to__home">
-                                <a asp-controller="Recharge" asp-action="Index">
-                                    <i class="fa-solid fa-arrow-left-long"></i>
-                                    Change Number
-                                </a>
-                            </div>
+    .plan-validity {
+        display: inline-flex; align-items: center; gap: 6px;
+        background: hsl(200 85% 48% / 0.1);
+        border: 1px solid hsl(200 85% 48% / 0.2);
+        border-radius: 20px; padding: 4px 12px;
+        font-size: 11px; font-weight: 700;
+        color: hsl(200 85% 60%); margin-bottom: 18px;
+    }
 
-                        </div>
-                    </div>
-                    <!-- LEFT SIDE END -->
-                    <!-- RIGHT SIDE CARDS -->
-                   <div class="col-lg-7">
-    <div class="sign__wrap mt-5" style="box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; background: #fff;">
-        <div class="panel-header" style="border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; padding: 20px;">
-            <h5 class="mb-0">
-                Special Combo Plans
-            </h5>
-            <span class="badge-custom" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base)); font-weight: 600;">
-                @Model.Count() Plans Available
-            </span>
+    .btn-select-plan {
+        width: 100%; padding: 12px;
+        background: linear-gradient(135deg, hsl(200 85% 48%), hsl(180 70% 38%));
+        border: none; border-radius: 10px; color: #fff;
+        font-size: 13px; font-weight: 800; letter-spacing: 0.5px;
+        cursor: pointer; transition: all 0.2s;
+        display: flex; align-items: center;
+        justify-content: center; gap: 8px; text-decoration: none;
+    }
+    .btn-select-plan:hover {
+        box-shadow: 0 8px 25px hsl(200 85% 48% / 0.4);
+        transform: translateY(-1px); color: #fff;
+    }
+
+    .back-link {
+        display: inline-flex; align-items: center; gap: 8px;
+        color: #4a7070; font-size: 13px; text-decoration: none;
+        transition: color 0.2s; margin-bottom: 30px;
+    }
+    .back-link:hover { color: hsl(180 70% 55%); }
+</style>
+}
+
+<div class="plans-page">
+    <div class="container">
+
+        @await Html.PartialAsync("_PaymentStepper", "plan")
+
+        <div class="plans-header">
+            <h6>Step 1 of 3</h6>
+            <h1>Choose a <span>Special Plan</span></h1>
+            <p>Exclusive bundles for maximum value</p>
+            <div class="mobile-badge">
+                <i class="las la-mobile-alt"></i>
+                @ViewBag.Mobile
+            </div>
         </div>
 
-        <form asp-action="Payment" method="get">
-            <input type="hidden" name="mobile" value="@ViewBag.Mobile" />
-            <input type="hidden" name="planType" value="special" />
+        <a href="/Recharge" class="back-link">
+            <i class="las la-arrow-left"></i> Change Number
+        </a>
 
-            <div style="padding: 25px; max-height: 550px; overflow-y: auto;">
-                <div class="row g-3 justify-content-center">
-                    @foreach (var plan in Model)
-                    {
-                        <div class="col-md-6">
-                            <label class="plan-card">
-                                <input type="radio" name="planId" value="@plan.PlanId" required />
-                                <div class="plan-content">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="plan-id-tag">#@plan.PlanId</span>
-                                        <span class="plan-amount">Rs. @plan.Amount</span>
-                                    </div>
-
-                                    <h6 class="plan-title">@plan.Description</h6>
-
-                                    <div class="plan-details-grid">
-                                        <div class="detail-box">
-                                            <i class="las la-history"></i>
-                                            <div>
-                                                <small>Validity</small>
-                                                <strong>@plan.Validity Days</strong>
-                                            </div>
-                                        </div>
-                                        <div class="detail-box">
-                                            <i class="las la-bolt"></i>
-                                            <div>
-                                                <small>Benefits</small>
-                                                <strong>@plan.Benefits</strong>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    }
+        <div class="plans-grid">
+            @foreach (var plan in Model)
+            {
+                <div class="plan-card">
+                    <span class="special-badge">⭐ Special</span>
+                    <div class="plan-price">
+                        <span class="currency">Rs.</span>
+                        <span class="amount">@plan.Amount</span>
+                    </div>
+                    <div class="plan-validity">
+                        <i class="las la-calendar-alt"></i> @plan.Validity Days
+                    </div>
+                    <ul class="plan-features">
+                        @if (!string.IsNullOrEmpty(plan.Benefits))
+                        {
+                            <li><i class="las la-star"></i> @plan.Benefits</li>
+                        }
+                        @if (!string.IsNullOrEmpty(plan.Description))
+                        {
+                            <li><i class="las la-info-circle"></i> @plan.Description</li>
+                        }
+                    </ul>
+                    <a href="/Recharge/Payment?mobile=@ViewBag.Mobile&planId=@plan.PlanId&planType=special"
+                       class="btn-select-plan">
+                        <i class="las la-bolt"></i>
+                        Select Plan
+                    </a>
                 </div>
-            </div>
+            }
+        </div>
 
-            <div class="panel-header" style="border-radius: 0 0 12px 12px;">
-                <div class="d-flex gap-3 w-100">
-                    <button type="submit" class="common__btn w-100" style="flex: 1;">
-                        <span style="width:100%;">Proceed to Payment</span>
-                        <span><i class="fa-solid fa-arrow-right"></i></span>
-                    </button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
-                    <!-- RIGHT SIDE END -->
-
-                </div>
-            </div>
-
-        </section>
-
-       <style>
-    .plan-card {
-        border: 1px solid #edf0f2;
-        border-radius: 16px;
-        padding: 18px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background: #fff;
-        display: block;
-        height: 100%;
-        position: relative;
-    }
-
-    .plan-card input {
-        display: none;
-    }
-
-    /* Subtle hover effect */
-    .plan-card:hover {
-        border-color: hsl(var(--base) / 0.4);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    }
-
-    /* Active selection state */
-    .plan-card:has(input:checked) {
-        border: 2px solid hsl(var(--base));
-        background: hsl(var(--base) / 0.02);
-    }
-
-    .plan-id-tag {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #999;
-        text-transform: uppercase;
-    }
-
-    .plan-amount {
-        font-size: 1.4rem;
-        font-weight: 400;
-        /* color: hsl(var(--base)); */
-    }
-
-    .plan-title {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 15px;
-        line-height: 1.4;
-    }
-
-    .plan-details-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding-top: 15px;
-        border-top: 1px dashed #eee;
-    }
-
-    .detail-box {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .detail-box i {
-        font-size: 1.2rem;
-        color: hsl(var(--base));
-        background: hsl(var(--base) / 0.1);
-        padding: 6px;
-        border-radius: 8px;
-    }
-
-    .detail-box small {
-        display: block;
-        color: #888;
-        font-size: 0.7rem;
-        line-height: 1;
-    }
-
-    .detail-box strong {
-        font-size: 0.85rem;
-        color: #444;
-    }
-
-    /* Custom Scrollbar for the plans list */
-    div::-webkit-scrollbar {
-        width: 5px;
-    }
-    div::-webkit-scrollbar-thumb {
-        background: #e0e0e0;
-        border-radius: 10px;
-    }
-</style>

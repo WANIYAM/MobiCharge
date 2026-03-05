@@ -1,388 +1,856 @@
-﻿@model MobileRechargeApp.Models.PaymentViewModel
+@model MobileRechargeApp.Models.PaymentViewModel
 @{
     ViewData["Title"] = "Payment";
+    Layout = "_Layout";
 }
 
-<section class="sign__area">
-    <div class="sign__bg">
-        @* <img src="~/assets/images/banner-bg.png" alt="img"> *@
-    </div>
-    @* <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
-    @* <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div> *@
+@section Styles {
+<style>
+    /* ── Page base ── */
+    .payment-page {
+        min-height: 100vh;
+        background: #0a0f0f;
+        padding: 100px 0 60px;
+        position: relative;
+        overflow: hidden;
+    }
+    .payment-page::before {
+        content: '';
+        position: absolute;
+        top: -200px; left: -200px;
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, hsl(180 70% 38% / 0.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .payment-page::after {
+        content: '';
+        position: absolute;
+        bottom: -150px; right: -150px;
+        width: 500px; height: 500px;
+        background: radial-gradient(circle, hsl(200 85% 48% / 0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
 
+    /* ── Card shell ── */
+    .pay-card {
+        background: #0e1818;
+        border: 1px solid #1a2e2e;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px hsl(180 70% 38% / 0.08);
+        max-width: 560px;
+        margin: 0 auto;
+    }
+
+    /* ── Bill summary header ── */
+    .bill-header {
+        background: linear-gradient(135deg, hsl(180 70% 12%) 0%, hsl(200 85% 10%) 100%);
+        border-bottom: 1px solid #1a3030;
+        padding: 28px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+    .bill-header-left h6 {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: hsl(180 70% 45%);
+        margin: 0 0 6px;
+    }
+    .bill-header-left h2 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+        margin: 0;
+        font-family: 'ClashDisplay-Variable', sans-serif;
+    }
+    .bill-header-left h2 span {
+        font-size: 18px;
+        color: hsl(180 70% 55%);
+        font-weight: 600;
+    }
+    .bill-meta { display: flex; flex-direction: column; gap: 4px; text-align: right; }
+    .bill-meta-item { font-size: 12px; color: #5a8080; }
+    .bill-meta-item strong { color: #c0d8d8; display: block; font-size: 13px; }
+
+    /* ── Step panels ── */
+    .step-panel { display: none; padding: 28px 32px 32px; }
+    .step-panel.active { display: block; }
+
+    .panel-title {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #5a8080;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .panel-title::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #1a2e2e;
+    }
+
+    /* ── Payment method grid ── */
+    .method-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    .method-card {
+        border: 2px solid #1a2e2e;
+        border-radius: 14px;
+        padding: 18px 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: #0a1414;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .method-card:hover {
+        border-color: hsl(180 70% 38% / 0.5);
+        background: hsl(180 70% 38% / 0.05);
+        transform: translateY(-2px);
+    }
+    .method-card.selected {
+        border-color: hsl(180 70% 38%);
+        background: hsl(180 70% 38% / 0.1);
+        box-shadow: 0 0 20px hsl(180 70% 38% / 0.15);
+    }
+    .method-card.selected::after {
+        content: '✓';
+        position: absolute;
+        top: 8px; right: 10px;
+        font-size: 11px;
+        font-weight: 800;
+        color: hsl(180 70% 55%);
+        background: hsl(180 70% 38% / 0.2);
+        width: 18px; height: 18px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        line-height: 18px;
+    }
+    .method-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+        display: block;
+    }
+    .method-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: #c0d8d8;
+        display: block;
+    }
+    .method-tag {
+        font-size: 10px;
+        color: #4a7070;
+        margin-top: 3px;
+        display: block;
+    }
+
+    /* ── Detail panels ── */
+    .detail-panel { display: none; }
+    .detail-panel.visible { display: block; }
+
+    /* EasyPaisa / JazzCash styled panels */
+    .wallet-panel {
+        border-radius: 14px;
+        padding: 22px;
+        margin-bottom: 20px;
+    }
+    .wallet-panel.easypaisa {
+        background: linear-gradient(135deg, #0a2010 0%, #0f2a15 100%);
+        border: 1px solid #1a5a2a;
+    }
+    .wallet-panel.jazzcash {
+        background: linear-gradient(135deg, #1a0800 0%, #2a0f00 100%);
+        border: 1px solid #5a2a00;
+    }
+    .wallet-panel.card-panel {
+        background: linear-gradient(135deg, #0a101a 0%, #0f1525 100%);
+        border: 1px solid #1a2a4a;
+    }
+    .wallet-panel.bank-panel {
+        background: linear-gradient(135deg, #0a0a1a 0%, #0f0f25 100%);
+        border: 1px solid #1a1a4a;
+    }
+
+    .wallet-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+    .wallet-brand-icon {
+        width: 40px; height: 40px;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px;
+    }
+    .easypaisa .wallet-brand-icon { background: #00a651; }
+    .jazzcash  .wallet-brand-icon { background: #e85e00; }
+    .card-panel .wallet-brand-icon { background: #1a3a6a; }
+    .bank-panel .wallet-brand-icon { background: #2a2a6a; }
+
+    .wallet-brand-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+    }
+    .wallet-brand-sub {
+        font-size: 11px;
+        color: #7a9a8a;
+        margin-top: 1px;
+    }
+    .jazzcash  .wallet-brand-sub { color: #9a7a5a; }
+    .card-panel .wallet-brand-sub { color: #6a8aaa; }
+    .bank-panel .wallet-brand-sub { color: #7a7aaa; }
+
+    /* QR code mock */
+    .qr-wrap {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+    .qr-mock {
+        width: 90px; height: 90px;
+        border-radius: 10px;
+        background: #fff;
+        padding: 6px;
+        flex-shrink: 0;
+        display: grid;
+        grid-template-columns: repeat(7,1fr);
+        gap: 1.5px;
+    }
+    .qr-mock .qp { border-radius: 1px; }
+    .qr-steps { flex: 1; }
+    .qr-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .qr-step-num {
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        background: hsl(180 70% 38% / 0.2);
+        border: 1px solid hsl(180 70% 38% / 0.4);
+        color: hsl(180 70% 55%);
+        font-size: 10px;
+        font-weight: 800;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+    .easypaisa .qr-step-num { background: #00a651/0.2; border-color: #00a651; color: #00c961; }
+    .jazzcash  .qr-step-num { background: rgba(232,94,0,0.15); border-color: #e85e00; color: #ff8040; }
+    .qr-step p {
+        font-size: 12px;
+        color: #8aacac;
+        margin: 0;
+        line-height: 1.5;
+    }
+    .qr-step p strong { color: #c0d8d8; }
+
+    .amount-to-pay {
+        margin-top: 14px;
+        padding: 12px 16px;
+        border-radius: 10px;
+        background: rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .amount-to-pay span { font-size: 12px; color: #6a9090; }
+    .amount-to-pay strong { font-size: 16px; font-weight: 800; color: #fff; }
+
+    /* Card form inputs */
+    .form--field {
+        margin-bottom: 16px;
+    }
+    .form--field label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #5a8080;
+        margin-bottom: 8px;
+        display: block;
+    }
+    .form--field input, .form--field select {
+        width: 100%;
+        background: #060e0e;
+        border: 1.5px solid #1a2e2e;
+        border-radius: 10px;
+        padding: 12px 16px;
+        color: #d0e8e8;
+        font-size: 14px;
+        font-family: 'Menlo', 'Consolas', monospace;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        -webkit-appearance: none;
+    }
+    .form--field input:focus, .form--field select:focus {
+        border-color: hsl(180 70% 38%);
+        box-shadow: 0 0 0 3px hsl(180 70% 38% / 0.12);
+    }
+    .form--field input::placeholder { color: #2a4040; }
+    .card-number-wrap { position: relative; }
+    .card-number-wrap input { letter-spacing: 2px; }
+    .card-type-badge {
+        position: absolute;
+        right: 14px; top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        opacity: 0.5;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Virtual card display */
+    .virtual-card {
+        background: linear-gradient(135deg, #0d2535 0%, #0a1a28 50%, #0d2535 100%);
+        border-radius: 16px;
+        padding: 22px;
+        margin-bottom: 18px;
+        border: 1px solid #1a3a5a;
+        position: relative;
+        overflow: hidden;
+    }
+    .virtual-card::before {
+        content: '';
+        position: absolute;
+        top: -30px; right: -30px;
+        width: 140px; height: 140px;
+        border-radius: 50%;
+        background: hsl(200 85% 48% / 0.08);
+    }
+    .virtual-card::after {
+        content: '';
+        position: absolute;
+        bottom: -50px; left: 20px;
+        width: 160px; height: 160px;
+        border-radius: 50%;
+        background: hsl(180 70% 38% / 0.06);
+    }
+    .vc-chip {
+        width: 32px; height: 24px;
+        background: linear-gradient(135deg, #c8a84b, #f0d060);
+        border-radius: 5px;
+        margin-bottom: 18px;
+        position: relative; z-index: 1;
+    }
+    .vc-number {
+        font-family: 'Menlo', monospace;
+        font-size: 16px;
+        letter-spacing: 3px;
+        color: #d0e8f8;
+        margin-bottom: 16px;
+        position: relative; z-index: 1;
+    }
+    .vc-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        position: relative; z-index: 1;
+    }
+    .vc-label { font-size: 9px; color: #4a7090; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 2px; }
+    .vc-value { font-size: 13px; color: #c0d8f0; font-weight: 600; font-family: 'Menlo', monospace; }
+    .vc-logo { font-size: 11px; font-weight: 800; color: #7090b0; letter-spacing: 2px; }
+
+    /* Bank transfer */
+    .bank-detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #1a1a3a;
+    }
+    .bank-detail-row:last-child { border-bottom: none; }
+    .bank-detail-row span:first-child { font-size: 12px; color: #5a5a9a; }
+    .bank-detail-row span:last-child {
+        font-size: 13px;
+        font-weight: 700;
+        color: #c0c0e8;
+        font-family: 'Menlo', monospace;
+    }
+    .copy-btn {
+        background: transparent;
+        border: 1px solid #2a2a5a;
+        color: #6a6aaa;
+        border-radius: 6px;
+        padding: 3px 8px;
+        font-size: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-left: 8px;
+    }
+    .copy-btn:hover { border-color: hsl(180 70% 38%); color: hsl(180 70% 55%); }
+
+    /* Confirm button */
+    .btn-pay-now {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, hsl(180 70% 38%), hsl(200 85% 48%));
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.25s;
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+    .btn-pay-now:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px hsl(180 70% 38% / 0.4);
+    }
+    .btn-pay-now:active { transform: translateY(0); }
+
+    .btn-back-method {
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        border: 1px solid #1a2e2e;
+        border-radius: 12px;
+        color: #4a7070;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+    }
+    .btn-back-method:hover { border-color: #2a4040; color: #6a9090; }
+
+    /* Processing overlay */
+    .processing-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+    }
+    .processing-overlay.show { display: flex; }
+    .proc-spinner {
+        width: 64px; height: 64px;
+        border: 3px solid #1a3a3a;
+        border-top-color: hsl(180 70% 48%);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+    @@keyframes spin { to { transform: rotate(360deg); } }
+    .proc-text {
+        font-size: 16px;
+        font-weight: 700;
+        color: #c0e0e0;
+        font-family: 'ClashDisplay-Variable', sans-serif;
+    }
+    .proc-sub { font-size: 12px; color: #4a7070; margin-top: -18px; }
+
+    /* Security badge */
+    .security-note {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 11px;
+        color: #2a4040;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+    .security-note i { color: hsl(180 70% 38%); }
+</style>
+}
+
+<!-- Processing Overlay -->
+<div class="processing-overlay" id="processingOverlay">
+    <div class="proc-spinner"></div>
+    <div class="proc-text">Processing Payment...</div>
+    <div class="proc-sub">Please do not close this window</div>
+</div>
+
+<div class="payment-page">
     <div class="container">
-        <div class="sign__wrap">
+        <div style="max-width:560px; margin:0 auto;">
 
-            <!-- Header -->
-            <div class="text-center mb-5">
-                
-                <h3 class="mt-3">Secure Payment</h3>
-                <p class="text-dark">Review your recharge details below</p>
-            </div>
+            @await Html.PartialAsync("_PaymentStepper", "payment")
 
-            <div class="row g-4 align-items-stretch">
+            <!-- Main Card -->
+            <div class="pay-card">
 
-                <!-- LEFT SIDE -->
-                <div class="col-lg-5">
-                    <div class="payment-summary">
-
-                        <div class="mobile-summary-header d-flex align-items-center gap-3 mb-4">
-                            <div class="mobile-icon">
-                                <i class="las la-mobile"></i>
-                            </div>
-                            <div>
-                                <small>Mobile Number</small>
-                                <h5>@Model.MobileNumber</h5>
-                            </div>
+                <!-- Bill Header -->
+                <div class="bill-header">
+                    <div class="bill-header-left">
+                        <h6>Amount Due</h6>
+                        <h2><span>Rs.</span> @Model.Amount</h2>
+                    </div>
+                    <div class="bill-meta">
+                        <div class="bill-meta-item">
+                            <strong>@Model.MobileNumber</strong>
+                            Mobile Number
                         </div>
-
-                        <div class="summary-divider"></div>
-
-                        <div class="summary-row">
-                            <span>Plan Details</span>
-                            <strong>@Model.Description</strong>
+                        <div class="bill-meta-item">
+                            <strong>@(Model.PlanType == "topup" ? "Top-Up Plan" : Model.PlanType == "special" ? "Special Plan" : "Postpaid Bill")</strong>
+                            Plan Type
                         </div>
-
-                        <div class="summary-row">
-                            <span>Plan Type</span>
-                            <span class="badge-custom">
-                                @(Model.PlanType == "topup" ? "Top Up" : "Special Plan")
-                            </span>
-                        </div>
-
-                        <div class="summary-total">
-                            Total Amount:
-                            <strong>Rs. @Model.Amount</strong>
-                        </div>
-
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE -->
-                <div class="col-lg-7">
+                <!-- STEP A: Choose Method -->
+                <div class="step-panel active" id="panelMethod">
+                    <div class="panel-title">Select Payment Method</div>
 
-                    <!-- FORM -->
-                    <form asp-action="Payment"
-                          method="post"
-                          class="payment-form"
-                          id="paymentForm">
+                    <div class="method-grid">
+                        <div class="method-card" onclick="selectMethod('easypaisa', this)">
+                            <span class="method-icon">🟢</span>
+                            <span class="method-name">EasyPaisa</span>
+                            <span class="method-tag">Mobile Wallet</span>
+                        </div>
+                        <div class="method-card" onclick="selectMethod('jazzcash', this)">
+                            <span class="method-icon">🟠</span>
+                            <span class="method-name">JazzCash</span>
+                            <span class="method-tag">Mobile Wallet</span>
+                        </div>
+                        <div class="method-card" onclick="selectMethod('card', this)">
+                            <span class="method-icon">💳</span>
+                            <span class="method-name">Credit / Debit Card</span>
+                            <span class="method-tag">Visa • Mastercard</span>
+                        </div>
+                        <div class="method-card" onclick="selectMethod('bank', this)">
+                            <span class="method-icon">🏦</span>
+                            <span class="method-name">Bank Transfer</span>
+                            <span class="method-tag">IBFT / Online</span>
+                        </div>
+                    </div>
 
-                        <input type="hidden" asp-for="MobileNumber" />
-                        <input type="hidden" asp-for="PlanId" />
-                        <input type="hidden" asp-for="PlanType" />
-                        <input type="hidden" asp-for="Amount" />
-                        <input type="hidden" asp-for="Description" />
+                    <button class="btn-pay-now" onclick="proceedToDetails()" id="btnProceed" disabled
+                            style="opacity:0.4; cursor:not-allowed;">
+                        <i class="las la-arrow-right"></i>
+                        Continue to Payment
+                    </button>
+                </div>
 
-                        <label class="form-label fw-bold mb-4">
-                            <i class="las la-credit-card me-2"></i>
-                            Select Payment Method
-                        </label>
+                <!-- STEP B: Payment Details -->
+                <div class="step-panel" id="panelDetails">
 
-                        <div class="row g-4">
-
-                            <div class="col-md-6">
-                                <label class="payment-option">
-                                    <input type="radio" asp-for="PaymentMethod" value="Credit Card" />
-                                    <div class="payment-option-content">
-                                        <i class="las la-credit-card text-dark"></i>
-                                        <span>Credit Card</span>
-                                    </div>
-                                </label>
+                    <!-- EasyPaisa -->
+                    <div class="detail-panel" id="detail-easypaisa">
+                        <div class="panel-title">EasyPaisa</div>
+                        <div class="wallet-panel easypaisa">
+                            <div class="wallet-brand">
+                                <div class="wallet-brand-icon">🟢</div>
+                                <div>
+                                    <div class="wallet-brand-name">EasyPaisa</div>
+                                    <div class="wallet-brand-sub">Scan QR or follow steps below</div>
+                                </div>
                             </div>
-
-                            <div class="col-md-6">
-                                <label class="payment-option">
-                                    <input type="radio" asp-for="PaymentMethod" value="Debit Card" />
-                                    <div class="payment-option-content">
-                                        <i class="las la-credit-card text-dark"></i>
-                                        <span>Debit Card</span>
+                            <div class="qr-wrap">
+                                <div class="qr-mock" id="qrEasypaisa"></div>
+                                <div class="qr-steps">
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border-color:#00a651;color:#00c961;">1</div>
+                                        <p>Open <strong>EasyPaisa App</strong> and tap <strong>Send Money</strong></p>
                                     </div>
-                                </label>
-                            </div>
-
-                            
-
-                            <div class="col-md-6">
-                                <label class="payment-option">
-                                    <input type="radio" asp-for="PaymentMethod" value="Easypaisa" />
-                                    <div class="payment-option-content">
-                                        <i class="las la-mobile text-dark"></i>
-                                        <span>Easypaisa</span>
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border-color:#00a651;color:#00c961;">2</div>
+                                        <p>Scan the QR code or enter account <strong>0300-1234567</strong></p>
                                     </div>
-                                </label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="payment-option">
-                                    <input type="radio" asp-for="PaymentMethod" value="JazzCash" />
-                                    <div class="payment-option-content">
-                                        <i class="las la-mobile text-dark"></i>
-                                        <span>JazzCash</span>
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border-color:#00a651;color:#00c961;">3</div>
+                                        <p>Enter amount <strong>Rs. @Model.Amount</strong> and confirm with PIN</p>
                                     </div>
-                                </label>
+                                </div>
                             </div>
+                            <div class="amount-to-pay">
+                                <span>Total to pay</span>
+                                <strong>Rs. @Model.Amount</strong>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- JazzCash -->
+                    <div class="detail-panel" id="detail-jazzcash">
+                        <div class="panel-title">JazzCash</div>
+                        <div class="wallet-panel jazzcash">
+                            <div class="wallet-brand">
+                                <div class="wallet-brand-icon">🟠</div>
+                                <div>
+                                    <div class="wallet-brand-name">JazzCash</div>
+                                    <div class="wallet-brand-sub">Scan QR or follow steps below</div>
+                                </div>
+                            </div>
+                            <div class="qr-wrap">
+                                <div class="qr-mock" id="qrJazzcash"></div>
+                                <div class="qr-steps">
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border-color:#e85e00;color:#ff8040;">1</div>
+                                        <p>Open <strong>JazzCash App</strong> and tap <strong>Mobile Account</strong></p>
+                                    </div>
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border-color:#e85e00;color:#ff8040;">2</div>
+                                        <p>Scan the QR code or enter account <strong>0311-9876543</strong></p>
+                                    </div>
+                                    <div class="qr-step">
+                                        <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border-color:#e85e00;color:#ff8040;">3</div>
+                                        <p>Enter amount <strong>Rs. @Model.Amount</strong> and confirm with MPIN</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="amount-to-pay">
+                                <span>Total to pay</span>
+                                <strong>Rs. @Model.Amount</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card -->
+                    <div class="detail-panel" id="detail-card">
+                        <div class="panel-title">Card Details</div>
+
+                        <!-- Virtual card preview -->
+                        <div class="virtual-card" id="virtualCard">
+                            <div class="vc-chip"></div>
+                            <div class="vc-number" id="vcNumber">•••• •••• •••• ••••</div>
+                            <div class="vc-bottom">
+                                <div>
+                                    <div class="vc-label">Card Holder</div>
+                                    <div class="vc-value" id="vcName">YOUR NAME</div>
+                                </div>
+                                <div>
+                                    <div class="vc-label">Expires</div>
+                                    <div class="vc-value" id="vcExpiry">MM / YY</div>
+                                </div>
+                                <div class="vc-logo" id="vcLogo">VISA</div>
+                            </div>
                         </div>
 
-                        <span asp-validation-for="PaymentMethod" class="text-danger small"></span>
+                        <div class="wallet-panel card-panel">
+                            <div class="form--field">
+                                <label>Card Number</label>
+                                <div class="card-number-wrap">
+                                    <input type="text" id="cardNumber" placeholder="0000  0000  0000  0000"
+                                           maxlength="19" oninput="formatCard(this)" autocomplete="cc-number"/>
+                                    <span class="card-type-badge" id="cardTypeBadge">💳</span>
+                                </div>
+                            </div>
+                            <div class="form--field">
+                                <label>Cardholder Name</label>
+                                <input type="text" id="cardName" placeholder="Name as on card"
+                                       oninput="document.getElementById('vcName').textContent = this.value.toUpperCase() || 'YOUR NAME'" autocomplete="cc-name"/>
+                            </div>
+                            <div class="form-row">
+                                <div class="form--field">
+                                    <label>Expiry Date</label>
+                                    <input type="text" id="cardExpiry" placeholder="MM / YY"
+                                           maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp"/>
+                                </div>
+                                <div class="form--field">
+                                    <label>CVV</label>
+                                    <input type="password" id="cardCvv" placeholder="•••" maxlength="3" autocomplete="cc-csc"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    </form>
+                    <!-- Bank Transfer -->
+                    <div class="detail-panel" id="detail-bank">
+                        <div class="panel-title">Bank Transfer</div>
+                        <div class="wallet-panel bank-panel">
+                            <div class="wallet-brand">
+                                <div class="wallet-brand-icon">🏦</div>
+                                <div>
+                                    <div class="wallet-brand-name">IBFT / Online Transfer</div>
+                                    <div class="wallet-brand-sub" style="color:#7a7aaa;">Transfer to the account below</div>
+                                </div>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span>Bank Name</span>
+                                <span>HBL — Habib Bank Ltd</span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span>Account Title</span>
+                                <span>MobileRecharge Pvt Ltd</span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span>Account Number</span>
+                                <span>0123-4567890-001
+                                    <button class="copy-btn" onclick="copyText('0123-4567890-001', this)">Copy</button>
+                                </span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span>IBAN</span>
+                                <span style="font-size:11px;">PK36HABB0123456789000
+                                    <button class="copy-btn" onclick="copyText('PK36HABB0123456789000', this)">Copy</button>
+                                </span>
+                            </div>
+                            <div class="bank-detail-row">
+                                <span>Reference / Remarks</span>
+                                <span style="color:hsl(180 70% 55%);">@Model.MobileNumber</span>
+                            </div>
+                            <div class="amount-to-pay" style="margin-top:12px;">
+                                <span>Exact amount to transfer</span>
+                                <strong>Rs. @Model.Amount</strong>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Confirm Pay button — submits the hidden form -->
+                    <button class="btn-pay-now" onclick="submitPayment()">
+                        <i class="las la-lock"></i>
+                        Confirm & Pay Rs. @Model.Amount
+                    </button>
+                    <button class="btn-back-method" onclick="goBackToMethod()">
+                        ← Change Payment Method
+                    </button>
                 </div>
-            </div>
 
-            <!-- ✅ PAY BUTTON (FORM KE BAHAR) -->
-            <div class="d-grid mt-5">
-                <button type="submit"
-                        form="paymentForm"
-                        class="common__btn pay-btn w-100">
-                    <span style="width:100%;">Pay Rs. @Model.Amount</span>
-                    <span><i class="fa-solid fa-lock"></i></span>
-                </button>
-            </div>
+            </div><!-- /.pay-card -->
 
-            <!-- Security Note -->
-            <div class="alert secure-note mt-4 mb-0">
-                <small>
-                    <i class="las la-shield-alt"></i>
-                    Your payment is secure and encrypted. We never store your payment details.
-                </small>
+            <div class="security-note">
+                <i class="las la-shield-alt"></i>
+                256-bit SSL encrypted · Demo payment flow · No real transaction processed
             </div>
 
         </div>
     </div>
-</section>
+</div>
 
-<style>
-    /* Page Feel Upgrade */
-    body {
-        background: linear-gradient(135deg, #f6f9ff, #f1f5ff);
-    }
+<!-- Hidden real form that actually submits to controller -->
+<form id="realPayForm" asp-action="Payment" method="post" style="display:none;">
+    <input type="hidden" asp-for="MobileNumber" />
+    <input type="hidden" asp-for="PlanId" />
+    <input type="hidden" asp-for="Amount" />
+    <input type="hidden" asp-for="Description" />
+    <input type="hidden" asp-for="PlanType" />
+    <input type="hidden" name="PaymentMethod" id="hiddenPaymentMethod" />
+</form>
 
-    /* Main Wrapper */
-    .sign__wrap {
-        max-width: 1000px;
-        margin: 80px auto;
-        padding: 60px;
-        border-radius: 35px;
-        background: rgba(255,255,255,0.75);
-        backdrop-filter: blur(12px);
-        box-shadow: 0 30px 70px rgba(0,0,0,0.08);
-        border: 1px solid rgba(255,255,255,0.6);
-    }
-
-        /* Header */
-        .sign__wrap h3 {
-            font-weight: 700;
-            font-size: 1.8rem;
-        }
-
-        .sign__wrap p {
-            font-size: 0.95rem;
-            opacity: 0.8;
-        }
-
-
-    /* Card Base */
-    .payment-summary,
-    .payment-form {
-        background: white;
-        border-radius: 28px;
-        padding: 40px;
-        border: 1px solid #f0f0f0;
-        height: 100%;
-        transition: all 0.35s ease;
-    }
-
-        /* .payment-summary:hover,
-        .payment-form:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.08);
-        } */
-
-    /* Mobile Header */
-    .mobile-summary-header {
-        padding: 20px;
-        background: #f9fbff;
-        border-radius: 18px;
-    }
-
-    .mobile-icon {
-        width: 65px;
-        height: 65px;
-        border-radius: 18px;
-        background: hsl(var(--base) / 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: hsl(var(--base));
-        font-size: 1.8rem;
-    }
-
-    /* Divider */
-    .summary-divider {
-        height: 1px;
-        background: #eee;
-        margin: 30px 0;
-    }
-
-    /* Summary Rows */
-    .summary-row {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 18px;
-        font-size: 0.95rem;
-        color: #666;
-    }
-
-        .summary-row strong {
-            color: #222;
-        }
-
-    /* Total Highlight */
-    .summary-total {
-        margin-top: 20px;
-        padding: 25px;
-        border-radius: 18px;
-        background: linear-gradient(135deg, hsl(var(--base) / 0.08), transparent);
-        text-align: right;
-        font-size: 1.2rem;
-    }
-
-        .summary-total strong {
-            font-size: 1.8rem;
-            /* color: black; */
-            color: hsl(var(--base));
-        }
-
-    /* Payment Options */
-    .payment-option {
-        display: block;
-        cursor: pointer;
-    }
-
-        .payment-option input {
-            display: none;
-        }
-
-    .payment-option-content {
-        border: 1px solid #eee;
-        border-radius: 22px;
-        padding: 30px 20px;
-        text-align: center;
-        transition: all 0.3s ease;
-        background: #fafcff;
-        height: 100%;
-    }
-
-        .payment-option-content i {
-            font-size: 2.4rem;
-            margin-bottom: 14px;
-            color: hsl(var(--base));
-            transition: 0.3s;
-        }
-
-        .payment-option-content span {
-            font-weight: 600;
-        }
-
-    /* Hover */
-    /* Remove old hover shadow */
-    .payment-option:hover .payment-option-content {
-        transform: translateY(-6px);
-        box-shadow: none;
-        border: 2px solid #1DA5A5;
-    }
-
-    /* Selected (Checked) */
-    .payment-option input:checked + .payment-option-content {
-        border: 2px solid #1DA5A5;
-        background: white;
-        box-shadow: none;
-    }
-
-    /* Focus (keyboard accessibility) */
-    .payment-option input:focus + .payment-option-content {
-        border: 2px solid #1DA5A5;
-        box-shadow: none;
-    }
-
-    /* Selected */
-    .payment-option input:checked + .payment-option-content {
-        border: 2px solid hsl(var(--base));
-        background: white;
-        box-shadow: 0 15px 35px hsl(var(--base) / 0.2);
-    }
-
-        .payment-option input:checked + .payment-option-content i {
-            transform: scale(1.15);
-        }
-
-    /* Premium Pay Button */
-    .pay-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 14px;
-        height: 65px;
-        border-radius: 22px;
-        font-weight: 700;
-        font-size: 1.1rem;
-        /* background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base) / 0.8)); */
-        color: white;
-        border: none;
-        transition: all 0.3s ease;
-    }
-
-
-    /* Security Note */
-    .secure-note {
-        background: hsl(var(--base) / 0.06);
-        border-left: 5px solid hsl(var(--base));
-        border-radius: 16px;
-        padding: 14px 18px;
-    }
-
-        .secure-note small {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-    /* Responsive Improvements */
-    @@media (max-width: 992px) {
-
-        .sign__wrap {
-            padding: 35px;
-        }
-
-        .payment-summary,
-        .payment-form {
-            padding: 28px;
-        }
-
-        .summary-total {
-            font-size: 1.2rem;
-        }
-    }
-
-    @@media (max-width: 576px) {
-
-        .sign__wrap {
-            padding: 25px;
-            border-radius: 20px;
-        }
-
-        .payment-option-content {
-            padding: 22px 15px;
-        }
-
-        .pay-btn {
-            height: 55px;
-            font-size: 1rem;
-        }
-    }</style>
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+<script>
+// ── State ──────────────────────────────────────────────────────────
+let selectedMethod = null;
+
+// ── Method selection ───────────────────────────────────────────────
+function selectMethod(method, el) {
+    selectedMethod = method;
+    document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const btn = document.getElementById('btnProceed');
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+}
+
+function proceedToDetails() {
+    if (!selectedMethod) return;
+
+    // Hide method panel, show details panel
+    document.getElementById('panelMethod').classList.remove('active');
+    document.getElementById('panelDetails').classList.add('active');
+
+    // Show correct detail sub-panel
+    document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('detail-' + selectedMethod).classList.add('visible');
+
+    // Update stepper
+    document.getElementById('step2').classList.add('done');
+    document.getElementById('step2').querySelector('.step-circle').innerHTML = '<i class="las la-check"></i>';
+
+    // Draw QR if wallet
+    if (selectedMethod === 'easypaisa') drawQR('qrEasypaisa', '#00a651');
+    if (selectedMethod === 'jazzcash')  drawQR('qrJazzcash',  '#e85e00');
+}
+
+function goBackToMethod() {
+    document.getElementById('panelDetails').classList.remove('active');
+    document.getElementById('panelMethod').classList.add('active');
+    document.getElementById('step2').classList.remove('done');
+    document.getElementById('step2').querySelector('.step-circle').textContent = '2';
+}
+
+// ── QR code mock (pixel art style) ────────────────────────────────
+function drawQR(containerId, color) {
+    const el = document.getElementById(containerId);
+    if (!el || el.children.length > 0) return;
+    // 7x7 grid, pre-defined pattern for visual realism
+    const pattern = [
+        1,1,1,1,1,1,1,
+        1,0,0,0,0,0,1,
+        1,0,1,0,1,0,1,
+        1,0,0,1,0,0,1,
+        1,0,1,0,1,0,1,
+        1,0,0,0,0,0,1,
+        1,1,1,1,1,1,1,
+    ];
+    pattern.forEach(v => {
+        const d = document.createElement('div');
+        d.className = 'qp';
+        d.style.cssText = `background:${v ? color : '#fff'};border-radius:1px;`;
+        el.appendChild(d);
+    });
+}
+
+// ── Card number formatter ──────────────────────────────────────────
+function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1  ').trim();
+    // Update virtual card
+    const display = v.padEnd(16,'•').replace(/(.{4})/g, '$1 ').trim();
+    document.getElementById('vcNumber').textContent = display;
+    // Detect card type
+    const badge = document.getElementById('cardTypeBadge');
+    const logo  = document.getElementById('vcLogo');
+    if      (v.startsWith('4'))  { badge.textContent = '💳'; logo.textContent = 'VISA'; }
+    else if (v.startsWith('5'))  { badge.textContent = '🔴'; logo.textContent = 'MASTERCARD'; }
+    else if (v.startsWith('37')) { badge.textContent = '🟦'; logo.textContent = 'AMEX'; }
+    else                         { badge.textContent = '💳'; logo.textContent = 'CARD'; }
+}
+
+function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    input.value = v;
+    document.getElementById('vcExpiry').textContent = v || 'MM / YY';
+}
+
+// ── Copy to clipboard ──────────────────────────────────────────────
+function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.color = 'hsl(180 70% 55%)';
+        setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
+    });
+}
+
+// ── Submit payment ─────────────────────────────────────────────────
+function submitPayment() {
+    document.getElementById('hiddenPaymentMethod').value = selectedMethod;
+
+    // Show processing overlay
+    document.getElementById('processingOverlay').classList.add('show');
+
+    // Simulate processing delay then submit real form
+    setTimeout(() => {
+        document.getElementById('realPayForm').submit();
+    }, 2200);
+}
+</script>
 }

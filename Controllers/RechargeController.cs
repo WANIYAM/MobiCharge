@@ -20,7 +20,16 @@ namespace MobileRechargeApp.Controllers
         }
 
         // ─── Online Recharge ────────────────────────────────────────────────
-        public IActionResult Index() => View();
+        public async Task<IActionResult> Index()
+        {
+            // If user is logged in, pre-fill their mobile number
+            if (User.Identity!.IsAuthenticated && !User.IsInRole("Admin"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                ViewBag.LoggedInMobile = user?.UserName ?? "";
+            }
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Index(RechargeViewModel model, string planType)

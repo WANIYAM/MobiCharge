@@ -1,19 +1,373 @@
 @model MobileRechargeApp.Models.PostpaidBillViewModel
 @{
-    ViewData["Title"] = "Post Bill Payment";
+    ViewData["Title"] = "Postpaid Bill";
+    Layout = "_Layout";
 }
 
-<section class="sign__area">
-    <div class="sign__bg"><img src="~/assets/images/sign/sign-bg.webp" alt="bg"></div>
-    <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div>
-    <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+@section Styles {
+<style>
+/* ── Page ── */
+.bill-page {
+    min-height: 100vh;
+    background: #0a0f0f;
+    padding: 100px 0 60px;
+    position: relative;
+    overflow: hidden;
+}
+.bill-page::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, hsl(180 70% 38% / 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.bill-page::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, hsl(200 85% 48% / 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
 
-    <div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+/* ── Left panel ── */
+.bill-left { position: sticky; top: 100px; }
+.bill-left .sign__title h1 { color: #fff; }
+.bill-left .sign__title span { color: hsl(180 70% 48%); }
+
+/* ── Dark Cards ── */
+.dark-card {
+    background: #0e1818;
+    border: 1.5px solid #1a2e2e;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+}
+.dark-card__header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 26px;
+    border-bottom: 1px solid #1a2e2e;
+    background: #0a1212;
+}
+.dark-card__label {
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: hsl(180 70% 45%); margin-bottom: 4px;
+}
+.dark-card__cycle { font-size: 13px; color: #4a7070; display: flex; align-items: center; gap: 6px; }
+
+/* Status badges */
+.bill-status {
+    padding: 6px 14px; border-radius: 30px;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+}
+.bill-status.paid {
+    background: hsl(180 70% 38% / 0.12);
+    color: hsl(180 70% 55%);
+    border: 1px solid hsl(180 70% 38% / 0.3);
+}
+.bill-status.due {
+    background: hsl(0 80% 50% / 0.1);
+    color: hsl(0 80% 65%);
+    border: 1px solid hsl(0 80% 50% / 0.3);
+}
+
+/* Amount hero */
+.bill-amount-hero {
+    padding: 28px 26px 20px;
+    border-bottom: 1px solid #1a2e2e;
+}
+.amount-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3a5555; margin-bottom: 8px; }
+.amount-display .currency { font-size: 18px; color: hsl(180 70% 48%); font-weight: 700; vertical-align: top; line-height: 2.2; }
+.amount-display .amount   { font-size: 52px; font-weight: 900; color: #fff; font-family: 'ClashDisplay-Variable', sans-serif; line-height: 1; }
+
+/* Body */
+.bill-body { padding: 24px 26px; }
+
+.section-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: #3a5555; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: #1a2e2e; }
+
+/* Usage items */
+.usage-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+.usage-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px;
+    background: #060e0e; border-radius: 12px;
+    border: 1px solid #111e1e; transition: border-color 0.2s;
+}
+.usage-item:hover { border-color: hsl(180 70% 38% / 0.3); }
+.usage-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.usage-icon.calls { background: hsl(200 100% 50% / 0.1); color: hsl(200 100% 55%); }
+.usage-icon.data  { background: hsl(270 80%  60% / 0.1); color: hsl(270 80%  65%); }
+.usage-icon.sms   { background: hsl(40  100% 50% / 0.1); color: hsl(40  100% 55%); }
+.usage-icon.rent  { background: hsl(180 70%  38% / 0.1); color: hsl(180 70%  55%); }
+.usage-info { flex: 1; }
+.usage-info span  { display: block; font-size: 13px; font-weight: 600; color: #c0d8d8; }
+.usage-info small { font-size: 11px; color: #3a5555; }
+.usage-amount     { font-size: 14px; font-weight: 700; color: #a0c8c8; font-family: 'Menlo', monospace; }
+
+/* Totals */
+.bill-totals {
+    border-top: 1px solid #1a2e2e;
+    padding-top: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px;
+}
+.bill-total-row { display: flex; justify-content: space-between; font-size: 13px; color: #4a7070; }
+.bill-total-row.grand {
+    font-size: 17px; font-weight: 800; color: #fff;
+    padding-top: 14px; border-top: 1px solid #1a2e2e; margin-top: 4px;
+}
+.bill-total-row.grand span:last-child { color: hsl(180 70% 55%); }
+
+/* Paid notice */
+.paid-notice {
+    background: hsl(180 70% 38% / 0.08);
+    border: 1px solid hsl(180 70% 38% / 0.2);
+    border-radius: 14px; padding: 18px 22px;
+    color: hsl(180 70% 55%); font-size: 13px;
+    display: flex; align-items: center; gap: 12px;
+}
+.paid-notice i { font-size: 24px; flex-shrink: 0; }
+
+/* ── Payment Method Grid ── */
+.method-title {
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #3a5555; margin-bottom: 14px;
+}
+.method-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 18px;
+}
+.method-card {
+    border: 1.5px solid #1a2e2e; border-radius: 12px;
+    padding: 14px 12px; cursor: pointer;
+    transition: all 0.2s; background: #060e0e;
+    text-align: center; position: relative; overflow: hidden;
+}
+.method-card:hover {
+    border-color: hsl(180 70% 38% / 0.5);
+    background: hsl(180 70% 38% / 0.05);
+    transform: translateY(-2px);
+}
+.method-card.selected {
+    border-color: hsl(180 70% 38%);
+    background: hsl(180 70% 38% / 0.1);
+    box-shadow: 0 0 16px hsl(180 70% 38% / 0.15);
+}
+.method-card.selected::after {
+    content: '✓'; position: absolute; top: 6px; right: 8px;
+    font-size: 10px; font-weight: 800; color: hsl(180 70% 55%);
+}
+.method-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+.method-name { font-size: 12px; font-weight: 700; color: #c0d8d8; display: block; }
+.method-tag  { font-size: 10px; color: #3a5555; margin-top: 2px; display: block; }
+
+/* ── Payment Detail Panels ── */
+.payment-detail { display: none; margin-bottom: 16px; }
+.payment-detail.visible { display: block; }
+
+.wallet-panel { border-radius: 14px; padding: 20px; }
+.wallet-panel.easypaisa { background: linear-gradient(135deg,#0a2010,#0f2a15); border: 1px solid #1a5a2a; }
+.wallet-panel.jazzcash  { background: linear-gradient(135deg,#1a0800,#2a0f00); border: 1px solid #5a2a00; }
+.wallet-panel.card-panel{ background: linear-gradient(135deg,#0a101a,#0f1525); border: 1px solid #1a2a4a; }
+.wallet-panel.bank-panel{ background: linear-gradient(135deg,#0a0a1a,#0f0f25); border: 1px solid #1a1a4a; }
+
+.wallet-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.wallet-brand-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.easypaisa .wallet-brand-icon { background: #00a651; }
+.jazzcash  .wallet-brand-icon { background: #e85e00; }
+.card-panel .wallet-brand-icon { background: #1a3a6a; }
+.bank-panel .wallet-brand-icon { background: #2a2a6a; }
+.wallet-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
+.wallet-brand-sub  { font-size: 11px; color: #7a9a8a; margin-top: 1px; }
+.jazzcash  .wallet-brand-sub { color: #9a7a5a; }
+.card-panel .wallet-brand-sub { color: #6a8aaa; }
+.bank-panel .wallet-brand-sub { color: #7a7aaa; }
+
+.qr-wrap { display: flex; gap: 16px; align-items: flex-start; }
+.qr-mock {
+    width: 80px; height: 80px; border-radius: 8px;
+    background: #fff; padding: 5px; flex-shrink: 0;
+    display: grid; grid-template-columns: repeat(7,1fr); gap: 1.5px;
+}
+.qr-mock .qp { border-radius: 1px; }
+.qr-steps { flex: 1; }
+.qr-step { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.qr-step-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 9px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+}
+.qr-step p { font-size: 11px; color: #8aacac; margin: 0; line-height: 1.5; }
+.qr-step p strong { color: #c0d8d8; }
+
+.amount-to-pay {
+    margin-top: 12px; padding: 10px 14px;
+    border-radius: 10px; background: rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: space-between;
+}
+.amount-to-pay span   { font-size: 11px; color: #6a9090; }
+.amount-to-pay strong { font-size: 15px; font-weight: 800; color: #fff; }
+
+/* Card inputs */
+.form--field { margin-bottom: 14px; }
+.form--field label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #4a7070;
+    margin-bottom: 7px; display: block;
+}
+.form--field input {
+    width: 100%; background: #060e0e;
+    border: 1.5px solid #1a2e2e; border-radius: 10px;
+    padding: 11px 14px; color: #d0e8e8; font-size: 13px;
+    font-family: 'Menlo','Consolas',monospace; outline: none;
+    transition: border-color 0.2s;
+}
+.form--field input:focus { border-color: hsl(180 70% 38%); box-shadow: 0 0 0 3px hsl(180 70% 38% / 0.1); }
+.form--field input::placeholder { color: #1a3030; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.card-number-wrap { position: relative; }
+.card-type-badge  { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.5; }
+
+.virtual-card {
+    background: linear-gradient(135deg,#0d2535,#0a1a28 50%,#0d2535);
+    border-radius: 14px; padding: 18px; margin-bottom: 14px;
+    border: 1px solid #1a3a5a; position: relative; overflow: hidden;
+}
+.virtual-card::before {
+    content: ''; position: absolute; top: -25px; right: -25px;
+    width: 110px; height: 110px; border-radius: 50%;
+    background: hsl(200 85% 48% / 0.07);
+}
+.vc-chip   { width: 28px; height: 22px; background: linear-gradient(135deg,#c8a84b,#f0d060); border-radius: 4px; margin-bottom: 14px; }
+.vc-number { font-family:'Menlo',monospace; font-size:14px; letter-spacing:2px; color:#d0e8f8; margin-bottom:12px; }
+.vc-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
+.vc-label  { font-size:8px; color:#4a7090; letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+.vc-value  { font-size:12px; color:#c0d8f0; font-weight:600; font-family:'Menlo',monospace; }
+.vc-logo   { font-size:10px; font-weight:800; color:#7090b0; letter-spacing:2px; }
+
+.bank-detail-row {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 0; border-bottom:1px solid #1a1a3a;
+}
+.bank-detail-row:last-child { border-bottom:none; }
+.bank-detail-row span:first-child { font-size:11px; color:#5a5a9a; }
+.bank-detail-row span:last-child  { font-size:12px; font-weight:700; color:#c0c0e8; font-family:'Menlo',monospace; }
+.copy-btn {
+    background:transparent; border:1px solid #2a2a5a;
+    color:#6a6aaa; border-radius:5px; padding:2px 7px;
+    font-size:9px; cursor:pointer; transition:all 0.2s; margin-left:6px;
+}
+.copy-btn:hover { border-color:hsl(180 70% 38%); color:hsl(180 70% 55%); }
+
+/* Buttons */
+.btn-pay-now {
+    width:100%; padding:15px;
+    background:linear-gradient(135deg,hsl(180 70% 38%),hsl(200 85% 48%));
+    border:none; border-radius:12px; color:#fff !important;
+    font-size:14px; font-weight:800; letter-spacing:0.5px;
+    cursor:pointer; transition:all 0.25s;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.btn-pay-now:hover { transform:translateY(-2px); box-shadow:0 12px 35px hsl(180 70% 38% / 0.4); }
+.btn-pay-now:disabled { opacity:0.4; cursor:not-allowed; transform:none; box-shadow:none; }
+.btn-back-method {
+    width:100%; padding:11px;
+    background:transparent; border:1px solid #1a2e2e;
+    border-radius:12px; color:#3a5555; font-size:12px; font-weight:600;
+    cursor:pointer; transition:all 0.2s; margin-top:8px;
+}
+.btn-back-method:hover { border-color:#2a4040; color:#5a8080; }
+
+.security-note {
+    text-align:center; margin-top:14px; font-size:10px; color:#1a3030;
+    display:flex; align-items:center; justify-content:center; gap:5px;
+}
+.security-note i { color:hsl(180 70% 38%); }
+
+/* Processing overlay */
+.processing-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(8px);
+    z-index:9999; align-items:center; justify-content:center;
+    flex-direction:column; gap:20px;
+}
+.processing-overlay.show { display:flex; }
+.proc-spinner {
+    width:56px; height:56px;
+    border:3px solid #1a3a3a; border-top-color:hsl(180 70% 48%);
+    border-radius:50%; animation:spin 0.8s linear infinite;
+}
+@@keyframes spin { to { transform:rotate(360deg); } }
+.proc-text { font-size:15px; font-weight:700; color:#c0e0e0; font-family:'ClashDisplay-Variable',sans-serif; }
+.proc-sub  { font-size:11px; color:#3a6060; margin-top:-14px; }
+
+/* History table */
+.badge-teal {
+    background:hsl(180 70% 38% / 0.12); color:hsl(180 70% 55%);
+    border:1px solid hsl(180 70% 38% / 0.3);
+    border-radius:20px; padding:3px 12px; font-size:11px; font-weight:700;
+}
+.hist-table { width:100%; border-collapse:collapse; }
+.hist-table th {
+    font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
+    color:#3a5555; padding:14px 20px; border-bottom:1px solid #1a2e2e;
+    background:#0a1212; text-align:left;
+}
+.hist-table td {
+    padding:14px 20px; font-size:13px; color:#7a9a9a;
+    border-bottom:1px solid #0e1c1c; vertical-align:middle;
+}
+.hist-table tr:last-child td { border-bottom:none; }
+.hist-table tr:hover td { background:#0a1414; }
+.txn-id-badge { font-family:'Menlo',monospace; font-size:12px; font-weight:700; color:hsl(180 70% 55%); }
+.amount-col   { font-family:'Menlo',monospace; font-weight:700; color:#c0d8d8; }
+.status-badge {
+    display:inline-flex; align-items:center; gap:5px;
+    background:hsl(180 70% 38% / 0.1); color:hsl(180 70% 55%);
+    border:1px solid hsl(180 70% 38% / 0.2);
+    border-radius:20px; padding:3px 10px; font-size:11px; font-weight:700;
+}
+
+@@media (max-width:768px) {
+    .method-grid { grid-template-columns:1fr 1fr; }
+    .amount-display .amount { font-size:38px; }
+    .hist-table th:nth-child(4), .hist-table td:nth-child(4) { display:none; }
+}
+</style>
+}
+
+<!-- Processing Overlay -->
+<div class="processing-overlay" id="processingOverlay">
+    <div class="proc-spinner"></div>
+    <div class="proc-text">Processing Payment...</div>
+    <div class="proc-sub">Please do not close this window</div>
+</div>
+
+<section class="bill-page">
+    <div class="container">
         <div class="row g-4 align-items-start">
 
-            <!-- ===== LEFT PANEL ===== -->
+            <!-- ── LEFT PANEL ── -->
             <div class="col-lg-4">
-                <div class="sign__left__blk">
+                <div class="bill-left sign__left__blk">
                     <div class="sign__label">
                         <div class="footer__subs__label">
                             <div class="footer__subs__shr">
@@ -27,10 +381,10 @@
                     <div class="sign__title">
                         <span>Postpaid Account</span>
                         <h1>Your <span>Bill</span></h1>
-                        <p class="mt-3" style="color:rgba(255,255,255,0.7); font-size:14px;">
+                        <p class="mt-3" style="color:rgba(255,255,255,0.55);font-size:14px;">
                             <i class="las la-mobile-alt"></i> @Model.MobileNumber
                         </p>
-                        <p style="color:rgba(255,255,255,0.7); font-size:14px;">
+                        <p style="color:rgba(255,255,255,0.55);font-size:14px;">
                             <i class="las la-user"></i> @Model.FullName
                         </p>
                     </div>
@@ -42,71 +396,63 @@
                 </div>
             </div>
 
-            <!-- ===== RIGHT PANEL ===== -->
+            <!-- ── RIGHT PANEL ── -->
             <div class="col-lg-8">
 
-                @* ===== CURRENT BILL CARD ===== *@
-                <div class="bill-card mb-4">
-
-                    <!-- Bill Header -->
-                    <div class="bill-card__header">
+                <!-- Current Bill Card -->
+                <div class="dark-card">
+                    <div class="dark-card__header">
                         <div>
-                            <div class="bill-card__label">Current Bill</div>
-                            <div class="bill-card__cycle">
-                                <i class="las la-calendar-alt"></i>
-                                Billing Cycle: @Model.BillingCycle
+                            <div class="dark-card__label">Current Bill</div>
+                            <div class="dark-card__cycle">
+                                <i class="las la-calendar-alt"></i> @Model.BillingCycle
                             </div>
                         </div>
                         @if (Model.IsPaid)
                         {
-                            <span class="bill-status paid">
-                                <i class="las la-check-circle"></i> Paid
-                            </span>
+                            <span class="bill-status paid"><i class="las la-check-circle"></i> Paid</span>
                         }
                         else
                         {
                             <span class="bill-status due">
                                 <i class="las la-exclamation-circle"></i>
-                                Due by @Model.DueDate.ToString("dd MMM yyyy")
+                                Due @Model.DueDate.ToString("dd MMM yyyy")
                             </span>
                         }
                     </div>
 
-                    <!-- Usage Breakdown -->
-                    <div class="bill-card__body">
-                        <h6 class="section-label">Usage Breakdown</h6>
+                    <!-- Amount Hero -->
+                    <div class="bill-amount-hero">
+                        <div class="amount-label">Total Amount Due</div>
+                        <div class="amount-display">
+                            <span class="currency">Rs.</span>
+                            <span class="amount">@Model.TotalAmount</span>
+                        </div>
+                    </div>
 
+                    <div class="bill-body">
+
+                        <!-- Usage Breakdown -->
+                        <div class="section-label">Usage Breakdown</div>
                         <div class="usage-row">
                             <div class="usage-item">
                                 <div class="usage-icon calls"><i class="las la-phone"></i></div>
-                                <div class="usage-info">
-                                    <span>Call Charges</span>
-                                    <small>Voice calls this month</small>
-                                </div>
+                                <div class="usage-info"><span>Call Charges</span><small>Voice calls this month</small></div>
                                 <div class="usage-amount">Rs. @Model.CallCharges</div>
                             </div>
                             <div class="usage-item">
                                 <div class="usage-icon data"><i class="las la-wifi"></i></div>
-                                <div class="usage-info">
-                                    <span>Data Charges</span>
-                                    <small>Mobile data usage</small>
-                                </div>
+                                <div class="usage-info"><span>Data Charges</span><small>Mobile data usage</small></div>
                                 <div class="usage-amount">Rs. @Model.DataCharges</div>
                             </div>
                             <div class="usage-item">
                                 <div class="usage-icon sms"><i class="las la-sms"></i></div>
-                                <div class="usage-info">
-                                    <span>SMS Charges</span>
-                                    <small>Text messages sent</small>
-                                </div>
+                                <div class="usage-info"><span>SMS Charges</span><small>Text messages sent</small></div>
                                 <div class="usage-amount">Rs. @Model.SmsCharges</div>
                             </div>
                             <div class="usage-item">
                                 <div class="usage-icon rent"><i class="las la-sim-card"></i></div>
-                                <div class="usage-info">
-                                    <span>Monthly Rent</span>
-                                    <small>@Model.PlanName</small>
-                                </div>
+                                <div class="usage-info"><span>Monthly Rent</span><small>@Model.PlanName</small></div>
                                 <div class="usage-amount">Rs. @Model.BaseRent</div>
                             </div>
                         </div>
@@ -127,62 +473,221 @@
                             </div>
                         </div>
 
-                        <!-- Pay Button -->
-                        @if (!Model.IsPaid)
-                        {
-                            <form asp-action="PostpaidPay" asp-controller="Recharge" method="post" class="mt-4">
-                                <input type="hidden" name="mobileNumber"   value="@Model.MobileNumber" />
-                                <input type="hidden" name="amount"         value="@Model.TotalAmount" />
-
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold mb-2">
-                                        <i class="las la-credit-card" style="color:hsl(var(--base));"></i>
-                                        Select Payment Method
-                                    </label>
-                                    <select name="paymentMethod" class="form-control form--control" required style="height:54px;">
-                                        <option value="">-- Choose Payment Method --</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Debit Card">Debit Card</option>
-                                        <option value="Net Banking">Net Banking</option>
-                                        <option value="Easypaisa">UPI</option>
-                                    </select>
-                                </div>
-
-                                <button type="submit" class="common__btn w-100" style="justify-content:space-between;">
-                                    <span>
-                                        <i class="las la-check-circle me-2"></i>
-                                        Pay Rs. @Model.TotalAmount Now
-                                    </span>
-                                    <span><i class="fa-solid fa-arrow-right"></i></span>
-                                </button>
-                            </form>
-                        }
-                        else
+                        @if (Model.IsPaid)
                         {
                             <div class="paid-notice">
                                 <i class="las la-check-circle"></i>
-                                This month's bill has been paid. Your next bill will be generated on
-                                <strong>@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("dd MMM yyyy"))</strong>.
+                                <div>
+                                    This month's bill has been paid successfully.
+                                    Your next bill will be generated on
+                                    <strong>@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("dd MMM yyyy"))</strong>.
+                                </div>
                             </div>
                         }
-                    </div>
-                </div>
+                        else
+                        {
+                            <!-- ── STEP A: Choose Method ── -->
+                            <div id="panelMethod">
+                                <div class="method-title">Select Payment Method</div>
+                                <div class="method-grid">
+                                    <div class="method-card" onclick="selectMethod('easypaisa',this)">
+                                        <span class="method-icon">🟢</span>
+                                        <span class="method-name">EasyPaisa</span>
+                                        <span class="method-tag">Wallet</span>
+                                    </div>
+                                    <div class="method-card" onclick="selectMethod('jazzcash',this)">
+                                        <span class="method-icon">🟠</span>
+                                        <span class="method-name">JazzCash</span>
+                                        <span class="method-tag">Wallet</span>
+                                    </div>
+                                    <div class="method-card" onclick="selectMethod('card',this)">
+                                        <span class="method-icon">💳</span>
+                                        <span class="method-name">Card</span>
+                                        <span class="method-tag">Visa · Mastercard</span>
+                                    </div>
+                                    <div class="method-card" onclick="selectMethod('bank',this)">
+                                        <span class="method-icon">🏦</span>
+                                        <span class="method-name">Bank Transfer</span>
+                                        <span class="method-tag">IBFT</span>
+                                    </div>
+                                </div>
+                                <button class="btn-pay-now" id="btnProceed" onclick="proceedToDetails()"
+                                        disabled style="opacity:0.4;cursor:not-allowed;">
+                                    <i class="las la-arrow-right"></i> Continue to Payment
+                                </button>
+                            </div>
 
-                @* ===== PAST BILLS ===== *@
+                            <!-- ── STEP B: Payment Details ── -->
+                            <div id="panelDetails" style="display:none;">
+
+                                <!-- EasyPaisa -->
+                                <div class="payment-detail" id="detail-easypaisa">
+                                    <div class="wallet-panel easypaisa">
+                                        <div class="wallet-brand">
+                                            <div class="wallet-brand-icon">🟢</div>
+                                            <div>
+                                                <div class="wallet-brand-name">EasyPaisa</div>
+                                                <div class="wallet-brand-sub">Scan QR or follow steps</div>
+                                            </div>
+                                        </div>
+                                        <div class="qr-wrap">
+                                            <div class="qr-mock" id="qrEasypaisa"></div>
+                                            <div class="qr-steps">
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">1</div>
+                                                    <p>Open <strong>EasyPaisa App</strong> → tap <strong>Send Money</strong></p>
+                                                </div>
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">2</div>
+                                                    <p>Scan QR or enter <strong>0300-1234567</strong></p>
+                                                </div>
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">3</div>
+                                                    <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with PIN</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="amount-to-pay">
+                                            <span>Total to pay</span>
+                                            <strong>Rs. @Model.TotalAmount</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- JazzCash -->
+                                <div class="payment-detail" id="detail-jazzcash">
+                                    <div class="wallet-panel jazzcash">
+                                        <div class="wallet-brand">
+                                            <div class="wallet-brand-icon">🟠</div>
+                                            <div>
+                                                <div class="wallet-brand-name">JazzCash</div>
+                                                <div class="wallet-brand-sub">Scan QR or follow steps</div>
+                                            </div>
+                                        </div>
+                                        <div class="qr-wrap">
+                                            <div class="qr-mock" id="qrJazzcash"></div>
+                                            <div class="qr-steps">
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">1</div>
+                                                    <p>Open <strong>JazzCash App</strong> → tap <strong>Mobile Account</strong></p>
+                                                </div>
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">2</div>
+                                                    <p>Scan QR or enter <strong>0311-9876543</strong></p>
+                                                </div>
+                                                <div class="qr-step">
+                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">3</div>
+                                                    <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with MPIN</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="amount-to-pay">
+                                            <span>Total to pay</span>
+                                            <strong>Rs. @Model.TotalAmount</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card -->
+                                <div class="payment-detail" id="detail-card">
+                                    <div class="virtual-card">
+                                        <div class="vc-chip"></div>
+                                        <div class="vc-number" id="vcNumber">•••• •••• •••• ••••</div>
+                                        <div class="vc-bottom">
+                                            <div><div class="vc-label">Card Holder</div><div class="vc-value" id="vcName">YOUR NAME</div></div>
+                                            <div><div class="vc-label">Expires</div><div class="vc-value" id="vcExpiry">MM / YY</div></div>
+                                            <div class="vc-logo" id="vcLogo">VISA</div>
+                                        </div>
+                                    </div>
+                                    <div class="wallet-panel card-panel">
+                                        <div class="form--field">
+                                            <label>Card Number</label>
+                                            <div class="card-number-wrap">
+                                                <input type="text" id="cardNumber" placeholder="0000  0000  0000  0000"
+                                                       maxlength="19" oninput="formatCard(this)" autocomplete="cc-number"/>
+                                                <span class="card-type-badge" id="cardTypeBadge">💳</span>
+                                            </div>
+                                        </div>
+                                        <div class="form--field">
+                                            <label>Cardholder Name</label>
+                                            <input type="text" id="cardName" placeholder="Name as on card"
+                                                   oninput="document.getElementById('vcName').textContent=this.value.toUpperCase()||'YOUR NAME'"
+                                                   autocomplete="cc-name"/>
+                                        </div>
+                                        <div class="form-row-2">
+                                            <div class="form--field">
+                                                <label>Expiry</label>
+                                                <input type="text" id="cardExpiry" placeholder="MM / YY"
+                                                       maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp"/>
+                                            </div>
+                                            <div class="form--field">
+                                                <label>CVV</label>
+                                                <input type="password" id="cardCvv" placeholder="•••" maxlength="3" autocomplete="cc-csc"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bank Transfer -->
+                                <div class="payment-detail" id="detail-bank">
+                                    <div class="wallet-panel bank-panel">
+                                        <div class="wallet-brand">
+                                            <div class="wallet-brand-icon">🏦</div>
+                                            <div>
+                                                <div class="wallet-brand-name">IBFT / Online Transfer</div>
+                                                <div class="wallet-brand-sub">Transfer exact amount below</div>
+                                            </div>
+                                        </div>
+                                        <div class="bank-detail-row"><span>Bank Name</span><span>HBL — Habib Bank Ltd</span></div>
+                                        <div class="bank-detail-row"><span>Account Title</span><span>MobileRecharge Pvt Ltd</span></div>
+                                        <div class="bank-detail-row">
+                                            <span>Account No.</span>
+                                            <span>0123-4567890-001 <button class="copy-btn" onclick="copyText('0123-4567890-001',this)">Copy</button></span>
+                                        </div>
+                                        <div class="bank-detail-row">
+                                            <span>IBAN</span>
+                                            <span style="font-size:10px;">PK36HABB0123456789000 <button class="copy-btn" onclick="copyText('PK36HABB0123456789000',this)">Copy</button></span>
+                                        </div>
+                                        <div class="bank-detail-row">
+                                            <span>Reference</span>
+                                            <span style="color:hsl(180 70% 55%);">@Model.MobileNumber</span>
+                                        </div>
+                                        <div class="amount-to-pay" style="margin-top:12px;">
+                                            <span>Exact amount to transfer</span>
+                                            <strong>Rs. @Model.TotalAmount</strong>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn-pay-now" onclick="submitPayment()">
+                                    <i class="las la-lock"></i>
+                                    Confirm & Pay Rs. @Model.TotalAmount
+                                </button>
+                                <button class="btn-back-method" onclick="goBack()">← Change Payment Method</button>
+                            </div>
+
+                            <div class="security-note">
+                                <i class="las la-shield-alt"></i>
+                                256-bit SSL encrypted · Demo payment flow
+                            </div>
+                        }
+
+                    </div><!-- /.bill-body -->
+                </div><!-- /.dark-card -->
+
+                <!-- Payment History -->
                 @if (Model.PastBills.Any())
                 {
-                    <div class="bill-card">
-                        <div class="bill-card__header">
-                            <h6 class="mb-0">
-                                <i class="las la-history" style="color:hsl(var(--base));"></i>
+                    <div class="dark-card">
+                        <div class="dark-card__header">
+                            <h6 style="margin:0;color:#c0d8d8;font-size:14px;">
+                                <i class="las la-history" style="color:hsl(180 70% 48%);margin-right:8px;"></i>
                                 Payment History
                             </h6>
-                            <span class="badge-custom" style="background:hsl(var(--base)/0.1); color:hsl(var(--base));">
-                                @Model.PastBills.Count() payments
-                            </span>
+                            <span class="badge-teal">@Model.PastBills.Count() payments</span>
                         </div>
                         <div class="table-responsive">
-                            <table class="table" style="margin:0;">
+                            <table class="hist-table">
                                 <thead>
                                     <tr>
                                         <th>Txn ID</th>
@@ -196,15 +701,11 @@
                                     @foreach (var txn in Model.PastBills)
                                     {
                                         <tr>
-                                            <td><strong class="txn-id">TXN@(txn.TxnId.ToString("D6"))</strong></td>
+                                            <td><span class="txn-id-badge">#TXN@(txn.TxnId.ToString("D6"))</span></td>
                                             <td>@txn.TxnDate.ToString("dd MMM yyyy")</td>
-                                            <td><strong style="color:hsl(var(--base));">Rs. @txn.Amount</strong></td>
+                                            <td><span class="amount-col">Rs. @txn.Amount</span></td>
                                             <td>@txn.PaymentMethod</td>
-                                            <td>
-                                                <span class="badge-custom" style="background:hsl(112 100% 40%/0.1); color:hsl(112 100% 40%);">
-                                                    <i class="las la-check-circle"></i> @txn.Status
-                                                </span>
-                                            </td>
+                                            <td><span class="status-badge"><i class="las la-check-circle"></i> @txn.Status</span></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -218,146 +719,81 @@
     </div>
 </section>
 
-<style>
-    /* ── Bill Card ── */
-    .bill-card {
-        background: #fff;
-        border-radius: 20px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-        overflow: hidden;
-        border: 1px solid hsl(var(--border-color));
-    }
+<!-- Hidden real form submitted on confirm -->
+<form id="payForm" asp-action="PostpaidPay" asp-controller="Recharge" method="post" style="display:none;">
+    <input type="hidden" name="mobileNumber"  value="@Model.MobileNumber" />
+    <input type="hidden" name="amount"        value="@Model.TotalAmount" />
+    <input type="hidden" name="paymentMethod" id="hiddenMethod" />
+</form>
 
-    .bill-card__header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 28px;
-        border-bottom: 1px solid hsl(var(--border-color));
-        background: hsl(var(--section-bg));
-    }
+@section Scripts {
+<script>
+let selectedMethod = null;
 
-    .bill-card__label {
-        font-weight: 700;
-        font-size: 16px;
-        color: hsl(var(--heading-color));
-        margin-bottom: 4px;
-    }
+function selectMethod(method, el) {
+    selectedMethod = method;
+    document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const btn = document.getElementById('btnProceed');
+    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
+}
 
-    .bill-card__cycle {
-        font-size: 13px;
-        color: hsl(var(--text-color));
-    }
+function proceedToDetails() {
+    if (!selectedMethod) return;
+    document.getElementById('panelMethod').style.display  = 'none';
+    document.getElementById('panelDetails').style.display = 'block';
+    document.querySelectorAll('.payment-detail').forEach(p => p.classList.remove('visible'));
+    document.getElementById('detail-' + selectedMethod).classList.add('visible');
+    if (selectedMethod === 'easypaisa') drawQR('qrEasypaisa', '#00a651');
+    if (selectedMethod === 'jazzcash')  drawQR('qrJazzcash',  '#e85e00');
+}
 
-    .bill-card__body { padding: 28px; }
+function goBack() {
+    document.getElementById('panelDetails').style.display = 'none';
+    document.getElementById('panelMethod').style.display  = 'block';
+}
 
-    /* ── Status Badges ── */
-    .bill-status {
-        padding: 8px 16px;
-        border-radius: 30px;
-        font-size: 13px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+function drawQR(id, color) {
+    const el = document.getElementById(id);
+    if (!el || el.children.length) return;
+    const p = [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,1,0,1,0,1, 1,0,0,1,0,0,1, 1,0,1,0,1,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1];
+    p.forEach(v => {
+        const d = document.createElement('div');
+        d.className = 'qp';
+        d.style.cssText = `background:${v ? color : '#fff'};border-radius:1px;`;
+        el.appendChild(d);
+    });
+}
 
-    .bill-status.paid {
-        background: hsl(112 100% 40% / 0.1);
-        color: hsl(112 100% 40%);
-    }
+function formatCard(input) {
+    let v = input.value.replace(/\D/g,'').substring(0,16);
+    input.value = v.replace(/(.{4})/g,'$1  ').trim();
+    document.getElementById('vcNumber').textContent = v.padEnd(16,'•').replace(/(.{4})/g,'$1 ').trim();
+    const badge = document.getElementById('cardTypeBadge'), logo = document.getElementById('vcLogo');
+    if      (v.startsWith('4'))  { badge.textContent='💳'; logo.textContent='VISA'; }
+    else if (v.startsWith('5'))  { badge.textContent='🔴'; logo.textContent='MASTERCARD'; }
+    else if (v.startsWith('37')) { badge.textContent='🟦'; logo.textContent='AMEX'; }
+    else                         { badge.textContent='💳'; logo.textContent='CARD'; }
+}
 
-    .bill-status.due {
-        background: hsl(0 100% 50% / 0.1);
-        color: hsl(0 100% 50%);
-    }
+function formatExpiry(input) {
+    let v = input.value.replace(/\D/g,'').substring(0,4);
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    input.value = v;
+    document.getElementById('vcExpiry').textContent = v || 'MM / YY';
+}
 
-    /* ── Usage Breakdown ── */
-    .section-label {
-        font-weight: 700;
-        color: hsl(var(--heading-color));
-        margin-bottom: 16px;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
+function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!'; btn.style.color = 'hsl(180 70% 55%)';
+        setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
+    });
+}
 
-    .usage-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-
-    .usage-item {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 14px 16px;
-        background: hsl(var(--section-bg));
-        border-radius: 12px;
-        border: 1px solid hsl(var(--border-color));
-    }
-
-    .usage-icon {
-        width: 42px; height: 42px;
-        border-radius: 10px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 20px;
-        flex-shrink: 0;
-    }
-
-    .usage-icon.calls { background: hsl(200 100% 50% / 0.1); color: hsl(200 100% 40%); }
-    .usage-icon.data  { background: hsl(270 100% 60% / 0.1); color: hsl(270 100% 50%); }
-    .usage-icon.sms   { background: hsl(40  100% 50% / 0.1); color: hsl(40  100% 40%); }
-    .usage-icon.rent  { background: hsl(var(--base) / 0.1);  color: hsl(var(--base));  }
-
-    .usage-info { flex: 1; }
-    .usage-info span  { display: block; font-weight: 600; font-size: 14px; color: hsl(var(--heading-color)); }
-    .usage-info small { color: hsl(var(--text-color)); font-size: 12px; }
-
-    .usage-amount { font-weight: 700; font-size: 15px; color: hsl(var(--heading-color)); }
-
-    /* ── Totals ── */
-    .bill-totals {
-        border-top: 1px solid hsl(var(--border-color));
-        padding-top: 16px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .bill-total-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 14px;
-        color: hsl(var(--text-color));
-    }
-
-    .bill-total-row.grand {
-        font-size: 18px;
-        font-weight: 700;
-        color: hsl(var(--heading-color));
-        padding-top: 12px;
-        border-top: 2px solid hsl(var(--border-color));
-        margin-top: 4px;
-    }
-
-    .bill-total-row.grand span:last-child { color: hsl(var(--base)); }
-
-    /* ── Paid Notice ── */
-    .paid-notice {
-        margin-top: 24px;
-        background: hsl(112 100% 40% / 0.08);
-        border: 1px solid hsl(112 100% 40% / 0.2);
-        border-radius: 12px;
-        padding: 16px 20px;
-        color: hsl(112 100% 30%);
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .paid-notice i { font-size: 22px; }
-
-    /* ── Table ── */
-    .table th { font-weight: 600; color: hsl(var(--heading-color)); background: hsl(var(--section-bg)); padding: 14px 20px; }
-    .table td { padding: 14px 20px; vertical-align: middle; border-bottom: 1px solid hsl(var(--border-color) / 0.5); }
-    .txn-id   { font-weight: 600; color: hsl(var(--heading-color)); }
-</style>
+function submitPayment() {
+    document.getElementById('hiddenMethod').value = selectedMethod;
+    document.getElementById('processingOverlay').classList.add('show');
+    setTimeout(() => document.getElementById('payForm').submit(), 2200);
+}
+</script>
+}

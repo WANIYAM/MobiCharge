@@ -1,0 +1,123 @@
+@* 
+    _PaymentStepper.cshtml
+    Usage: @await Html.PartialAsync("_PaymentStepper", "plan"|"payment"|"receipt")
+    Pass the current active step name as the model string.
+*@
+@model string
+
+@{
+    bool isPlan    = Model == "plan";
+    bool isPayment = Model == "payment";
+    bool isReceipt = Model == "receipt";
+}
+
+<style>
+    /* ── Stepper (shared across Plan → Payment → Receipt) ── */
+    .checkout-stepper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        margin-bottom: 40px;
+    }
+    .cs-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    .cs-circle {
+        width: 48px; height: 48px;
+        border-radius: 50%;
+        border: 2px solid #2a3535;
+        background: #111a1a;
+        color: #3a5555;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px;
+        font-weight: 800;
+        font-family: 'Menlo', monospace;
+        transition: all 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .cs-label {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #3a5555;
+        transition: color 0.3s;
+    }
+    .cs-line {
+        width: 90px;
+        height: 2px;
+        background: #1a2e2e;
+        margin-bottom: 24px;
+        transition: background 0.4s;
+        position: relative;
+        overflow: hidden;
+    }
+    /* done state */
+    .cs-step.done .cs-circle {
+        background: hsl(180 70% 38%);
+        border-color: hsl(180 70% 38%);
+        color: #fff;
+        box-shadow: 0 0 16px hsl(180 70% 38% / 0.5);
+    }
+    .cs-step.done .cs-label { color: hsl(180 70% 45%); }
+    /* active state */
+    .cs-step.active .cs-circle {
+        border-color: hsl(180 70% 48%);
+        background: hsl(180 70% 38% / 0.15);
+        color: hsl(180 70% 65%);
+        box-shadow: 0 0 0 4px hsl(180 70% 38% / 0.12),
+                    0 0 20px hsl(180 70% 38% / 0.25);
+    }
+    .cs-step.active .cs-label { color: hsl(180 70% 60%); }
+    /* done line */
+    .cs-line.done { background: hsl(180 70% 38%); }
+    /* animated progress line for active step */
+    .cs-line.active::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, hsl(180 70% 38%), hsl(200 85% 48%));
+        animation: lineProgress 0.6s ease forwards;
+    }
+    @@keyframes lineProgress {
+        from { transform: scaleX(0); transform-origin: left; }
+        to   { transform: scaleX(1); transform-origin: left; }
+    }
+</style>
+
+<div class="checkout-stepper">
+
+    <!-- Step 1: Plan -->
+    <div class="cs-step @(isPlan ? "active" : "done")">
+        <div class="cs-circle">
+            @if (!isPlan) { <i class="las la-check"></i> }
+            else          { <text>1</text> }
+        </div>
+        <span class="cs-label">Plan</span>
+    </div>
+
+    <!-- Line 1→2 -->
+    <div class="cs-line @(isPlan ? "" : isPayment ? "active" : "done")"></div>
+
+    <!-- Step 2: Payment -->
+    <div class="cs-step @(isPayment ? "active" : isReceipt ? "done" : "")">
+        <div class="cs-circle">
+            @if (isReceipt) { <i class="las la-check"></i> }
+            else            { <text>2</text> }
+        </div>
+        <span class="cs-label">Payment</span>
+    </div>
+
+    <!-- Line 2→3 -->
+    <div class="cs-line @(isReceipt ? "active" : "")"></div>
+
+    <!-- Step 3: Receipt -->
+    <div class="cs-step @(isReceipt ? "active" : "")">
+        <div class="cs-circle">3</div>
+        <span class="cs-label">Receipt</span>
+    </div>
+
+</div>
