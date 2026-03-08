@@ -4,71 +4,407 @@
     Layout = "_AdminLayout";
 }
 
-<div class="row justify-content-center">
-    <div class="col-lg-6">
-        <div class="transactions-panel">
-            <div class="panel-header">
-                <h5 class="mb-0">
-                    <i class="las la-plus-circle" style="color: hsl(var(--base));"></i>
-                    Add New Top Up Plan
-                </h5>
-            </div>
-            <div class="p-4">
-                <form asp-action="AddTopUpPlan" method="post">
-                    <div class="mb-4">
-                        <label class="form-label fw-bold mb-2">Amount (Rs.)</label>
-                        <div class="input-group">
-                            <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                <i class="las la-money-bill"></i>
-                            </span>
-                            <input asp-for="Amount" class="form-control" placeholder="e.g. 50"
-                                   style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
-                        </div>
-                        <span asp-validation-for="Amount" class="text-danger small"></span>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-bold mb-2">Talk Time (Rs.)</label>
-                        <div class="input-group">
-                            <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                <i class="las la-money-bill"></i>
-                            </span>
-                            <input asp-for="TalkTime" class="form-control" placeholder="e.g. 42"
-                                   style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
-                        </div>
-                        <span asp-validation-for="TalkTime" class="text-danger small"></span>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-bold mb-2">Validity (Days)</label>
-                        <input asp-for="Validity" class="form-control" placeholder="e.g. 28"
-                               style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
-                        <span asp-validation-for="Validity" class="text-danger small"></span>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label fw-bold mb-2">Description</label>
-                        <input asp-for="Description" class="form-control" placeholder="e.g. Monthly Talktime"
-                               style="border: 1px solid hsl(var(--border-color)); padding: 0.75rem;" />
-                        <span asp-validation-for="Description" class="text-danger small"></span>
-                    </div>
-
-                    <div class="d-flex gap-3 mt-4">
-                        <button type="submit" class="btn-view" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none; padding: 0.75rem 2rem;">
-                            <i class="las la-save"></i>
-                            Save Plan
-                        </button>
-                        <a href="/Admin/TopUpPlans" class="btn-view" style="background: hsl(var(--section-bg)); color: hsl(var(--text-color)); border: 1px solid hsl(var(--border-color));">
-                            <i class="las la-times"></i>
-                            Cancel
-                        </a>
-                    </div>
-                </form>
-            </div>
+<!-- Page Header -->
+<div class="page-header">
+    <div class="header-left">
+        <div class="header-icon" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));">
+            <i class="las la-plus-circle"></i>
         </div>
+        <div>
+            <h1 class="header-title">Add Top Up Plan</h1>
+            <p class="header-subtitle">Create a new top up recharge plan</p>
+        </div>
+    </div>
+    <a href="/Admin/TopUpPlans" class="back-btn" style="border-color: hsl(var(--border-color)); color: hsl(var(--text-color));">
+        <i class="las la-arrow-left"></i>
+        <span>Back to Plans</span>
+    </a>
+</div>
+
+<!-- Form Card -->
+<div class="form-card">
+    <div class="form-card-header">
+        <div class="header-left">
+            <span class="header-dot" style="background: hsl(var(--base));"></span>
+            <h3 class="header-title">Plan Details</h3>
+        </div>
+        <span class="header-badge" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base));">New Plan</span>
+    </div>
+    
+    <div class="form-card-body">
+        <form asp-action="AddTopUpPlan" method="post" class="modern-form">
+            <!-- Amount Field -->
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Amount (Rs.)</span>
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon" style="color: hsl(var(--base));">
+                        <i class="las la-money-bill"></i>
+                    </span>
+                    <input asp-for="Amount" class="form-input" placeholder="e.g. 50" />
+                </div>
+                <span asp-validation-for="Amount" class="validation-error"></span>
+            </div>
+
+            <!-- Talk Time Field -->
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Talk Time (Rs.)</span>
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon" style="color: hsl(var(--base));">
+                        <i class="las la-phone-alt"></i>
+                    </span>
+                    <input asp-for="TalkTime" class="form-input" placeholder="e.g. 42" />
+                </div>
+                <span asp-validation-for="TalkTime" class="validation-error"></span>
+            </div>
+
+            <!-- Validity Field -->
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Validity (Days)</span>
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon" style="color: hsl(var(--base));">
+                        <i class="las la-calendar"></i>
+                    </span>
+                    <input asp-for="Validity" class="form-input" placeholder="e.g. 28" />
+                </div>
+                <span asp-validation-for="Validity" class="validation-error"></span>
+            </div>
+
+            <!-- Description Field -->
+            <div class="form-group">
+                <label class="form-label">
+                    <span>Description</span>
+                    <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon" style="color: hsl(var(--base));">
+                        <i class="las la-align-left"></i>
+                    </span>
+                    <input asp-for="Description" class="form-input" placeholder="e.g. Monthly Talktime" />
+                </div>
+                <span asp-validation-for="Description" class="validation-error"></span>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));">
+                    <i class="las la-save"></i>
+                    <span>Save Plan</span>
+                </button>
+                <a href="/Admin/TopUpPlans" class="btn-cancel" style="border-color: hsl(var(--border-color)); color: hsl(var(--text-color));">
+                    <i class="las la-times"></i>
+                    <span>Cancel</span>
+                </a>
+            </div>
+        </form>
     </div>
 </div>
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+<style>
+    /* ===== ADD TOP UP PLAN STYLES ===== */
+    @@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: hsl(var(--section-bg));
+        color: hsl(var(--text-color));
+    }
+
+    /* Page Header */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .header-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 26px;
+        box-shadow: 0 8px 20px -4px hsl(var(--base) / 0.4);
+    }
+
+    .header-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        margin: 0 0 4px;
+    }
+
+    .header-subtitle {
+        font-size: 14px;
+        color: hsl(var(--text-color) / 0.7);
+        margin: 0;
+    }
+
+    .back-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: transparent;
+        border: 1px solid;
+        border-radius: 40px;
+        font-weight: 500;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            border-color: hsl(var(--base)) !important;
+            color: hsl(var(--base)) !important;
+        }
+
+    /* Form Card */
+    .form-card {
+        background: white;
+        border-radius: 28px;
+        border: 1px solid hsl(var(--border-color) / 0.4);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .form-card-header {
+        padding: 20px 28px;
+        background: linear-gradient(135deg, hsl(var(--section-bg) / 0.8), white);
+        border-bottom: 1px solid hsl(var(--border-color) / 0.3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+        .form-card-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+    .header-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px hsl(var(--base) / 0.2);
+    }
+
+    .form-card-header .header-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        margin: 0;
+    }
+
+    .header-badge {
+        padding: 6px 16px;
+        border-radius: 40px;
+        font-size: 13px;
+        font-weight: 600;
+        border: 1px solid hsl(var(--base) / 0.2);
+    }
+
+    .form-card-body {
+        padding: 28px;
+    }
+
+    /* Form Groups */
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        color: hsl(var(--heading-color));
+    }
+
+    .required {
+        color: #dc2626;
+        font-size: 16px;
+    }
+
+    /* Input Wrapper */
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 16px;
+        font-size: 18px;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 14px 14px 14px 48px;
+        border: 2px solid hsl(var(--border-color) / 0.5);
+        border-radius: 16px;
+        font-size: 15px;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease;
+        background: white;
+        color: hsl(var(--heading-color));
+    }
+
+        .form-input:hover {
+            border-color: hsl(var(--base) / 0.5);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: hsl(var(--base));
+            box-shadow: 0 0 0 4px hsl(var(--base) / 0.1);
+        }
+
+            .form-input:focus + .input-icon {
+                color: hsl(var(--base-two)) !important;
+                transform: scale(1.1);
+            }
+
+        .form-input::placeholder {
+            color: hsl(var(--text-color) / 0.3);
+            font-size: 14px;
+        }
+
+    /* Validation Error */
+    .validation-error {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+        color: #dc2626;
+        padding-left: 4px;
+    }
+
+    /* Form Actions */
+    .form-actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid hsl(var(--border-color) / 0.3);
+    }
+
+    .btn-submit, .btn-cancel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 32px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .btn-submit {
+        color: white;
+        flex: 2;
+        border: none;
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px hsl(var(--base) / 0.4);
+        }
+
+    .btn-cancel {
+        background: transparent;
+        border: 1px solid;
+        flex: 1;
+    }
+
+        .btn-cancel:hover {
+            background: hsl(var(--section-bg));
+            transform: translateY(-2px);
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            font-size: 22px;
+        }
+
+        .header-title {
+            font-size: 22px;
+        }
+
+        .form-card-body {
+            padding: 20px;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-submit, .btn-cancel {
+            width: 100%;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .form-card-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-badge {
+            align-self: flex-start;
+        }
+
+        .form-input {
+            padding: 12px 12px 12px 44px;
+            font-size: 14px;
+        }
+    }
+</style>

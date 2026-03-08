@@ -4,130 +4,781 @@
     Layout = "_AdminLayout";
 }
 
+<!-- Success/Error Messages -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert-modern alert-success">
+        <i class="las la-check-circle"></i>
+        <span>@TempData["Success"]</span>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-modern alert-error">
+        <i class="las la-exclamation-circle"></i>
+        <span>@TempData["Error"]</span>
+    </div>
+}
+
 <!-- ── Page Header ─────────────────────────────────────────────── -->
-<div class="lv-page-hdr">
-    <div class="lv-page-hdr__left">
-        <div class="lv-page-hdr__icon" style="background:linear-gradient(135deg,hsl(40 95% 50%),hsl(38 100% 60%));">
+<div class="edit-page-header">
+    <div class="edit-page-header__left">
+        <div class="edit-page-header__icon">
             <i class="las la-user-edit"></i>
         </div>
-        <div>
-            <h2 class="lv-page-hdr__title">Edit User</h2>
-            <p class="lv-page-hdr__sub">Update user details and plan type</p>
+        <div class="edit-page-header__text">
+            <h1 class="edit-page-header__title">Edit User</h1>
+            <p class="edit-page-header__subtitle">Update user information and plan details</p>
         </div>
     </div>
-    <div class="lv-page-hdr__right">
-        <a href="/Admin/Users" class="lv-btn lv-btn--ghost">
-            <i class="las la-arrow-left"></i> Back to Users
+    <div class="edit-page-header__right">
+        <a href="/Admin/Users" class="btn btn-outline">
+            <i class="las la-arrow-left"></i>
+            <span>Back to Users</span>
         </a>
     </div>
 </div>
 
-<!-- ── Form Card ──────────────────────────────────────────────── -->
-<div class="lv-card lv-form-card">
-    <div class="lv-card__hdr">
-        <div class="lv-card__hdr-left">
-            <span class="lv-card__dot" style="background:hsl(40 95% 50%);"></span>
-            <span class="lv-card__title">Edit Details</span>
+<!-- ── Main Form Card ──────────────────────────────────────────── -->
+<div class="edit-form-container">
+    <div class="edit-form-card">
+        <!-- Card Header -->
+        <div class="edit-form-card__header">
+            <div class="edit-form-card__header-left">
+                <span class="edit-form-card__dot"></span>
+                <h3 class="edit-form-card__title">User Information</h3>
+            </div>
+            <span class="edit-form-card__badge">Edit Mode</span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="edit-form-card__body">
+            <form asp-action="EditUser" method="post" class="edit-form">
+                <input type="hidden" asp-for="Id" />
+
+                <!-- Form Grid - 2 columns on desktop -->
+                <div class="edit-form-grid">
+                    <!-- Left Column -->
+                    <div class="edit-form-grid__col">
+                        <!-- Full Name -->
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">
+                                <span>Full Name</span>
+                                <span class="edit-form-label__required">*</span>
+                            </label>
+                            <div class="edit-input-wrapper">
+                                <span class="edit-input-icon">
+                                    <i class="las la-user"></i>
+                                </span>
+                                <input asp-for="FullName" class="edit-form-input" 
+                                       placeholder="Enter full name" />
+                            </div>
+                            <span asp-validation-for="FullName" class="edit-form-error"></span>
+                        </div>
+
+                        <!-- Mobile Number -->
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">
+                                <span>Mobile Number</span>
+                                <span class="edit-form-label__required">*</span>
+                            </label>
+                            <div class="edit-input-wrapper">
+                                <span class="edit-input-icon">
+                                    <i class="las la-phone-alt"></i>
+                                </span>
+                                <input asp-for="MobileNumber" class="edit-form-input" 
+                                       maxlength="10" placeholder="10-digit mobile number" />
+                            </div>
+                            <span asp-validation-for="MobileNumber" class="edit-form-error"></span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="edit-form-grid__col">
+                        <!-- Email -->
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">
+                                <span>Email Address</span>
+                                <span class="edit-form-label__optional">optional</span>
+                            </label>
+                            <div class="edit-input-wrapper">
+                                <span class="edit-input-icon">
+                                    <i class="las la-envelope"></i>
+                                </span>
+                                <input asp-for="Email" class="edit-form-input" 
+                                       placeholder="user@example.com" />
+                            </div>
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="edit-form-group">
+                            <label class="edit-form-label">
+                                <span>New Password</span>
+                                <span class="edit-form-label__optional">leave blank to keep current</span>
+                            </label>
+                            <div class="edit-input-wrapper">
+                                <span class="edit-input-icon">
+                                    <i class="las la-lock"></i>
+                                </span>
+                                <input asp-for="NewPassword" type="password" class="edit-form-input" 
+                                       placeholder="Enter new password" />
+                            </div>
+                            <span asp-validation-for="NewPassword" class="edit-form-error"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plan Type Selection - Full Width -->
+                <div class="edit-form-group edit-form-group--full">
+                    <label class="edit-form-label">
+                        <span>Plan Type</span>
+                        <span class="edit-form-label__required">*</span>
+                    </label>
+                    
+                    <div class="edit-plan-grid">
+                        <!-- Prepaid Option -->
+                        <label class="edit-plan-option">
+                            <input type="radio" asp-for="PlanType" value="Prepaid" class="edit-plan-option__radio">
+                            <div class="edit-plan-option__card">
+                                <div class="edit-plan-option__icon prepaid-icon">
+                                    <i class="las la-sim-card"></i>
+                                </div>
+                                <div class="edit-plan-option__content">
+                                    <span class="edit-plan-option__title">Prepaid</span>
+                                    <span class="edit-plan-option__desc">Pay before you use</span>
+                                </div>
+                                <div class="edit-plan-option__check">
+                                    <i class="las la-check-circle"></i>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Postpaid Option -->
+                        <label class="edit-plan-option">
+                            <input type="radio" asp-for="PlanType" value="Postpaid" class="edit-plan-option__radio">
+                            <div class="edit-plan-option__card">
+                                <div class="edit-plan-option__icon postpaid-icon">
+                                    <i class="las la-calendar-check"></i>
+                                </div>
+                                <div class="edit-plan-option__content">
+                                    <span class="edit-plan-option__title">Postpaid</span>
+                                    <span class="edit-plan-option__desc">Pay monthly bill</span>
+                                </div>
+                                <div class="edit-plan-option__check">
+                                    <i class="las la-check-circle"></i>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <span asp-validation-for="PlanType" class="edit-form-error"></span>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="edit-form-actions">
+                    <button type="submit" class="btn btn-primary btn-large">
+                        <i class="las la-save"></i>
+                        <span>Save Changes</span>
+                    </button>
+                    <a href="/Admin/Users" class="btn btn-secondary btn-large">
+                        <i class="las la-times"></i>
+                        <span>Cancel</span>
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <div class="lv-form-body">
-        <form asp-action="EditUser" method="post">
-            <input type="hidden" asp-for="Id" />
-
-            <!-- Full Name -->
-            <div class="lv-field">
-                <label class="lv-label">Full Name <span class="lv-required">*</span></label>
-                <div class="lv-input-wrap">
-                    <span class="lv-input-ico"><i class="las la-user"></i></span>
-                    <input asp-for="FullName" class="lv-input" />
-                </div>
-                <span asp-validation-for="FullName" class="lv-error-msg"></span>
-            </div>
-
-            <!-- Mobile Number -->
-            <div class="lv-field">
-                <label class="lv-label">Mobile Number <span class="lv-required">*</span></label>
-                <div class="lv-input-wrap">
-                    <span class="lv-input-ico"><i class="las la-phone-alt"></i></span>
-                    <input asp-for="MobileNumber" class="lv-input" maxlength="10" />
-                </div>
-                <span asp-validation-for="MobileNumber" class="lv-error-msg"></span>
-            </div>
-
-            <!-- Email -->
-            <div class="lv-field">
-                <label class="lv-label">Email <span class="lv-optional">(optional)</span></label>
-                <div class="lv-input-wrap">
-                    <span class="lv-input-ico"><i class="las la-envelope"></i></span>
-                    <input asp-for="Email" class="lv-input" />
-                </div>
-            </div>
-
-            <!-- New Password -->
-            <div class="lv-field">
-                <label class="lv-label">
-                    New Password
-                    <span class="lv-optional">(leave blank to keep current)</span>
-                </label>
-                <div class="lv-input-wrap">
-                    <span class="lv-input-ico"><i class="las la-lock"></i></span>
-                    <input asp-for="NewPassword" type="password" class="lv-input"
-                           placeholder="Enter new password or leave blank" />
-                </div>
-                <span asp-validation-for="NewPassword" class="lv-error-msg"></span>
-            </div>
-
-            <!-- Plan Type -->
-            <div class="lv-field">
-                <label class="lv-label">Plan Type <span class="lv-required">*</span></label>
-                <div class="lv-plan-grid">
-                    <label class="lv-plan-opt">
-                        <input type="radio" asp-for="PlanType" value="Prepaid" />
-                        <div class="lv-plan-opt__card">
-                            <div class="lv-plan-opt__icon" style="background:hsl(var(--base)/.12);color:hsl(var(--base));">
-                                <i class="las la-sim-card"></i>
-                            </div>
-                            <div class="lv-plan-opt__text">
-                                <strong>Prepaid</strong>
-                                <small>Pay before use</small>
-                            </div>
-                            <span class="lv-plan-opt__check"><i class="las la-check"></i></span>
-                        </div>
-                    </label>
-                    <label class="lv-plan-opt">
-                        <input type="radio" asp-for="PlanType" value="Postpaid" />
-                        <div class="lv-plan-opt__card">
-                            <div class="lv-plan-opt__icon" style="background:hsl(var(--base-two)/.12);color:hsl(var(--base-two));">
-                                <i class="las la-calendar-check"></i>
-                            </div>
-                            <div class="lv-plan-opt__text">
-                                <strong>Postpaid</strong>
-                                <small>Pay monthly bill</small>
-                            </div>
-                            <span class="lv-plan-opt__check"><i class="las la-check"></i></span>
-                        </div>
-                    </label>
-                </div>
-                <span asp-validation-for="PlanType" class="lv-error-msg"></span>
-            </div>
-
-            <!-- Submit -->
-            <div class="lv-form-actions">
-                <button type="submit" class="lv-btn lv-btn--primary lv-btn--lg">
-                    <i class="las la-save"></i> Save Changes
-                </button>
-                <a href="/Admin/Users" class="lv-btn lv-btn--ghost lv-btn--lg">
-                    Cancel
-                </a>
-            </div>
-
-        </form>
-    </div>
 </div>
+
+<style>
+    /* =======================================================
+       MODERN EDIT USER PAGE - Premium Design System
+       Colors preserved from :root variables
+    ======================================================= */
+
+    @@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    /* Global Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: hsl(var(--section-bg));
+        color: hsl(var(--text-color));
+        line-height: 1.5;
+    }
+
+    /* ==================== ALERTS ==================== */
+    .alert-modern {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        font-weight: 500;
+        animation: slideInDown 0.3s ease;
+        border-left: 4px solid transparent;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, hsl(180 70% 38% / 0.1), hsl(200 85% 48% / 0.1));
+        border-left-color: hsl(180 70% 38%);
+        color: hsl(180 70% 30%);
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, hsl(0 85% 55% / 0.1), hsl(0 85% 45% / 0.1));
+        border-left-color: hsl(0 85% 55%);
+        color: hsl(0 85% 35%);
+    }
+
+    .alert-modern i {
+        font-size: 1.5rem;
+    }
+
+    @@keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ==================== PAGE HEADER ==================== */
+    .edit-page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .edit-page-header__left {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .edit-page-header__icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, 
+            hsl(40 95% 50%), 
+            hsl(38 100% 60%));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        box-shadow: 0 15px 30px -10px hsl(40 95% 50% / 0.4);
+    }
+
+    .edit-page-header__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .edit-page-header__subtitle {
+        font-size: 0.95rem;
+        color: hsl(var(--text-color) / 0.7);
+        margin: 0.25rem 0 0;
+    }
+
+    /* ==================== BUTTONS ==================== */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+        cursor: pointer;
+        border: 1px solid transparent;
+        white-space: nowrap;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid hsl(var(--border-color));
+        color: hsl(var(--text-color));
+    }
+
+    .btn-outline:hover {
+        background: hsl(var(--base) / 0.05);
+        border-color: hsl(var(--base));
+        color: hsl(var(--base));
+        transform: translateY(-2px);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, 
+            hsl(var(--base)), 
+            hsl(var(--base-two)));
+        color: white;
+        box-shadow: 0 10px 20px -8px hsl(var(--base) / 0.5);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px -8px hsl(var(--base) / 0.6);
+    }
+
+    .btn-secondary {
+        background: hsl(var(--section-bg));
+        border: 1px solid hsl(var(--border-color));
+        color: hsl(var(--text-color));
+    }
+
+    .btn-secondary:hover {
+        background: hsl(var(--border-color) / 0.3);
+        transform: translateY(-2px);
+    }
+
+    .btn-large {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+
+    .btn i {
+        font-size: 1.2rem;
+    }
+
+    /* ==================== FORM CONTAINER ==================== */
+    .edit-form-container {
+        animation: fadeInUp 0.5s ease;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .edit-form-card {
+        background: white;
+        border-radius: 28px;
+        border: 1px solid hsl(var(--border-color) / 0.4);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+
+    /* Card Header */
+    .edit-form-card__header {
+        padding: 1.5rem 2rem;
+        background: linear-gradient(135deg, 
+            hsl(var(--section-bg) / 0.8), 
+            white);
+        border-bottom: 1px solid hsl(var(--border-color) / 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .edit-form-card__header-left {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .edit-form-card__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, 
+            hsl(var(--base)), 
+            hsl(var(--base-two)));
+        box-shadow: 0 0 0 3px hsl(var(--base) / 0.2);
+    }
+
+    .edit-form-card__title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: hsl(var(--heading-color));
+        margin: 0;
+    }
+
+    .edit-form-card__badge {
+        padding: 0.35rem 1.25rem;
+        background: hsl(40 95% 50% / 0.1);
+        color: hsl(40 95% 40%);
+        border-radius: 40px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid hsl(40 95% 50% / 0.2);
+    }
+
+    /* Card Body */
+    .edit-form-card__body {
+        padding: 2rem;
+    }
+
+    /* ==================== FORM GRID ==================== */
+    .edit-form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .edit-form-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+    }
+
+    /* ==================== FORM GROUPS ==================== */
+    .edit-form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .edit-form-group--full {
+        grid-column: 1 / -1;
+        margin-bottom: 2rem;
+    }
+
+    .edit-form-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: hsl(var(--heading-color));
+    }
+
+    .edit-form-label__required {
+        color: hsl(0 85% 55%);
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    .edit-form-label__optional {
+        color: hsl(var(--text-color) / 0.5);
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin-left: 0.5rem;
+    }
+
+    /* Input Wrapper */
+    .edit-input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .edit-input-icon {
+        position: absolute;
+        left: 1rem;
+        color: hsl(var(--base));
+        font-size: 1.2rem;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+    }
+
+    .edit-form-input {
+        width: 100%;
+        padding: 0.875rem 1rem 0.875rem 3rem;
+        border: 2px solid hsl(var(--border-color) / 0.5);
+        border-radius: 16px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: all 0.2s ease;
+        background: white;
+        color: hsl(var(--heading-color));
+    }
+
+    .edit-form-input:focus {
+        outline: none;
+        border-color: hsl(var(--base));
+        box-shadow: 0 0 0 4px hsl(var(--base) / 0.1);
+    }
+
+    .edit-form-input:hover {
+        border-color: hsl(var(--base) / 0.5);
+    }
+
+    .edit-form-input::placeholder {
+        color: hsl(var(--text-color) / 0.4);
+    }
+
+    /* Error Message */
+    .edit-form-error {
+        display: block;
+        margin-top: 0.5rem;
+        font-size: 0.8rem;
+        color: hsl(0 85% 55%);
+        padding-left: 0.5rem;
+    }
+
+    /* ==================== PLAN SELECTION ==================== */
+    .edit-plan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .edit-plan-option {
+        cursor: pointer;
+        display: block;
+    }
+
+    .edit-plan-option__radio {
+        display: none;
+    }
+
+    .edit-plan-option__card {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1.5rem;
+        background: white;
+        border: 2px solid hsl(var(--border-color) / 0.5);
+        border-radius: 24px;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+        position: relative;
+    }
+
+    .edit-plan-option__radio:checked + .edit-plan-option__card {
+        border-color: hsl(var(--base));
+        background: linear-gradient(135deg, 
+            hsl(var(--base) / 0.02), 
+            hsl(var(--base-two) / 0.02));
+        box-shadow: 0 15px 30px -12px hsl(var(--base) / 0.3);
+        transform: translateY(-2px);
+    }
+
+    .edit-plan-option__card:hover {
+        border-color: hsl(var(--base) / 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-plan-option__icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .prepaid-icon {
+        background: hsl(var(--base) / 0.1);
+        color: hsl(var(--base));
+    }
+
+    .postpaid-icon {
+        background: hsl(var(--base-two) / 0.1);
+        color: hsl(var(--base-two));
+    }
+
+    .edit-plan-option__content {
+        flex: 1;
+    }
+
+    .edit-plan-option__title {
+        display: block;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: hsl(var(--heading-color));
+        margin-bottom: 0.25rem;
+    }
+
+    .edit-plan-option__desc {
+        display: block;
+        font-size: 0.8rem;
+        color: hsl(var(--text-color) / 0.7);
+    }
+
+    .edit-plan-option__check {
+        color: hsl(var(--base));
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: scale(0.5);
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+    }
+
+    .edit-plan-option__radio:checked + .edit-plan-option__card .edit-plan-option__check {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* ==================== FORM ACTIONS ==================== */
+    .edit-form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid hsl(var(--border-color) / 0.3);
+    }
+
+    @@media (max-width: 480px) {
+        .edit-form-actions {
+            flex-direction: column;
+        }
+        
+        .edit-form-actions .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    /* ==================== RESPONSIVE ADJUSTMENTS ==================== */
+    @@media (max-width: 1024px) {
+        .edit-page-header__title {
+            font-size: 1.75rem;
+        }
+        
+        .edit-form-card__header {
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .edit-form-card__body {
+            padding: 1.5rem;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .edit-page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .edit-page-header__left {
+            width: 100%;
+        }
+        
+        .edit-page-header__right {
+            width: 100%;
+        }
+        
+        .edit-page-header__right .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .edit-plan-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .edit-form-card__badge {
+            display: none;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .edit-page-header__icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+        }
+        
+        .edit-page-header__title {
+            font-size: 1.5rem;
+        }
+        
+        .edit-form-card__header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .edit-plan-option__card {
+            padding: 1rem;
+        }
+        
+        .edit-plan-option__icon {
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+        }
+        
+        .edit-plan-option__title {
+            font-size: 1rem;
+        }
+    }
+
+    /* ==================== ANIMATIONS ==================== */
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Loading state for submit button */
+    .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 5px 15px -5px hsl(var(--base) / 0.5);
+    }
+
+    /* Input focus animation */
+    .edit-form-input:focus + .edit-input-icon {
+        color: hsl(var(--base-two));
+        transform: scale(1.1);
+    }
+
+    /* Validation styling */
+    .input-validation-error {
+        border-color: hsl(0 85% 55%) !important;
+    }
+
+    .field-validation-error {
+        color: hsl(0 85% 55%);
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        display: block;
+    }
+</style>
 
 @await Html.PartialAsync("_LevelUpStyles")
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Add active state to selected plan
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('.edit-plan-option__radio');
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    radio.closest('.edit-plan-option').classList.add('selected');
+                }
+                
+                radio.addEventListener('change', function() {
+                    document.querySelectorAll('.edit-plan-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    if (this.checked) {
+                        this.closest('.edit-plan-option').classList.add('selected');
+                    }
+                });
+            });
+        });
+    </script>
 }

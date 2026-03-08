@@ -11,259 +11,834 @@
     </div>
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="mb-1" style="font-family:'ClashDisplay-Variable',sans-serif;">
-            <i class="las la-users" style="color:hsl(var(--base));"></i> Registered Users
-        </h2>
-        <p class="text-muted mb-0">Create, edit and manage platform users</p>
+<div class="user-page-header">
+    <div class="user-title-wrap">
+        <div class="user-title-icon">
+            <i class="las la-users"></i>
+        </div>
+        <div>
+            <h2 class="user-title">Registered Users</h2>
+            <p class="user-subtitle">Create, edit and manage platform users</p>
+        </div>
     </div>
-    <div class="d-flex gap-2 align-items-center">
-        <span class="happy-users-badge" style="padding:0.5rem 1.5rem;">
-            <i class="las la-user"></i><span>@Model.Count() Users</span>
+
+    <div class="user-header-actions">
+        <span class="user-count-badge">
+            <i class="las la-user"></i>
+            @Model.Count() Users
         </span>
-        <a href="/Admin/CreateUser" class="btn-action btn-create">
-            <i class="las la-user-plus"></i> Add User
+        <a href="/Admin/CreateUser" class="btn-create">
+            <i class="las la-user-plus"></i>
+            Add User
         </a>
     </div>
 </div>
 
-<div class="transactions-panel">
-
-    <!-- Panel header with per-page control -->
+<div class="users-panel">
+    <!-- Panel Header -->
     <div class="panel-header">
-        <h5 class="mb-0">
-            <i class="las la-users-cog" style="color:hsl(var(--base));"></i> User Management
+        <h5>
+            <i class="las la-users-cog"></i>
+            User Management
         </h5>
-        <div class="pg-controls-top">
-            <span class="pg-info-text">Show</span>
-            <select id="perPageSelect" class="pg-per-page" onchange="initPagination()">
+        <div class="per-page-control">
+            <span>Show</span>
+            <select id="perPageSelect" onchange="initPagination()">
                 <option value="5">5</option>
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
             </select>
-            <span class="pg-info-text">per page</span>
-            <span class="pg-page-label" id="page-label"></span>
+            <span>per page</span>
+            <span class="page-label" id="page-label"></span>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
+    <!-- Table Container with Horizontal Scroll -->
+    <div class="table-container">
+        <table class="users-table">
             <thead>
                 <tr>
-                    <th>#</th><th>Full Name</th><th>Mobile Number</th>
-                    <th>Plan Type</th><th>Role</th><th>Status</th><th>Actions</th>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Mobile Number</th>
+                    <th>Plan Type</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="table-body">
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="7">
-                            <div class="empty-state">
-                                <i class="las la-user-slash"></i>
-                                <p class="mt-2">No users yet</p>
-                            </div>
+                        <td colspan="7" class="empty-state">
+                            <i class="las la-user-slash"></i>
+                            <p>No users yet</p>
                         </td>
                     </tr>
                 }
-                @{ int count = 1; }
-                @foreach (var item in Model)
+                else
                 {
-                    <tr class="pg-row">
-                        <td>@count</td>
-                        <td>
-                            <div style="display:flex;align-items:center;gap:10px;">
-                                <div class="user-mini-avatar">@item.FullName.Substring(0,1).ToUpper()</div>
-                                <strong>@item.FullName</strong>
-                            </div>
-                        </td>
-                        <td><span class="mobile-number"><i class="las la-phone-alt"></i> @item.User.UserName</span></td>
-                        <td>
-                            @if (item.PlanType == "Postpaid")
-                            { <span class="badge-custom badge-postpaid"><i class="las la-calendar"></i> Postpaid</span> }
-                            else if (item.PlanType == "Prepaid")
-                            { <span class="badge-custom badge-topup"><i class="las la-sim-card"></i> Prepaid</span> }
-                            else
-                            { <span class="badge-custom" style="background:hsl(0 0% 50%/0.1);color:hsl(0 0% 40%);">@item.PlanType</span> }
-                        </td>
-                        <td>
-                            @if (item.Role == "Admin")
-                            { <span class="badge-custom" style="background:hsl(270 100% 60%/0.1);color:hsl(270 100% 45%);"><i class="las la-user-shield"></i> Admin</span> }
-                            else
-                            { <span class="badge-custom badge-success"><i class="las la-user"></i> User</span> }
-                        </td>
-                        <td>
-                            @if (item.User.LockoutEnd != null && item.User.LockoutEnd > DateTimeOffset.Now)
-                            { <span class="badge-custom" style="background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);"><i class="las la-lock"></i> Locked</span> }
-                            else
-                            { <span class="badge-custom badge-success"><i class="las la-check-circle"></i> Active</span> }
-                        </td>
-                        <td>
-                            <div class="action-btns">
-                                <a href="/Admin/EditUser/@item.User.Id" class="btn-action btn-edit">
-                                    <i class="las la-edit"></i> Edit
-                                </a>
-                                @if (item.Role != "Admin")
-                                {
-                                    <form method="post" action="/Admin/DeleteUser" style="margin:0;"
-                                          onsubmit="return confirm('Delete @item.User.UserName? This cannot be undone.');">
-                                        <input type="hidden" name="id" value="@item.User.Id" />
-                                        <button type="submit" class="btn-action btn-delete">
-                                            <i class="las la-trash"></i> Delete
-                                        </button>
-                                    </form>
+                    int count = 1;
+                    foreach (var item in Model)
+                    {
+                        <tr class="user-row">
+                            <td class="text-center">@count</td>
+                            <td>
+                                <div class="user-info-cell">
+                                    <div class="user-avatar">
+                                        @item.FullName.Substring(0, 1).ToUpper()
+                                    </div>
+                                    <span class="user-name">@item.FullName</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="mobile-cell">
+                                    <i class="las la-phone-alt"></i>
+                                    <span>@item.User.UserName</span>
+                                </div>
+                            </td>
+                            <td>
+                                @{
+                                    var planClass = item.PlanType?.ToLower() switch
+                                    {
+                                        "postpaid" => "badge-postpaid",
+                                        "prepaid" => "badge-prepaid",
+                                        _ => ""
+                                    };
                                 }
-                            </div>
-                        </td>
-                    </tr>
-                    count++;
+                                <span class="plan-badge @planClass">
+                                    <i class="las la-@(item.PlanType == "Postpaid" ? "calendar" : "sim-card")"></i>
+                                    @item.PlanType
+                                </span>
+                            </td>
+                            <td>
+                                @if (item.Role == "Admin")
+                                {
+                                    <span class="role-badge role-admin">
+                                        <i class="las la-user-shield"></i>
+                                        Admin
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="role-badge role-user">
+                                        <i class="las la-user"></i>
+                                        User
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var isLocked = item.User.LockoutEnd != null && item.User.LockoutEnd > DateTimeOffset.Now;
+                                }
+                                <span class="status-badge @(isLocked ? "status-locked" : "status-active")">
+                                    <i class="las la-@(isLocked ? "lock" : "check-circle")"></i>
+                                    @(isLocked ? "Locked" : "Active")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="/Admin/EditUser/@item.User.Id" class="btn-edit">
+                                        <i class="las la-edit"></i>
+                                        <span>Edit</span>
+                                    </a>
+                                    @if (item.Role != "Admin")
+                                    {
+                                        <form method="post" action="/Admin/DeleteUser"
+                                              onsubmit="return confirm('Delete @item.User.UserName? This cannot be undone.');">
+                                            <input type="hidden" name="id" value="@item.User.Id" />
+                                            <button type="submit" class="btn-delete">
+                                                <i class="las la-trash"></i>
+                                                <span>Delete</span>
+                                            </button>
+                                        </form>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        count++;
+                    }
                 }
             </tbody>
         </table>
     </div>
 
-    <!-- ── Pagination footer ── -->
-    <div class="pg-bar" id="pg-bar">
-        <span class="pg-summary" id="pg-summary"></span>
-        <div class="pg-btns" id="pg-btns"></div>
+    <!-- Pagination -->
+    <div class="pagination-bar" id="pg-bar">
+        <span class="pagination-info" id="pg-summary"></span>
+        <div class="pagination-buttons" id="pg-btns"></div>
     </div>
-
 </div>
 
 <style>
-    /* ── existing styles ── */
-    .alert-success-bar { background:hsl(var(--base)/0.1); border-left:4px solid hsl(var(--base)); border-radius:12px; padding:12px 18px; margin-bottom:20px; color:hsl(var(--base)); display:flex; align-items:center; gap:10px; }
-    .user-mini-avatar { width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,hsl(var(--base)),hsl(var(--base-two)));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0; }
-    .action-btns { display:flex;gap:8px;flex-wrap:wrap; }
-    .btn-action { display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:none;text-decoration:none;transition:0.2s; }
-    .btn-create { background:hsl(var(--base)/0.1);color:hsl(var(--base));border:1px solid hsl(var(--base)/0.3); }
-    .btn-create:hover { background:hsl(var(--base));color:#fff; }
-    .btn-edit { background:hsl(40 100% 50%/0.1);color:hsl(40 100% 35%);border:1px solid hsl(40 100% 50%/0.3); }
-    .btn-edit:hover { background:hsl(40 100% 50%);color:#fff; }
-    .btn-delete { background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);border:1px solid hsl(0 100% 50%/0.3); }
-    .btn-delete:hover { background:hsl(0 100% 50%);color:#fff; }
+    /* ===== RESET & BASE ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-    /* ── per-page control in header ── */
-    .pg-controls-top { display:flex; align-items:center; gap:6px; }
-    .pg-info-text { font-size:12px; color:hsl(var(--text-color)/.6); font-weight:500; }
-    .pg-per-page { border:1px solid hsl(var(--border-color)); border-radius:8px; padding:4px 8px; font-size:12px; background:hsl(var(--section-bg)); color:hsl(var(--heading-color)); cursor:pointer; outline:none; transition:.15s; }
-    .pg-per-page:focus { border-color:hsl(var(--base)); }
-    .pg-page-label { font-size:12px; font-weight:600; color:hsl(var(--text-color)/.5); margin-left:4px; }
+    /* ===== ALERT STYLES ===== */
+    .alert-success-bar {
+        background: linear-gradient(135deg, hsl(180 70% 38% / 0.1), hsl(200 85% 48% / 0.1));
+        border-left: 4px solid hsl(var(--base));
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: hsl(var(--heading-color));
+        font-weight: 500;
+    }
 
-    /* ── pagination footer bar ── */
-    .pg-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-top:1px solid hsl(var(--border-color)/.5); background:hsl(var(--section-bg)); flex-wrap:wrap; gap:8px; }
-    .pg-summary { font-size:12px; color:hsl(var(--text-color)/.55); font-weight:500; }
-    .pg-btns { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+        .alert-success-bar i {
+            font-size: 1.25rem;
+            color: hsl(var(--base));
+        }
 
-    /* ── page buttons ── */
+    /* ===== PAGE HEADER ===== */
+    .user-page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .user-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .user-title-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .user-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: hsl(var(--heading-color));
+    }
+
+    .user-subtitle {
+        margin: 0.25rem 0 0;
+        font-size: 0.875rem;
+        color: hsl(var(--text-color) / 0.7);
+    }
+
+    .user-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .user-count-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.25rem;
+        background: hsl(var(--base) / 0.1);
+        color: hsl(var(--base));
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        white-space: nowrap;
+    }
+
+    .btn-create {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        color: white;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+    }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px hsl(var(--base) / 0.3);
+            color: white;
+        }
+
+    /* ===== MAIN PANEL ===== */
+    .users-panel {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid hsl(var(--border-color));
+        overflow: hidden;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-header {
+        padding: 1rem 1.5rem;
+        background: hsl(var(--section-bg));
+        border-bottom: 1px solid hsl(var(--border-color));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+        .panel-header h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: hsl(var(--heading-color));
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+            .panel-header h5 i {
+                color: hsl(var(--base));
+                font-size: 1.25rem;
+            }
+
+    .per-page-control {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: hsl(var(--text-color));
+    }
+
+        .per-page-control select {
+            padding: 0.35rem 0.75rem;
+            border: 1px solid hsl(var(--border-color));
+            border-radius: 6px;
+            background: white;
+            color: hsl(var(--heading-color));
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+
+    .page-label {
+        color: hsl(var(--base));
+        font-weight: 600;
+        margin-left: 0.5rem;
+    }
+
+    /* ===== TABLE CONTAINER (Horizontal Scroll on Mobile) ===== */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* ===== TABLE STYLES ===== */
+    .users-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px; /* Ensures table doesn't break on desktop */
+    }
+
+        .users-table th {
+            background: hsl(var(--section-bg));
+            padding: 1rem 1.25rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: hsl(var(--text-color) / 0.8);
+            border-bottom: 2px solid hsl(var(--border-color));
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .users-table td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid hsl(var(--border-color) / 0.5);
+            color: hsl(var(--text-color));
+            vertical-align: middle;
+        }
+
+        .users-table tbody tr:hover {
+            background: hsl(var(--base) / 0.02);
+        }
+
+    /* Center align for # column */
+    .text-center {
+        text-align: center;
+    }
+
+    /* ===== USER INFO CELL ===== */
+    .user-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .user-name {
+        font-weight: 500;
+        color: hsl(var(--heading-color));
+        white-space: nowrap;
+    }
+
+    /* ===== MOBILE CELL ===== */
+    .mobile-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+    }
+
+        .mobile-cell i {
+            color: hsl(var(--base));
+            font-size: 1rem;
+        }
+
+    /* ===== BADGES ===== */
+    .plan-badge, .role-badge, .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.35rem 1rem;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    /* Plan Badges */
+    .badge-postpaid {
+        background: hsl(40 100% 46% / 0.1);
+        color: hsl(40 100% 40%);
+    }
+
+    .badge-prepaid {
+        background: hsl(var(--base) / 0.1);
+        color: hsl(var(--base));
+    }
+
+    /* Role Badges */
+    .role-admin {
+        background: hsl(270 100% 60% / 0.1);
+        color: hsl(270 100% 45%);
+    }
+
+    .role-user {
+        background: hsl(180 70% 38% / 0.1);
+        color: hsl(180 70% 38%);
+    }
+
+    /* Status Badges */
+    .status-active {
+        background: hsl(180 70% 38% / 0.1);
+        color: hsl(180 70% 38%);
+    }
+
+    .status-locked {
+        background: hsl(0 100% 50% / 0.1);
+        color: hsl(0 100% 45%);
+    }
+
+    /* ===== ACTION BUTTONS ===== */
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-edit, .btn-delete {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .btn-edit {
+        background: hsl(210 90% 55% / 0.1);
+        color: hsl(210 90% 45%);
+    }
+
+        .btn-edit:hover {
+            background: hsl(210 90% 45%);
+            color: white;
+        }
+
+    .btn-delete {
+        background: hsl(0 85% 55% / 0.1);
+        color: hsl(0 85% 45%);
+    }
+
+        .btn-delete:hover {
+            background: hsl(0 85% 45%);
+            color: white;
+        }
+
+        .btn-edit i, .btn-delete i {
+            font-size: 0.9rem;
+        }
+
+    /* Form inside table cell */
+    .action-buttons form {
+        margin: 0;
+        display: inline-block;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination-bar {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid hsl(var(--border-color));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        background: hsl(var(--section-bg));
+    }
+
+    .pagination-info {
+        font-size: 0.875rem;
+        color: hsl(var(--text-color) / 0.8);
+    }
+
+    .pagination-buttons {
+        display: flex;
+        gap: 0.375rem;
+        flex-wrap: wrap;
+    }
+
     .pg-btn {
-        display:inline-flex; align-items:center; justify-content:center;
-        min-width:32px; height:32px; padding:0 8px;
-        border-radius:8px; border:1px solid hsl(var(--border-color));
-        background:hsl(var(--white)); color:hsl(var(--text-color));
-        font-size:12px; font-weight:600; cursor:pointer; transition:all .18s;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.75rem;
+        border: 1px solid hsl(var(--border-color));
+        background: white;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: hsl(var(--text-color));
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .pg-btn:hover:not(:disabled):not(.pg-btn--on) {
-        border-color:hsl(var(--base)); color:hsl(var(--base));
-        background:hsl(var(--base)/.07);
-    }
+
+        .pg-btn:hover:not(:disabled) {
+            background: hsl(var(--base));
+            border-color: hsl(var(--base));
+            color: white;
+        }
+
     .pg-btn--on {
-        background:linear-gradient(135deg,hsl(var(--base)),hsl(var(--base-two)));
-        color:#fff; border-color:transparent;
-        box-shadow:0 3px 10px hsl(var(--base)/.3);
+        background: hsl(var(--base));
+        border-color: hsl(var(--base));
+        color: white;
     }
-    .pg-btn--nav { font-size:14px; }
-    .pg-btn:disabled { opacity:.3; cursor:not-allowed; }
-    .pg-dots { display:inline-flex; align-items:center; justify-content:center; min-width:32px; height:32px; font-size:13px; color:hsl(var(--text-color)/.35); }
+
+    .pg-btn--nav {
+        font-size: 1.1rem;
+    }
+
+    .pg-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .pg-dots {
+        display: flex;
+        align-items: center;
+        padding: 0 0.25rem;
+        color: hsl(var(--text-color) / 0.5);
+        font-weight: 600;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 3rem !important;
+        color: hsl(var(--text-color) / 0.5);
+    }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+    /* ===== RESPONSIVE FIXES ===== */
+    @@media (max-width: 768px) {
+        .user-page-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user-header-actions {
+            width: 100%;
+        }
+
+        .user-count-badge {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-create {
+            flex: 2;
+            justify-content: center;
+        }
+
+        .panel-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .per-page-control {
+            width: 100%;
+        }
+
+            .per-page-control select {
+                flex: 1;
+            }
+
+        .pagination-bar {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .pagination-buttons {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-edit, .btn-delete {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .user-title {
+            font-size: 1.25rem;
+        }
+
+        .user-title-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.25rem;
+        }
+
+        .panel-header {
+            padding: 1rem;
+        }
+
+        .users-table td {
+            padding: 0.875rem 1rem;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 0.875rem;
+        }
+
+        .plan-badge, .role-badge, .status-badge {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-edit span, .btn-delete span {
+            display: none; /* Hide text, show only icons on very small screens */
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 0.4rem;
+        }
+
+            .btn-edit i, .btn-delete i {
+                margin: 0;
+                font-size: 1rem;
+            }
+    }
 </style>
 
 <script>
-(function () {
-    let page = 1;
+    (function() {
+        let page = 1;
 
-    const perPageEl  = () => document.getElementById('perPageSelect');
-    const rows       = () => Array.from(document.querySelectorAll('#table-body .pg-row'));
-    const perPage    = () => parseInt(perPageEl().value) || 10;
+        function getPerPage() {
+            return parseInt(document.getElementById('perPageSelect').value) || 10;
+        }
 
-    function initPagination() { page = 1; render(); }
+        function getRows() {
+            return Array.from(document.querySelectorAll('#table-body .user-row'));
+        }
 
-    function render() {
-        const pp    = perPage();
-        const all   = rows();
-        const total = all.length;
-        const pages = Math.max(1, Math.ceil(total / pp));
-        if (page > pages) page = pages;
+        function initPagination() {
+            page = 1;
+            render();
+        }
 
-        const from = (page - 1) * pp;
-        const to   = Math.min(from + pp, total);
+        function render() {
+            const perPage = getPerPage();
+            const allRows = getRows();
+            const total = allRows.length;
+            const pages = Math.max(1, Math.ceil(total / perPage));
+        
+            if (page > pages) page = pages;
 
-        all.forEach((r, i) => r.style.display = (i >= from && i < to) ? '' : 'none');
+            const from = (page - 1) * perPage;
+            const to = Math.min(from + perPage, total);
 
-        // Summary text
-        document.getElementById('pg-summary').textContent =
-            total === 0 ? 'No records' : `Showing ${from + 1}–${to} of ${total} users`;
+            allRows.forEach((row, index) => {
+                row.style.display = (index >= from && index < to) ? '' : 'none';
+            });
 
-        // Header page label
-        document.getElementById('page-label').textContent =
-            total > 0 ? `· Page ${page}/${pages}` : '';
-
-        // Hide bar if single page
-        document.getElementById('pg-bar').style.display =
-            (pages <= 1 && total <= pp) ? 'none' : 'flex';
-
-        buildBtns(pages);
-    }
-
-    function buildBtns(pages) {
-        const wrap = document.getElementById('pg-btns');
-        wrap.innerHTML = '';
-
-        // ‹ Prev
-        const prev = mkBtn('&#8249;', 'pg-btn pg-btn--nav', page === 1);
-        prev.onclick = () => { if (page > 1) { page--; render(); } };
-        wrap.appendChild(prev);
-
-        // Smart page numbers
-        pageNums(page, pages).forEach(p => {
-            if (p === '…') {
-                const d = document.createElement('span');
-                d.className = 'pg-dots'; d.textContent = '…';
-                wrap.appendChild(d);
-            } else {
-                const b = mkBtn(p, 'pg-btn' + (p === page ? ' pg-btn--on' : ''), false);
-                b.onclick = () => { page = p; render(); };
-                wrap.appendChild(b);
+            // Update summary
+            const summaryEl = document.getElementById('pg-summary');
+            if (summaryEl) {
+                summaryEl.textContent = total === 0
+                    ? 'No records'
+                    : `Showing ${from + 1}–${to} of ${total} users`;
             }
-        });
 
-        // › Next
-        const next = mkBtn('&#8250;', 'pg-btn pg-btn--nav', page === pages);
-        next.onclick = () => { if (page < pages) { page++; render(); } };
-        wrap.appendChild(next);
-    }
+            // Update page label
+            const labelEl = document.getElementById('page-label');
+            if (labelEl) {
+                labelEl.textContent = total > 0 ? `Page ${page}/${pages}` : '';
+            }
 
-    function mkBtn(html, cls, disabled) {
-        const b = document.createElement('button');
-        b.type = 'button'; b.innerHTML = html;
-        b.className = cls; b.disabled = disabled;
-        return b;
-    }
+            // Show/hide pagination bar
+            const barEl = document.getElementById('pg-bar');
+            if (barEl) {
+                barEl.style.display = (pages <= 1 && total <= perPage) ? 'none' : 'flex';
+            }
 
-    // Always show: 1, last, current-1, current, current+1 + ellipsis gaps
-    function pageNums(cur, total) {
-        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
-        const set = new Set([1, total, cur]);
-        if (cur > 1) set.add(cur - 1);
-        if (cur < total) set.add(cur + 1);
-        const sorted = [...set].sort((a, b) => a - b);
-        const out = []; let prev = 0;
-        sorted.forEach(n => { if (n - prev > 1) out.push('…'); out.push(n); prev = n; });
-        return out;
-    }
+            buildPaginationButtons(pages);
+        }
 
-    document.addEventListener('DOMContentLoaded', render);
-    window.initPagination = initPagination;
-})();
+        function buildPaginationButtons(pages) {
+            const container = document.getElementById('pg-btns');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            // Previous button
+            const prevBtn = createButton('‹', 'pg-btn pg-btn--nav', page === 1);
+            prevBtn.onclick = () => {
+                if (page > 1) {
+                    page--;
+                    render();
+                }
+            };
+            container.appendChild(prevBtn);
+
+            // Page numbers
+            const pageNumbers = getPageNumbers(page, pages);
+            pageNumbers.forEach(p => {
+                if (p === '…') {
+                    const dots = document.createElement('span');
+                    dots.className = 'pg-dots';
+                    dots.textContent = '…';
+                    container.appendChild(dots);
+                } else {
+                    const btn = createButton(p, 'pg-btn' + (p === page ? ' pg-btn--on' : ''), false);
+                    btn.onclick = () => {
+                        page = p;
+                        render();
+                    };
+                    container.appendChild(btn);
+                }
+            });
+
+            // Next button
+            const nextBtn = createButton('›', 'pg-btn pg-btn--nav', page === pages);
+            nextBtn.onclick = () => {
+                if (page < pages) {
+                    page++;
+                    render();
+                }
+            };
+            container.appendChild(nextBtn);
+        }
+
+        function createButton(text, className, disabled) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.innerHTML = text;
+            btn.className = className;
+            btn.disabled = disabled;
+            return btn;
+        }
+
+        function getPageNumbers(current, total) {
+            if (total <= 7) {
+                return Array.from({ length: total }, (_, i) => i + 1);
+            }
+        
+            const pages = new Set([1, total, current]);
+            if (current > 1) pages.add(current - 1);
+            if (current < total) pages.add(current + 1);
+        
+            const sorted = [...pages].sort((a, b) => a - b);
+            const result = [];
+            let prev = 0;
+        
+            sorted.forEach(num => {
+                if (num - prev > 1) result.push('…');
+                result.push(num);
+                prev = num;
+            });
+        
+            return result;
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', render);
+        window.initPagination = initPagination;
+    })();
 </script>

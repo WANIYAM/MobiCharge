@@ -9,7 +9,7 @@
 /* ── Page ── */
 .bill-page {
     min-height: 100vh;
-    background: #0a0f0f;
+    /* background: #0a0f0f; */
     padding: 100px 0 60px;
     position: relative;
     overflow: hidden;
@@ -19,7 +19,7 @@
     position: absolute;
     top: -200px; right: -100px;
     width: 600px; height: 600px;
-    background: radial-gradient(circle, hsl(180 70% 38% / 0.08) 0%, transparent 70%);
+    /* background: radial-gradient(circle, hsl(180 70% 38% / 0.08) 0%, transparent 70%); */
     pointer-events: none;
 }
 .bill-page::after {
@@ -27,21 +27,26 @@
     position: absolute;
     bottom: -100px; left: -100px;
     width: 400px; height: 400px;
-    background: radial-gradient(circle, hsl(200 85% 48% / 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, hsl(200 85% 48% / 0.05) 0%, transparent 70%); 
     pointer-events: none;
 }
 
 /* ── Left panel ── */
 .bill-left { position: sticky; top: 100px; }
-.bill-left .sign__title h1 { color: #fff; }
+
+            .bill-left .sign__title h1 {
+                color: #14537A;
+            }
 .bill-left .sign__title span { color: hsl(180 70% 48%); }
 
 /* ── Dark Cards ── */
 .dark-card {
-    background: #0e1818;
-    border: 1.5px solid #1a2e2e;
+
+   /* background: #0e1818;          */
+   border: 1.5px solid #14537A;
     border-radius: 20px;
     overflow: hidden;
+    /* text-align: center; */
     box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     margin-bottom: 20px;
 }
@@ -49,14 +54,22 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 20px 26px;
     border-bottom: 1px solid #1a2e2e;
-    background: #0a1212;
+    background: #14537A;
+    /* background: #0a1212; */
 }
 .dark-card__label {
     font-size: 11px; font-weight: 800;
     letter-spacing: 2px; text-transform: uppercase;
-    color: hsl(180 70% 45%); margin-bottom: 4px;
+    color: white; margin-bottom: 4px;
 }
-.dark-card__cycle { font-size: 13px; color: #4a7070; display: flex; align-items: center; gap: 6px; }
+
+        .dark-card__cycle {
+            font-size: 13px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
 /* Status badges */
 .bill-status {
@@ -80,9 +93,15 @@
     padding: 28px 26px 20px;
     border-bottom: 1px solid #1a2e2e;
 }
-.amount-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #3a5555; margin-bottom: 8px; }
+.amount-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #14537A; margin-bottom: 8px; }
 .amount-display .currency { font-size: 18px; color: hsl(180 70% 48%); font-weight: 700; vertical-align: top; line-height: 2.2; }
-.amount-display .amount   { font-size: 52px; font-weight: 900; color: #fff; font-family: 'ClashDisplay-Variable', sans-serif; line-height: 1; }
+        .amount-display .amount {
+            font-size: 52px;
+            font-weight: 900;
+            color: #14537A;
+            font-family: 'ClashDisplay-Variable', sans-serif;
+            line-height: 1;
+        }
 
 /* Body */
 .bill-body { padding: 24px 26px; }
@@ -99,10 +118,11 @@
 .usage-item {
     display: flex; align-items: center; gap: 14px;
     padding: 14px 16px;
-    background: #060e0e; border-radius: 12px;
-    border: 1px solid #111e1e; transition: border-color 0.2s;
+    background: white; border-radius: 12px;
+            border: 1px solid #14537A;
+            transition: border-color 0.2s;
 }
-.usage-item:hover { border-color: hsl(180 70% 38% / 0.3); }
+.usage-item:hover { border-color: #1da5a5; }
 .usage-icon {
     width: 40px; height: 40px; border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
@@ -113,9 +133,20 @@
 .usage-icon.sms   { background: hsl(40  100% 50% / 0.1); color: hsl(40  100% 55%); }
 .usage-icon.rent  { background: hsl(180 70%  38% / 0.1); color: hsl(180 70%  55%); }
 .usage-info { flex: 1; }
-.usage-info span  { display: block; font-size: 13px; font-weight: 600; color: #c0d8d8; }
+            .usage-info span {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                color: #1da5a5;
+            }
+
 .usage-info small { font-size: 11px; color: #3a5555; }
-.usage-amount     { font-size: 14px; font-weight: 700; color: #a0c8c8; font-family: 'Menlo', monospace; }
+        .usage-amount {
+            font-size: 14px;
+            font-weight: 700;
+            color: #14537A;
+            font-family: 'Menlo', monospace;
+        }
 
 /* Totals */
 .bill-totals {
@@ -126,10 +157,12 @@
 }
 .bill-total-row { display: flex; justify-content: space-between; font-size: 13px; color: #4a7070; }
 .bill-total-row.grand {
-    font-size: 17px; font-weight: 800; color: #fff;
+                font-size: 17px;
+                font-weight: 800;
+                color: #14537A;
     padding-top: 14px; border-top: 1px solid #1a2e2e; margin-top: 4px;
 }
-.bill-total-row.grand span:last-child { color: hsl(180 70% 55%); }
+.bill-total-row.grand span:last-child { color:#1da5a5; }
 
 /* Paid notice */
 .paid-notice {
@@ -152,24 +185,27 @@
     gap: 10px; margin-bottom: 18px;
 }
 .method-card {
-    border: 1.5px solid #1a2e2e; border-radius: 12px;
+            border: 1.5px solid #14537A;
+            border-radius: 12px;
     padding: 14px 12px; cursor: pointer;
-    transition: all 0.2s; background: #060e0e;
+    transition: all 0.2s; 
     text-align: center; position: relative; overflow: hidden;
 }
 .method-card:hover {
-    border-color: hsl(180 70% 38% / 0.5);
-    background: hsl(180 70% 38% / 0.05);
+                border-color: #1da5a5;
+    /* background: hsl(180 70% 38% / 0.05); */
     transform: translateY(-2px);
 }
 .method-card.selected {
-    border-color: hsl(180 70% 38%);
+                border-color: #1da5a5;
     background: hsl(180 70% 38% / 0.1);
     box-shadow: 0 0 16px hsl(180 70% 38% / 0.15);
 }
 .method-card.selected::after {
     content: '✓'; position: absolute; top: 6px; right: 8px;
-    font-size: 10px; font-weight: 800; color: hsl(180 70% 55%);
+                    font-size: 10px;
+                    font-weight: 800;
+                    color: #1da5a5;
 }
 .method-icon { font-size: 22px; margin-bottom: 6px; display: block; }
 .method-name { font-size: 12px; font-weight: 700; color: #c0d8d8; display: block; }
@@ -180,10 +216,10 @@
 .payment-detail.visible { display: block; }
 
 .wallet-panel { border-radius: 14px; padding: 20px; }
-.wallet-panel.easypaisa { background: linear-gradient(135deg,#0a2010,#0f2a15); border: 1px solid #1a5a2a; }
-.wallet-panel.jazzcash  { background: linear-gradient(135deg,#1a0800,#2a0f00); border: 1px solid #5a2a00; }
-.wallet-panel.card-panel{ background: linear-gradient(135deg,#0a101a,#0f1525); border: 1px solid #1a2a4a; }
-.wallet-panel.bank-panel{ background: linear-gradient(135deg,#0a0a1a,#0f0f25); border: 1px solid #1a1a4a; }
+.wallet-panel.easypaisa { background: white; border: 1px solid #1a5a2a; }
+.wallet-panel.jazzcash  { background: white; border: 1px solid #5a2a00; }
+.wallet-panel.card-panel{ background: white; border: 1px solid #1a2a4a; }
+.wallet-panel.bank-panel{ background: white; border: 1px solid #1a1a4a; }
 
 .wallet-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 .wallet-brand-icon {
@@ -220,10 +256,14 @@
 
 .amount-to-pay {
     margin-top: 12px; padding: 10px 14px;
-    border-radius: 10px; background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            background: #14537a;
     display: flex; align-items: center; justify-content: space-between;
 }
-.amount-to-pay span   { font-size: 11px; color: #6a9090; }
+            .amount-to-pay span {
+                font-size: 11px;
+                color: #14537a;
+            }
 .amount-to-pay strong { font-size: 15px; font-weight: 800; color: #fff; }
 
 /* Card inputs */
@@ -234,8 +274,9 @@
     margin-bottom: 7px; display: block;
 }
 .form--field input {
-    width: 100%; background: #060e0e;
-    border: 1.5px solid #1a2e2e; border-radius: 10px;
+    width: 100%; background: white;
+                border: 1.5px solid #14537a;
+                border-radius: 10px;
     padding: 11px 14px; color: #d0e8e8; font-size: 13px;
     font-family: 'Menlo','Consolas',monospace; outline: none;
     transition: border-color 0.2s;
@@ -247,7 +288,7 @@
 .card-type-badge  { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.5; }
 
 .virtual-card {
-    background: linear-gradient(135deg,#0d2535,#0a1a28 50%,#0d2535);
+            background: linear-gradient(135deg,#14537a,#14537a 50%,#14537a);
     border-radius: 14px; padding: 18px; margin-bottom: 14px;
     border: 1px solid #1a3a5a; position: relative; overflow: hidden;
 }
@@ -280,7 +321,7 @@
 /* Buttons */
 .btn-pay-now {
     width:100%; padding:15px;
-    background:linear-gradient(135deg,hsl(180 70% 38%),hsl(200 85% 48%));
+    background:#1da5a5;
     border:none; border-radius:12px; color:#fff !important;
     font-size:14px; font-weight:800; letter-spacing:0.5px;
     cursor:pointer; transition:all 0.25s;
@@ -363,10 +404,9 @@
 
 <section class="bill-page">
     <div class="container">
-        <div class="row g-4 align-items-start">
-
+        <div class="row g-4 justify-content-center">
             <!-- ── LEFT PANEL ── -->
-            <div class="col-lg-4">
+            @* <div class="col-lg-4">
                 <div class="bill-left sign__left__blk">
                     <div class="sign__label">
                         <div class="footer__subs__label">
@@ -381,10 +421,10 @@
                     <div class="sign__title">
                         <span>Postpaid Account</span>
                         <h1>Your <span>Bill</span></h1>
-                        <p class="mt-3" style="color:rgba(255,255,255,0.55);font-size:14px;">
+                        <p class="mt-3" style="color: black;font-size:14px;">
                             <i class="las la-mobile-alt"></i> @Model.MobileNumber
                         </p>
-                        <p style="color:rgba(255,255,255,0.55);font-size:14px;">
+                        <p style="color: black;font-size:14px;">
                             <i class="las la-user"></i> @Model.FullName
                         </p>
                     </div>
@@ -394,7 +434,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> *@
 
             <!-- ── RIGHT PANEL ── -->
             <div class="col-lg-8">
@@ -527,11 +567,9 @@
                                             <div class="wallet-brand-icon">🟢</div>
                                             <div>
                                                 <div class="wallet-brand-name">EasyPaisa</div>
-                                                <div class="wallet-brand-sub">Scan QR or follow steps</div>
                                             </div>
                                         </div>
                                         <div class="qr-wrap">
-                                            <div class="qr-mock" id="qrEasypaisa"></div>
                                             <div class="qr-steps">
                                                 <div class="qr-step">
                                                     <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">1</div>
@@ -561,11 +599,9 @@
                                             <div class="wallet-brand-icon">🟠</div>
                                             <div>
                                                 <div class="wallet-brand-name">JazzCash</div>
-                                                <div class="wallet-brand-sub">Scan QR or follow steps</div>
                                             </div>
                                         </div>
                                         <div class="qr-wrap">
-                                            <div class="qr-mock" id="qrJazzcash"></div>
                                             <div class="qr-steps">
                                                 <div class="qr-step">
                                                     <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">1</div>

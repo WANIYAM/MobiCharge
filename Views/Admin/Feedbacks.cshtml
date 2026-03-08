@@ -6,83 +6,550 @@
 
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success mb-4" style="border-radius: 1rem; padding: 1rem 1.5rem; border-left: 4px solid hsl(var(--base));">
-        <i class="las la-check-circle" style="color: hsl(var(--base));"></i>
-        @TempData["Success"]
+    <div class="alert-modern alert-success">
+        <i class="las la-check-circle"></i>
+        <span>@TempData["Success"]</span>
     </div>
 }
 
-<!-- Header -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="mb-1" style="font-family: 'ClashDisplay-Variable', sans-serif;">
-            <i class="las la-comments" style="color: hsl(var(--base));"></i>
-            User Feedbacks
-        </h2>
-        <p class="text-muted mb-0">View all customer feedback and reviews</p>
+<!-- Page Header -->
+<div class="page-header">
+    <div class="header-left">
+        <div class="header-icon">
+            <i class="las la-comments"></i>
+        </div>
+        <div class="header-text">
+            <h1 class="header-title">User Feedbacks</h1>
+            <p class="header-subtitle">View all customer feedback and reviews</p>
+        </div>
     </div>
-    <span class="happy-users-badge" style="padding: 0.5rem 1.5rem;">
-        <i class="las la-comment"></i>
-        <span>@Model.Count() Total</span>
-    </span>
+    <div class="header-right">
+        <div class="total-badge">
+            <i class="las la-comment"></i>
+            <span>@Model.Count() Total Feedbacks</span>
+        </div>
+    </div>
 </div>
 
-<!-- Feedbacks Grid -->
-<div class="row g-4">
+<!-- Feedbacks Container -->
+<div class="feedbacks-container">
     @if (!Model.Any())
     {
-        <div class="col-12">
-            <div class="transactions-panel p-5 text-center">
-                <i class="las la-comments" style="font-size: 4rem; color: hsl(var(--text-color) / 0.2);"></i>
-                <h4 class="mt-3 mb-2">No Feedbacks Yet</h4>
-                <p class="text-muted mb-0">Customer feedback will appear here</p>
+        <div class="empty-state">
+            <div class="empty-icon">
+                <i class="las la-comments"></i>
             </div>
+            <h3 class="empty-title">No Feedbacks Yet</h3>
+            <p class="empty-text">Customer feedback will appear here once received</p>
         </div>
     }
     else
     {
-        @foreach (var f in Model)
-        {
-            <div class="col-lg-6">
-                <div class="quick-stat-card" style="flex-direction: column; align-items: flex-start;">
-                    <div class="d-flex justify-content-between w-100 mb-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="quick-icon" style="width: 2.5rem; height: 2.5rem;">
-                                <i class="las la-user"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">@f.Name</h6>
-                                <small class="text-muted">@f.Email</small>
+        <div class="feedbacks-grid">
+            @foreach (var f in Model)
+            {
+                <div class="feedback-card">
+                    <!-- Card Header -->
+                    <div class="card-header">
+                        <div class="user-avatar">
+                            @f.Name.Substring(0, 1).ToUpper()
+                        </div>
+                        <div class="user-info">
+                            <h3 class="user-name">@f.Name</h3>
+                            <div class="user-email">
+                                <i class="las la-envelope"></i>
+                                @f.Email
                             </div>
                         </div>
-                        <span class="badge-custom" style="background: hsl(var(--base) / 0.1); color: hsl(var(--base));">
-                            #@f.FeedbackId
-                        </span>
+                        <div class="feedback-id">#@f.FeedbackId</div>
                     </div>
-                    
-                    <p class="mb-3" style="color: hsl(var(--text-color)); line-height: 1.6;">
-                        "@f.Message"
-                    </p>
-                    
-                    <div class="d-flex align-items-center justify-content-between mt-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <i class="las la-clock" style="color: hsl(var(--text-color) / 0.5);"></i>
-                            <small class="text-muted">@f.SubmittedAt.ToString("dd MMM yyyy, hh:mm tt")</small>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="feedback-message">
+                            <i class="las la-quote-left quote-icon"></i>
+                            <p>@f.Message</p>
                         </div>
-                        <form method="post" action="/Admin/DeleteFeedback" style="margin:0;"
-                              onsubmit="return confirm('Delete this feedback from @f.Name?');">
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer">
+                        <div class="feedback-date">
+                            <div class="date-item">
+                                <i class="las la-calendar-alt"></i>
+                                @f.SubmittedAt.ToString("dd MMM yyyy")
+                            </div>
+                            <div class="date-item">
+                                <i class="las la-clock"></i>
+                                @f.SubmittedAt.ToString("hh:mm tt")
+                            </div>
+                        </div>
+                        
+                        <form method="post" action="/Admin/DeleteFeedback" 
+                              onsubmit="return confirm('Delete feedback from @f.Name?');"
+                              class="delete-form">
                             <input type="hidden" name="id" value="@f.FeedbackId" />
-                            <button type="submit" class="btn-delete-fb">
-                                <i class="las la-trash"></i> Delete
+                            <button type="submit" class="delete-btn">
+                                <i class="las la-trash-alt"></i>
+                                <span>Delete</span>
                             </button>
                         </form>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     }
 </div>
+
 <style>
-    .btn-delete-fb { background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);border:1px solid hsl(0 100% 50%/0.3);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:0.2s; }
-    .btn-delete-fb:hover { background:hsl(0 100% 50%);color:#fff; }
+    @@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #f8fafc;
+        color: #1e293b;
+    }
+
+    /* ===== ALERTS ===== */
+    .alert-modern {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 14px;
+        border-left: 4px solid;
+        animation: slideDown 0.3s ease;
+        background: #e8f5e9;
+        border-left-color: #2e7d32;
+        color: #1b5e20;
+    }
+
+    .alert-modern i {
+        font-size: 18px;
+        color: #2e7d32;
+    }
+
+    @@keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background:  linear-gradient(135deg, #00bcd4, #0097a7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        flex-shrink: 0;
+        box-shadow: 0 8px 16px -4px rgba(249, 115, 22, 0.3);
+    }
+
+    .header-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 4px;
+    }
+
+    .header-subtitle {
+        font-size: 13px;
+        color: #64748b;
+        margin: 0;
+    }
+
+    .header-right {
+        width: 100%;
+    }
+
+    .total-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        background: #ffff;
+        border: 1px solid #169FD2;
+        border-radius: 40px;
+        color: #169FD2;
+        font-weight: 600;
+        font-size: 13px;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    /* ===== FEEDBACKS CONTAINER ===== */
+    .feedbacks-container {
+        width: 100%;
+        animation: fadeIn 0.5s ease;
+    }
+
+    /* ===== FEEDBACKS GRID ===== */
+    .feedbacks-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* ===== FEEDBACK CARD ===== */
+    .feedback-card {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        animation: slideIn 0.4s ease forwards;
+        opacity: 0;
+    }
+
+    .feedback-card:hover {
+        border-color: #169FD2;
+        box-shadow: 0 12px 24px -8px #169FD2;
+        transform: translateY(-2px);
+    }
+
+    /* Card Header */
+    .card-header {
+        padding: 16px;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .user-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #00bcd4, #0097a7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .user-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .user-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 0 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-email {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        color: #64748b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .user-email i {
+        color: #169FD2;
+        font-size: 11px;
+        flex-shrink: 0;
+    }
+
+    .feedback-id {
+        padding: 4px 12px;
+        background: #ffff;
+        border: 1px solid #169FD2;
+        border-radius: 30px;
+        color: #169FD2;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Card Body */
+    .card-body {
+        padding: 16px;
+        background: white;
+    }
+
+    .feedback-message {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .quote-icon {
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        font-size: 20px;
+        color: #169FD2;
+        opacity: 0.2;
+        transform: rotate(180deg);
+    }
+
+    .feedback-message p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #334155;
+        margin: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Card Footer */
+    .card-footer {
+        padding: 14px 16px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .feedback-date {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .date-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #64748b;
+        white-space: nowrap;
+    }
+
+    .date-item i {
+        color: #169FD2;
+        font-size: 12px;
+    }
+
+    /* ===== DELETE BUTTON ===== */
+    .delete-form {
+        margin: 0;
+        width: 100%;
+    }
+
+    .delete-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: #ffebee;
+        border: 1px solid #ffcdd2;
+        border-radius: 30px;
+        color: #c62828;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        line-height: 1;
+    }
+
+    .delete-btn i {
+        font-size: 16px;
+        flex-shrink: 0;
+    }
+
+    .delete-btn span {
+        display: inline;
+    }
+
+    .delete-btn:hover {
+        background: #c62828;
+        color: white;
+        border-color: #c62828;
+        box-shadow: 0 4px 12px -2px rgba(198, 40, 40, 0.35);
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 60px 24px;
+        background: white;
+        border-radius: 24px;
+        border: 1px solid #e2e8f0;
+    }
+
+    .empty-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        background: #ffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .empty-icon i {
+        font-size: 40px;
+        color: #169FD2;
+        opacity: 0.5;
+    }
+
+    .empty-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 8px;
+    }
+
+    .empty-text {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @@keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    @@keyframes slideIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback-card:nth-child(1)  { animation-delay: 0.05s; }
+    .feedback-card:nth-child(2)  { animation-delay: 0.10s; }
+    .feedback-card:nth-child(3)  { animation-delay: 0.15s; }
+    .feedback-card:nth-child(4)  { animation-delay: 0.20s; }
+    .feedback-card:nth-child(5)  { animation-delay: 0.25s; }
+    .feedback-card:nth-child(6)  { animation-delay: 0.30s; }
+    .feedback-card:nth-child(7)  { animation-delay: 0.35s; }
+    .feedback-card:nth-child(8)  { animation-delay: 0.40s; }
+    .feedback-card:nth-child(9)  { animation-delay: 0.45s; }
+    .feedback-card:nth-child(10) { animation-delay: 0.50s; }
+
+    /* ===== TABLET (768px+) ===== */
+    @@media (min-width: 768px) {
+        .page-header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .header-icon {
+            width: 56px;
+            height: 56px;
+            font-size: 26px;
+        }
+
+        .header-title {
+            font-size: 24px;
+        }
+
+        .header-right {
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .total-badge {
+            width: auto;
+            padding: 10px 24px;
+        }
+
+        .feedbacks-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Footer: date left, delete right — on one row */
+        .card-footer {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .delete-form {
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .delete-btn {
+            width: auto;
+            padding: 9px 22px;
+        }
+    }
+
+    /* ===== DESKTOP (1024px+) ===== */
+    @@media (min-width: 1024px) {
+        .feedbacks-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            font-size: 28px;
+            border-radius: 18px;
+        }
+
+        .header-title {
+            font-size: 28px;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            font-size: 20px;
+        }
+    }
+
+    /* ===== LARGE DESKTOP (1400px+) ===== */
+    @@media (min-width: 1400px) {
+        .feedbacks-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
 </style>

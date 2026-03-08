@@ -5,22 +5,6 @@
 <section class="account-area">
     <div class="container" style="padding-top: 140px; padding-bottom: 60px;">
 
-        <!-- Breadcrumb -->
-        <div class="hero__wrap__users" style="margin-bottom: 30px; justify-content: flex-start;" data-aos="fade-up">
-            <div class="hero__wrap__users__img">
-                <span><img src="~/assets/images/hero/user-1.jpg" alt="user"></span>
-                <span><img src="~/assets/images/hero/user-2.jpg" alt="user"></span>
-                <span><img src="~/assets/images/hero/user-3.jpg" alt="user"></span>
-                <span><img src="~/assets/images/hero/user-4.jpg" alt="user"></span>
-            </div>
-            <div class="hero__wrap__users__title">
-                <span>
-                    <a href="/MyAccount" style="color: inherit; text-decoration: none;">My Account</a>
-                    <i class="las la-angle-right" style="margin: 0 10px;"></i>
-                    Caller Tunes
-                </span>
-            </div>
-        </div>
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -201,7 +185,7 @@
 
                             <div class="d-grid mt-4">
                                 <button type="submit" class="common__btn w-100" style="justify-content:space-between;">
-                                    <span><i class="las la-check-circle me-2"></i>Activate Selected Tune</span>
+                                    <span style="width:100%"><i class="las la-check-circle me-2"></i>Activate Selected Tune</span>
                                     <span><i class="fa-solid fa-arrow-right"></i></span>
                                 </button>
                             </div>
@@ -216,10 +200,13 @@
 
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <a href="/MyAccount" class="common__btn"
+                       style="background:transparent; color:hsl(var(--text-color)); width:250px; display:inline-flex; align-items:center; justify-content:space-between;">
 
-                <div class="text-end mt-4">
-                    <a href="/MyAccount" class="common__btn" style="background: transparent; border: 1px solid hsl(var(--border-color)); color: hsl(var(--text-color));">
-                        <span><i class="las la-arrow-left me-2"></i>Back to My Account</span>
+                        <span style="width:100%"><i class="las la-check-circle me-2"></i>Back to My Account</span>
+                        <span><i class="fa-solid fa-arrow-right"></i></span>
+
                     </a>
                 </div>
 
@@ -380,124 +367,63 @@
 
 @section Scripts {
 <script>
-    // ── Web Audio API tone definitions ──────────────────────────────────────
-    // Each tune is a sequence of [frequency, duration] pairs
-    const tunes = {
-        bollywood: {
-            notes: [[523,0.15],[587,0.15],[659,0.15],[698,0.3],[659,0.15],[587,0.15],[523,0.3],
-                    [440,0.15],[493,0.15],[523,0.15],[587,0.3],[523,0.15],[493,0.15],[440,0.4]],
-            type: 'sine'
-        },
-        classical: {
-            notes: [[330,0.3],[370,0.3],[415,0.3],[440,0.6],[415,0.3],[370,0.3],[330,0.6],
-                    [294,0.3],[330,0.3],[370,0.3],[415,0.6],[370,0.3],[330,0.3],[294,0.6]],
-            type: 'triangle'
-        },
-        pop: {
-            notes: [[659,0.1],[659,0.1],[0,0.1],[659,0.1],[0,0.1],[523,0.1],[659,0.2],
-                    [784,0.3],[0,0.3],[392,0.3],[0,0.3],[523,0.2],[392,0.2],[330,0.4]],
-            type: 'sawtooth'
-        },
-        instrumental: {
-            notes: [[440,0.4],[0,0.1],[494,0.4],[0,0.1],[523,0.4],[0,0.1],[587,0.4],
-                    [0,0.2],[523,0.4],[0,0.1],[494,0.4],[0,0.1],[440,0.6]],
-            type: 'sine'
-        },
-        devotional: {
-            notes: [[264,0.4],[297,0.4],[330,0.4],[352,0.4],[396,0.4],[440,0.4],[495,0.4],
-                    [528,0.6],[495,0.3],[440,0.3],[396,0.3],[352,0.3],[330,0.6]],
-            type: 'sine'
-        },
-        default: {
-            notes: [[941,0.2],[0,0.1],[941,0.2],[0,0.1],[941,0.2],[0,0.1],
-                    [1209,0.4],[0,0.2],[941,0.2],[0,0.1],[1209,0.4]],
-            type: 'square'
-        }
-    };
+    // ── Audio file definitions ──────────────────────────────────────────────
+    const tuneFiles = {
+    bollywood:    '/audio/He_Knew_He_Fucked_Up.mp3',
+    classical:    '/audio/Sad_Trombone_Wah_Wah_Wah_Fail.mp3',
+    pop:          '/audio/jhinka-chika-jhinka-chika.mp3',
+    instrumental: '/audio/jimin_lachimolala.mp3',
+    devotional:   '/audio/meow_meow_meow.mp3',
+    default:      '/audio/Fahhh.mp3'
+};
 
-    let audioCtx    = null;
-    let stopNodes   = [];
-    let progressInt = null;
-    let currentPlay = null;
-
-    function getCtx() {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        return audioCtx;
-    }
+    let currentAudio = null;
+    let progressInt  = null;
 
     function playTune(tuneKey, tuneName) {
         stopPreview();
 
-        const ctx      = getCtx();
-        const tune     = tunes[tuneKey];
         const bar      = document.getElementById('nowPlayingBar');
         const nameEl   = document.getElementById('nowPlayingName');
         const fill     = document.getElementById('progressFill');
         const playIcon = document.getElementById('play-' + tuneKey);
 
-        // Show now playing bar
-        bar.style.display = 'flex';
+        currentAudio = new Audio(tuneFiles[tuneKey]);
+        bar.style.display  = 'flex';
         nameEl.textContent = tuneName;
         fill.style.width   = '0%';
-        currentPlay        = tuneKey;
 
-        // Set play icon to pulsing
-        if (playIcon) playIcon.classList.add('playing');
+        currentAudio.play().catch(e => console.warn('Playback error:', e));
 
-        // Calculate total duration
-        const totalDuration = tune.notes.reduce((sum, n) => sum + n[1], 0);
-        let   startTime     = ctx.currentTime + 0.05;
-
-        tune.notes.forEach(([freq, dur]) => {
-            if (freq === 0) { startTime += dur; return; }
-
-            const osc  = ctx.createOscillator();
-            const gain = ctx.createGain();
-
-            osc.type      = tune.type;
-            osc.frequency.setValueAtTime(freq, startTime);
-
-            gain.gain.setValueAtTime(0.4, startTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, startTime + dur);
-
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.start(startTime);
-            osc.stop(startTime + dur);
-            stopNodes.push(osc);
-
-            startTime += dur;
+        // Progress bar
+        currentAudio.addEventListener('timeupdate', () => {
+            if (currentAudio && currentAudio.duration) {
+                const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
+                fill.style.width = Math.min(pct, 100) + '%';
+            }
         });
 
-        // Progress bar animation
-        const startReal = Date.now();
-        progressInt = setInterval(() => {
-            const elapsed = (Date.now() - startReal) / 1000;
-            const pct     = Math.min((elapsed / totalDuration) * 100, 100);
-            fill.style.width = pct + '%';
+        currentAudio.addEventListener('ended', stopPreview);
 
-            if (pct >= 100) {
-                clearInterval(progressInt);
-                setTimeout(stopPreview, 300);
-            }
-        }, 50);
+        if (playIcon) playIcon.classList.add('playing');
     }
 
     function stopPreview() {
-        // Stop all oscillators
-        stopNodes.forEach(n => { try { n.stop(); } catch(e) {} });
-        stopNodes = [];
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
 
         clearInterval(progressInt);
 
-        // Hide bar
         const bar = document.getElementById('nowPlayingBar');
         if (bar) bar.style.display = 'none';
 
-        // Reset all play icons
+        const fill = document.getElementById('progressFill');
+        if (fill) fill.style.width = '0%';
+
         document.querySelectorAll('.tune-card__play').forEach(el => el.classList.remove('playing'));
-        currentPlay = null;
     }
 
     // Stop audio when form is submitted

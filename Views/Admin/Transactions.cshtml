@@ -6,286 +6,1261 @@
 
 @if (TempData["Success"] != null)
 {
-    <div style="background:hsl(var(--base)/0.1);border-left:4px solid hsl(var(--base));border-radius:12px;padding:12px 18px;margin-bottom:20px;color:hsl(var(--base));display:flex;align-items:center;gap:10px;">
-        <i class="las la-check-circle"></i> @TempData["Success"]
+    <div class="alert-modern alert-success">
+        <i class="las la-check-circle"></i>
+        <span>@TempData["Success"]</span>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert-modern alert-error">
+        <i class="las la-exclamation-circle"></i>
+        <span>@TempData["Error"]</span>
     </div>
 }
 
-<!-- Header -->
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="mb-1" style="font-family: 'ClashDisplay-Variable', sans-serif;">
-            <i class="las la-exchange-alt" style="color: hsl(var(--base));"></i>
-            All Transactions
-        </h2>
-        <p class="text-muted mb-0">Monitor all recharge and bill payments</p>
+<!-- Page Header -->
+<div class="header-container">
+    <div class="header-left">
+        <div class="header-icon">
+            <i class="las la-exchange-alt"></i>
+        </div>
+        <div>
+            <h1 class="header-title">All Transactions</h1>
+            <p class="header-subtitle">Monitor all recharge and bill payments</p>
+        </div>
     </div>
-    <span class="happy-users-badge" style="padding: 0.5rem 1.5rem;">
-        <i class="las la-list"></i>
-        <span>@Model.Count() Records</span>
-    </span>
+    <div class="header-right">
+        <div class="record-badge">
+            <i class="las la-list"></i>
+            <span>@Model.Count() Records</span>
+        </div>
+    </div>
 </div>
 
-<!-- Date Filter Card -->
-<div class="quick-stat-card mb-4" style="flex-direction: column; align-items: stretch;">
-    <form method="get" class="d-flex gap-3 align-items-center flex-wrap">
-        <div class="d-flex align-items-center gap-2">
-            <i class="las la-calendar" style="color: hsl(var(--base)); font-size: 1.25rem;"></i>
-            <span class="fw-bold">Filter by Date:</span>
+<!-- Filter Card -->
+<div class="filter-container">
+    <div class="filter-header">
+        <i class="las la-filter"></i>
+        <span>Filter Transactions</span>
+    </div>
+    <form method="get" class="filter-form">
+        <div class="filter-group">
+            <label class="filter-label">
+                <i class="las la-calendar"></i>
+                Date:
+            </label>
+            <input type="date" name="date" value="@ViewBag.FilterDate"
+                   class="filter-input" />
         </div>
-        <input type="date" name="date" value="@ViewBag.FilterDate"
-               class="form-control" style="max-width:200px; border: 1px solid hsl(var(--border-color));" />
-        <button type="submit" class="btn-view" style="background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two))); color: white; border: none;">
-            <i class="las la-search"></i> Filter
-        </button>
-        <a href="/Admin/Transactions" class="btn-view" style="background: hsl(var(--section-bg)); color: hsl(var(--text-color)); border: 1px solid hsl(var(--border-color));">
-            <i class="las la-times"></i> Clear
-        </a>
+        
+        <div class="filter-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="las la-search"></i>
+                <span>Filter</span>
+            </button>
+            <a href="/Admin/Transactions" class="btn btn-secondary">
+                <i class="las la-times"></i>
+                <span>Clear</span>
+            </a>
+        </div>
+        
         @if (ViewBag.FilterDate != null)
         {
-            <span class="text-muted small">
-                Showing: <strong>@ViewBag.FilterDate</strong>
-            </span>
+            <div class="filter-badge">
+                <i class="las la-calendar-check"></i>
+                <span>Showing: <strong>@ViewBag.FilterDate</strong></span>
+            </div>
         }
     </form>
 </div>
 
 <!-- Transactions Panel -->
-<div class="transactions-panel">
-
-    <!-- Panel header with per-page selector -->
+<div class="panel-container">
+    <!-- Panel Header -->
     <div class="panel-header">
-        <h5 class="mb-0">
-            <i class="las la-history" style="color: hsl(var(--base));"></i>
-            Transaction History
-        </h5>
-        <div class="pg-controls-top">
-            <span class="pg-info-text">Show</span>
-            <select id="perPageSelect" class="pg-per-page" onchange="initPagination()">
+        <div class="panel-title">
+            <i class="las la-history panel-icon"></i>
+            <h3>Transaction History</h3>
+        </div>
+        
+        <div class="pagination-controls-top">
+            <span class="control-label">Show</span>
+            <select id="perPageSelect" class="per-page-select" onchange="initPagination()">
                 <option value="5">5</option>
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
             </select>
-            <span class="pg-info-text">per page</span>
-            <span class="pg-page-label" id="page-label"></span>
+            <span class="control-label">per page</span>
+            <span class="page-badge" id="page-label"></span>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>Mobile Number</th>
-                    <th>Plan Type</th>
-                    <th>Amount</th>
-                    <th>Payment Method</th>
-                    <th>Status</th>
-                    <th>Date & Time</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="table-body">
+    <!-- Desktop Table View (visible only on desktop) -->
+    <div class="desktop-table">
+        <div class="table-scroll-wrapper">
+            <table class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Mobile Number</th>
+                        <th>Plan Type</th>
+                        <th>Amount</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Date & Time</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="desktop-rows">
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="8">
-                            <div class="empty-state">
-                                <i class="las la-inbox"></i>
-                                <p class="mt-2">No transactions found</p>
-                            </div>
+                        <td colspan="8" class="empty-state">
+                            <i class="las la-inbox"></i>
+                            <p>No transactions found</p>
                         </td>
                     </tr>
                 }
-                @foreach (var t in Model)
+                else
                 {
-                    <tr class="pg-row">
-                        <td data-label="Transaction ID">
-                            <span class="txn-id">#TXN@(t.TxnId.ToString("D6"))</span>
-                        </td>
-                        <td data-label="Mobile Number">
-                            <span class="mobile-number">
-                                <i class="las la-phone-alt"></i> @t.MobileNumber
-                            </span>
-                        </td>
-                        <td data-label="Plan Type">
-                            @if (t.PlanType == "topup")
-                            {
-                                <span class="badge-custom badge-topup"><i class="las la-sim-card"></i> Top Up</span>
-                            }
-                            else if (t.PlanType == "special")
-                            {
-                                <span class="badge-custom badge-special"><i class="las la-star"></i> Special</span>
-                            }
-                            else
-                            {
-                                <span class="badge-custom badge-postpaid"><i class="las la-calendar"></i> Postpaid</span>
-                            }
-                        </td>
-                        <td data-label="Amount">
-                            <span class="amount">Rs. @t.Amount</span>
-                        </td>
-                        <td data-label="Payment Method">
-                            <span><i class="las la-credit-card"></i> @t.PaymentMethod</span>
-                        </td>
-                        <td data-label="Status">
-                            <span class="badge-custom badge-success">
-                                <i class="las la-check-circle"></i> @t.Status
-                            </span>
-                        </td>
-                        <td data-label="Date & Time">
-                            <span><i class="las la-clock"></i> @t.TxnDate.ToString("dd-MM-yyyy HH:mm")</span>
-                        </td>
-                        <td data-label="Actions">
-                            <form method="post" action="/Admin/DeleteTransaction" style="margin:0;"
-                                  onsubmit="return confirm('Delete transaction #TXN@(t.TxnId.ToString("D6"))? This cannot be undone.');">
-                                <input type="hidden" name="TxnId" value="@t.TxnId" />
-                                <button type="submit" class="btn-delete-txn">
-                                    <i class="las la-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                    foreach (var t in Model)
+                    {
+                        <tr class="transaction-row">
+                            <td>
+                                <span class="txn-id">#TXN@(t.TxnId.ToString("D6"))</span>
+                            </td>
+                            <td>
+                                <span class="mobile-cell">
+                                    <i class="las la-phone-alt"></i>
+                                    @t.MobileNumber
+                                </span>
+                            </td>
+                            <td>
+                                @{
+                                    string planDisplay = "";
+                                    string planIcon = "";
+                                    string planClass = "plan-badge";
+                                    
+                                    if (t.PlanType?.ToLower() == "topup")
+                                    {
+                                        planDisplay = "Topup";
+                                        planIcon = "las la-sim-card";
+                                        planClass += " plan-topup";
+                                    }
+                                    else if (t.PlanType?.ToLower() == "special")
+                                    {
+                                        planDisplay = "Special";
+                                        planIcon = "las la-star";
+                                        planClass += " plan-special";
+                                    }
+                                    else
+                                    {
+                                        planDisplay = "Postpaid";
+                                        planIcon = "las la-calendar";
+                                        planClass += " plan-postpaid";
+                                    }
+                                }
+                                <span class="@planClass">
+                                    <i class="@planIcon"></i>
+                                    @planDisplay
+                                </span>
+                            </td>
+                            <td>
+                                <span class="amount">Rs. @t.Amount</span>
+                            </td>
+                            <td>
+                                <span class="payment-cell">
+                                    <i class="las la-credit-card"></i>
+                                    @t.PaymentMethod
+                                </span>
+                            </td>
+                            <td>
+                                <span class="status-badge status-success">
+                                    <i class="las la-check-circle"></i>
+                                    @t.Status
+                                </span>
+                            </td>
+                            <td>
+                                <span class="date-cell">
+                                    <i class="las la-clock"></i>
+                                    @t.TxnDate.ToString("dd MMM yyyy HH:mm")
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <form method="post" action="/Admin/DeleteTransaction"
+                                      onsubmit="return confirm('Delete transaction #TXN@(t.TxnId.ToString("D6"))?');">
+                                    <input type="hidden" name="TxnId" value="@t.TxnId" />
+                                    <button type="submit" class="delete-btn">
+                                        <i class="las la-trash-alt"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
+        </div><!-- end table-scroll-wrapper -->
     </div>
 
-    <!-- ── Pagination footer ── -->
-    <div class="pg-bar" id="pg-bar">
-        <span class="pg-summary" id="pg-summary"></span>
-        <div class="pg-btns" id="pg-btns"></div>
+    <!-- Mobile Card View (visible only on mobile) -->
+    <div class="mobile-cards" id="mobile-rows">
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <i class="las la-inbox"></i>
+                <p>No transactions found</p>
+            </div>
+        }
+        else
+        {
+            foreach (var t in Model)
+            {
+                <div class="transaction-card">
+                    <div class="card-header">
+                        <span class="card-id">#TXN@(t.TxnId.ToString("D6"))</span>
+                        <span class="card-status status-success">@t.Status</span>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="card-row">
+                            <span class="card-label">
+                                <i class="las la-phone-alt"></i> Mobile:
+                            </span>
+                            <span class="card-value">@t.MobileNumber</span>
+                        </div>
+                        
+                        <div class="card-row">
+                            <span class="card-label">
+                                <i class="las la-tag"></i> Plan:
+                            </span>
+                            <span class="card-value">
+                                @if (t.PlanType?.ToLower() == "topup")
+                                {
+                                    <span>Topup</span>
+                                }
+                                else if (t.PlanType?.ToLower() == "special")
+                                {
+                                    <span>Special</span>
+                                }
+                                else
+                                {
+                                    <span>Postpaid</span>
+                                }
+                            </span>
+                        </div>
+                        
+                        <div class="card-row">
+                            <span class="card-label">
+                                <i class="las la-credit-card"></i> Payment:
+                            </span>
+                            <span class="card-value">@t.PaymentMethod</span>
+                        </div>
+                        
+                        <div class="card-row card-amount">
+                            <span class="card-label">Amount:</span>
+                            <span class="card-amount-value">Rs. @t.Amount</span>
+                        </div>
+                        
+                        <div class="card-row">
+                            <span class="card-label">
+                                <i class="las la-clock"></i> Date:
+                            </span>
+                            <span class="card-value">@t.TxnDate.ToString("dd MMM yyyy HH:mm")</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <form method="post" action="/Admin/DeleteTransaction"
+                              onsubmit="return confirm('Delete transaction #TXN@(t.TxnId.ToString("D6"))?');">
+                            <input type="hidden" name="TxnId" value="@t.TxnId" />
+                            <button type="submit" class="delete-card-btn">
+                                <i class="las la-trash-alt"></i>
+                                Delete Transaction
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
     </div>
 
+    <!-- Pagination Footer -->
+    <div class="pagination-footer" id="pg-bar">
+        <div class="pagination-info" id="pg-summary"></div>
+        <div class="pagination-buttons" id="pg-btns"></div>
+    </div>
+
+    <!-- Total Amount Footer -->
     @if (Model.Any())
     {
-        <div class="panel-header" style="border-top: 1px solid hsl(var(--border-color)); border-bottom: none;">
-            <div class="d-flex justify-content-end w-100">
-                <strong style="font-size: 1.1rem;">
-                    Total Amount: Rs. @Model.Sum(t => t.Amount)
-                </strong>
+        <div class="total-footer">
+            <div class="total-content">
+                <span class="total-label">Total Amount</span>
+                <span class="total-value">Rs. @Model.Sum(t => t.Amount)</span>
             </div>
         </div>
     }
 </div>
 
 <style>
-    .btn-delete-txn { background:hsl(0 100% 50%/0.1);color:hsl(0 100% 45%);border:1px solid hsl(0 100% 50%/0.3);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:0.2s; }
-    .btn-delete-txn:hover { background:hsl(0 100% 50%);color:#fff; }
+    /* ===== RESET & BASE ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-    /* ── per-page control ── */
-    .pg-controls-top { display:flex; align-items:center; gap:6px; }
-    .pg-info-text { font-size:12px; color:hsl(var(--text-color)/.6); font-weight:500; }
-    .pg-per-page { border:1px solid hsl(var(--border-color)); border-radius:8px; padding:4px 8px; font-size:12px; background:hsl(var(--section-bg)); color:hsl(var(--heading-color)); cursor:pointer; outline:none; transition:.15s; }
-    .pg-per-page:focus { border-color:hsl(var(--base)); }
-    .pg-page-label { font-size:12px; font-weight:600; color:hsl(var(--text-color)/.5); margin-left:4px; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #f5f7fb;
+        overflow-x: hidden;
+        max-width: 100%;
+    }
 
-    /* ── pagination bar ── */
-    .pg-bar { display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-top:1px solid hsl(var(--border-color)/.5); background:hsl(var(--section-bg)); flex-wrap:wrap; gap:8px; }
-    .pg-summary { font-size:12px; color:hsl(var(--text-color)/.55); font-weight:500; }
-    .pg-btns { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+    /* ===== ALERTS ===== */
+    .alert-modern {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+        font-weight: 500;
+        border-left: 4px solid;
+    }
 
-    /* ── page buttons ── */
+    .alert-success {
+        background: #e8f5e9;
+        border-left-color: #2e7d32;
+        color: #1b5e20;
+    }
+
+    .alert-error {
+        background: #ffebee;
+        border-left-color: #c62828;
+        color: #b71c1c;
+    }
+
+    .alert-modern i {
+        font-size: 20px;
+        flex-shrink: 0;
+    }
+
+    /* ===== HEADER ===== */
+    .header-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 24px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .header-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #00bcd4, #0097a7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+
+    .header-left > div {
+        min-width: 0;
+    }
+
+    .header-title {
+        font-size: clamp(20px, 4vw, 28px);
+        font-weight: 700;
+        color: #1a1a1a;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .header-subtitle {
+        font-size: 14px;
+        color: #666;
+        margin: 4px 0 0;
+    }
+
+    .header-right {
+        flex-shrink: 0;
+    }
+
+    .record-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: #e0f2f1;
+        color: #00838f;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+
+    /* ===== FILTER ===== */
+    .filter-container {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 24px;
+        overflow: hidden;
+    }
+
+    .filter-header {
+        padding: 16px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        color: #1a1a1a;
+    }
+
+    .filter-header i {
+        color: #00bcd4;
+    }
+
+    .filter-form {
+        padding: 16px;
+    }
+
+    .filter-group {
+        margin-bottom: 16px;
+    }
+
+    .filter-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+    }
+
+    .filter-label i {
+        color: #00bcd4;
+    }
+
+    .filter-input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .filter-input:focus {
+        outline: none;
+        border-color: #00bcd4;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 14px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #00bcd4, #0097a7);
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        color: #666;
+    }
+
+    .filter-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px;
+        background: #e0f2f1;
+        color: #00838f;
+        border-radius: 30px;
+        font-size: 13px;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    /* ===== PANEL ===== */
+    .panel-container {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        max-width: 100%;
+    }
+
+    .panel-header {
+        padding: 16px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .panel-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .panel-icon {
+        color: #00bcd4;
+        font-size: 20px;
+    }
+
+    .panel-title h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    .pagination-controls-top {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .control-label {
+        font-size: 13px;
+        color: #666;
+    }
+
+    .per-page-select {
+        padding: 6px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 20px;
+        font-size: 13px;
+        background: white;
+    }
+
+    .page-badge {
+        font-size: 13px;
+        font-weight: 600;
+        color: #00bcd4;
+        background: #e0f2f1;
+        padding: 4px 12px;
+        border-radius: 20px;
+    }
+
+    /* ===== DESKTOP TABLE — hidden below 1024px ===== */
+    .desktop-table {
+        display: none;
+    }
+
+    /* ===== MOBILE CARDS — shown below 1024px ===== */
+    .mobile-cards {
+        display: block;
+        padding: 16px;
+    }
+
+    .transaction-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 16px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+        padding: 14px 16px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .card-id {
+        font-weight: 700;
+        color: #00bcd4;
+        font-size: 15px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .status-success {
+        background: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .card-body {
+        padding: 16px;
+    }
+
+    .card-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    .card-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .card-label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #666;
+        flex-shrink: 0;
+    }
+
+    .card-label i {
+        color: #00bcd4;
+        font-size: 14px;
+    }
+
+    .card-value {
+        font-weight: 500;
+        color: #1a1a1a;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .card-amount {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px dashed #e0e0e0;
+    }
+
+    .card-amount-value {
+        font-weight: 700;
+        color: #00bcd4;
+        font-size: 18px;
+    }
+
+    .card-footer {
+        padding: 14px 16px;
+        background: #f8f9fa;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .delete-card-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        background: #ffebee;
+        border: 1px solid #ffcdd2;
+        border-radius: 30px;
+        color: #c62828;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination-footer {
+        padding: 16px;
+        border-top: 1px solid #e0e0e0;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .pagination-info {
+        font-size: 13px;
+        color: #666;
+        text-align: center;
+    }
+
+    .pagination-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
     .pg-btn {
-        display:inline-flex; align-items:center; justify-content:center;
-        min-width:32px; height:32px; padding:0 8px;
-        border-radius:8px; border:1px solid hsl(var(--border-color));
-        background:hsl(var(--white)); color:hsl(var(--text-color));
-        font-size:12px; font-weight:600; cursor:pointer; transition:all .18s;
+        min-width: 36px;
+        height: 36px;
+        padding: 0 8px;
+        border: 1px solid #e0e0e0;
+        background: white;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .pg-btn:hover:not(:disabled):not(.pg-btn--on) {
-        border-color:hsl(var(--base)); color:hsl(var(--base));
-        background:hsl(var(--base)/.07);
-    }
+
     .pg-btn--on {
-        background:linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
-        color:#fff; border-color:transparent;
-        box-shadow:0 3px 10px hsl(var(--base)/.3);
+        background: #00bcd4;
+        color: white;
+        border-color: #00bcd4;
     }
-    .pg-btn--nav { font-size:14px; }
-    .pg-btn:disabled { opacity:.3; cursor:not-allowed; }
-    .pg-dots { display:inline-flex; align-items:center; justify-content:center; min-width:32px; height:32px; font-size:13px; color:hsl(var(--text-color)/.35); }
+
+    .pg-btn--nav {
+        font-size: 16px;
+    }
+
+    .pg-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .pg-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+        height: 36px;
+        color: #999;
+    }
+
+    /* ===== TOTAL FOOTER ===== */
+    .total-footer {
+        padding: 16px;
+        background: #e0f2f1;
+        border-top: 1px solid #b2dfdb;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .total-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .total-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #006064;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .total-value {
+        font-size: 20px;
+        font-weight: 700;
+        color: #00838f;
+        background: white;
+        padding: 8px 24px;
+        border-radius: 40px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: #999;
+    }
+
+    .empty-state i {
+        font-size: 48px;
+        margin-bottom: 16px;
+        opacity: 0.3;
+        display: block;
+    }
+
+    /* ===== TABLET (768px – 1023px) ===== */
+    @@media (min-width: 768px) and (max-width: 1023px) {
+        .mobile-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 20px;
+            align-content: start;
+        }
+
+        .transaction-card {
+            margin-bottom: 0;
+        }
+
+        .desktop-table {
+            display: none;
+        }
+
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .filter-group {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1 1 auto;
+        }
+
+        .filter-label {
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .filter-input {
+            width: auto;
+            flex: 1 1 160px;
+        }
+
+        .filter-actions {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            flex: 0 0 auto;
+            padding: 10px 20px;
+        }
+
+        .filter-badge {
+            width: 100%;
+        }
+
+        .pagination-footer {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 16px 20px;
+        }
+
+        .pagination-info {
+            text-align: left;
+        }
+
+        .total-content {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    /* ===== DESKTOP (≥ 1024px) ===== */
+    @@media (min-width: 1024px) {
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            font-size: 28px;
+            border-radius: 16px;
+        }
+
+        /* Hide mobile cards, show desktop table */
+        .mobile-cards {
+            display: none;
+        }
+
+        .desktop-table {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .table-scroll-wrapper {
+            overflow: visible;
+            width: 100%;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .transaction-table th {
+            padding: 12px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #666;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            text-align: left;
+            white-space: normal;
+            word-break: break-word;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .transaction-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #1a1a1a;
+            white-space: normal;
+            word-break: break-word;
+            font-size: 13px;
+        }
+
+        .transaction-table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .txn-id {
+            font-weight: 600;
+            color: #00bcd4;
+        }
+
+        .mobile-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-cell i {
+            color: #00bcd4;
+        }
+
+        .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .plan-topup {
+            background: #e0f2f1;
+            color: #00838f;
+        }
+
+        .plan-special {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .plan-postpaid {
+            background: #e8eaf6;
+            color: #3949ab;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .payment-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .payment-cell i {
+            color: #00bcd4;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .date-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .date-cell i {
+            color: #00bcd4;
+        }
+
+        .delete-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 10px;
+            border: 1px solid #ffcdd2;
+            border-radius: 30px;
+            background: #ffebee;
+            color: #c62828;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .delete-btn:hover {
+            background: #c62828;
+            color: white;
+            border-color: #c62828;
+        }
+
+        /* Filter: single row on desktop */
+        .filter-form {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .filter-label {
+            margin-bottom: 0;
+        }
+
+        .filter-input {
+            width: 200px;
+        }
+
+        .filter-actions {
+            margin-bottom: 0;
+            width: auto;
+        }
+
+        .btn {
+            flex: 0 0 auto;
+            padding: 10px 24px;
+        }
+
+        .filter-badge {
+            margin-left: auto;
+        }
+
+        /* Pagination: single row */
+        .pagination-footer {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+        }
+
+        .pagination-info {
+            text-align: left;
+        }
+
+        /* Total: right-aligned */
+        .total-content {
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    /* ===== TEXT HELPERS ===== */
+    .text-center {
+        text-align: center;
+    }
 </style>
 
 <script>
-(function () {
-    let page = 1;
+    (function() {
+        let page = 1;
 
-    const perPageEl  = () => document.getElementById('perPageSelect');
-    const rows       = () => Array.from(document.querySelectorAll('#table-body .pg-row'));
-    const perPage    = () => parseInt(perPageEl().value) || 10;
+        function getPerPage() {
+            return parseInt(document.getElementById('perPageSelect').value) || 10;
+        }
 
-    function initPagination() { page = 1; render(); }
+        function isMobile() {
+            return window.innerWidth < 1024;
+        }
 
-    function render() {
-        const pp    = perPage();
-        const all   = rows();
-        const total = all.length;
-        const pages = Math.max(1, Math.ceil(total / pp));
-        if (page > pages) page = pages;
-
-        const from = (page - 1) * pp;
-        const to   = Math.min(from + pp, total);
-
-        all.forEach((r, i) => r.style.display = (i >= from && i < to) ? '' : 'none');
-
-        document.getElementById('pg-summary').textContent =
-            total === 0 ? 'No records' : `Showing ${from + 1}–${to} of ${total} transactions`;
-
-        document.getElementById('page-label').textContent =
-            total > 0 ? `· Page ${page}/${pages}` : '';
-
-        document.getElementById('pg-bar').style.display =
-            (pages <= 1 && total <= pp) ? 'none' : 'flex';
-
-        buildBtns(pages);
-    }
-
-    function buildBtns(pages) {
-        const wrap = document.getElementById('pg-btns');
-        wrap.innerHTML = '';
-
-        const prev = mkBtn('&#8249;', 'pg-btn pg-btn--nav', page === 1);
-        prev.onclick = () => { if (page > 1) { page--; render(); } };
-        wrap.appendChild(prev);
-
-        pageNums(page, pages).forEach(p => {
-            if (p === '…') {
-                const d = document.createElement('span');
-                d.className = 'pg-dots'; d.textContent = '…';
-                wrap.appendChild(d);
+        function getItems() {
+            if (isMobile()) {
+                return Array.from(document.querySelectorAll('#mobile-rows .transaction-card'));
             } else {
-                const b = mkBtn(p, 'pg-btn' + (p === page ? ' pg-btn--on' : ''), false);
-                b.onclick = () => { page = p; render(); };
-                wrap.appendChild(b);
+                return Array.from(document.querySelectorAll('#desktop-rows .transaction-row'));
             }
+        }
+
+        function initPagination() {
+            page = 1;
+            render();
+        }
+
+        function render() {
+            const pp = getPerPage();
+            const items = getItems();
+            const total = items.length;
+            const pages = Math.max(1, Math.ceil(total / pp));
+        
+            if (page > pages) page = pages;
+
+            const from = (page - 1) * pp;
+            const to = Math.min(from + pp, total);
+
+            items.forEach((item, index) => {
+                item.style.display = (index >= from && index < to) ? '' : 'none';
+            });
+
+            const summaryEl = document.getElementById('pg-summary');
+            if (summaryEl) {
+                summaryEl.textContent = total === 0
+                    ? 'No records'
+                    : `Showing ${from + 1}–${to} of ${total} transactions`;
+            }
+
+            const labelEl = document.getElementById('page-label');
+            if (labelEl) {
+                labelEl.textContent = total > 0 ? `Page ${page}/${pages}` : '';
+            }
+
+            const barEl = document.getElementById('pg-bar');
+            if (barEl) {
+                barEl.style.display = (pages <= 1 && total <= pp) ? 'none' : 'flex';
+            }
+
+            buildPaginationButtons(pages);
+        }
+
+        function buildPaginationButtons(pages) {
+            const container = document.getElementById('pg-btns');
+            if (!container) return;
+
+            container.innerHTML = '';
+
+            const prevBtn = createButton('‹', 'pg-btn pg-btn--nav', page === 1);
+            prevBtn.onclick = () => {
+                if (page > 1) {
+                    page--;
+                    render();
+                }
+            };
+            container.appendChild(prevBtn);
+
+            const pageNumbers = getPageNumbers(page, pages);
+            pageNumbers.forEach(p => {
+                if (p === '…') {
+                    const dots = document.createElement('span');
+                    dots.className = 'pg-dots';
+                    dots.textContent = '…';
+                    container.appendChild(dots);
+                } else {
+                    const btn = createButton(p, 'pg-btn' + (p === page ? ' pg-btn--on' : ''), false);
+                    btn.onclick = () => {
+                        page = p;
+                        render();
+                    };
+                    container.appendChild(btn);
+                }
+            });
+
+            const nextBtn = createButton('›', 'pg-btn pg-btn--nav', page === pages);
+            nextBtn.onclick = () => {
+                if (page < pages) {
+                    page++;
+                    render();
+                }
+            };
+            container.appendChild(nextBtn);
+        }
+
+        function createButton(text, className, disabled) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.innerHTML = text;
+            btn.className = className;
+            btn.disabled = disabled;
+            return btn;
+        }
+
+        function getPageNumbers(current, total) {
+            if (total <= 7) {
+                return Array.from({ length: total }, (_, i) => i + 1);
+            }
+        
+            const pages = new Set([1, total, current]);
+            if (current > 1) pages.add(current - 1);
+            if (current < total) pages.add(current + 1);
+        
+            const sorted = [...pages].sort((a, b) => a - b);
+            const result = [];
+            let prev = 0;
+        
+            sorted.forEach(num => {
+                if (num - prev > 1) result.push('…');
+                result.push(num);
+                prev = num;
+            });
+        
+            return result;
+        }
+
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(render, 100);
         });
 
-        const next = mkBtn('&#8250;', 'pg-btn pg-btn--nav', page === pages);
-        next.onclick = () => { if (page < pages) { page++; render(); } };
-        wrap.appendChild(next);
-    }
-
-    function mkBtn(html, cls, disabled) {
-        const b = document.createElement('button');
-        b.type = 'button'; b.innerHTML = html;
-        b.className = cls; b.disabled = disabled;
-        return b;
-    }
-
-    function pageNums(cur, total) {
-        if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
-        const set = new Set([1, total, cur]);
-        if (cur > 1) set.add(cur - 1);
-        if (cur < total) set.add(cur + 1);
-        const sorted = [...set].sort((a, b) => a - b);
-        const out = []; let prev = 0;
-        sorted.forEach(n => { if (n - prev > 1) out.push('…'); out.push(n); prev = n; });
-        return out;
-    }
-
-    document.addEventListener('DOMContentLoaded', render);
-    window.initPagination = initPagination;
-})();
+        document.addEventListener('DOMContentLoaded', render);
+        window.initPagination = initPagination;
+    })();
 </script>

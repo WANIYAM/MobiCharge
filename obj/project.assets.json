@@ -6390,11 +6390,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp.csproj",
+      "projectUniqueName": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\MobileRechargeApp.csproj",
       "projectName": "MobileRechargeApp",
-      "projectPath": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp.csproj",
+      "projectPath": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\MobileRechargeApp.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\Eproject\\MobileRechargeApp\\obj\\",
+      "outputPath": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

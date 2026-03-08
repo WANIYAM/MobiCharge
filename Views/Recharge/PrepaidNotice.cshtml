@@ -3,16 +3,13 @@
 }
 
 <section class="sign__area">
-    <div class="sign__bg">
-        <img src="~/assets/images/sign/sign-bg.webp" alt="img">
-        </div>
         <div class="sign__sp1"><img src="~/assets/images/wave-sp.png" alt="img"></div>
         <div class="sign__sp2"><img src="~/assets/images/wave-sp.png" alt="img"></div>
 
         <div class="container">
-            <div class="row justify-content-center align-items-center" style="min-height:70vh;">
+        <div class="row justify-content-center align-items-center" style="min-height:70vh;">
                 <div class="col-lg-8">
-                    <div class="sign__wrap text-center" style="padding: 60px 40px;">
+                <div class="sign__wrap text-center" style="padding: 60px 40px;  border: 2px solid #14537A">
 
                         <!-- Info Icon -->
                         <div class="stat-icon" style="width: 120px; height: 120px; margin: 0 auto 30px; border-radius: 30px;">
@@ -44,16 +41,24 @@
 
                         <!-- Action Buttons -->
                         <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-                            <a href="/Recharge" class="common__btn">
-                                <span><i class="las la-phone-volume me-2"></i>Go to Recharge</span>
+                            <a href="/Recharge" class="common__btn w-100">
+                                <span style="width:100%;"><i class="las la-phone-volume me-2"></i>Go to Recharge</span>
                                 <span><i class="fa-solid fa-arrow-right"></i></span>
                             </a>
-                            <a href="/MyAccount" class="common__btn" style="background: transparent; border: 1px solid hsl(var(--border-color));">
-                                <span style="color: hsl(var(--text-color));">My Account</span>
-                            </a>
+                           
                         </div>
 
+
                     </div>
+                <div class="text-center mt-4">
+                    <a href="/MyAccount" class="common__btn"
+                       style="background:transparent; color:hsl(var(--text-color)); width:250px; display:inline-flex; align-items:center; justify-content:space-between;">
+
+                        <span style="width:100%"><i class="las la-check-circle me-2"></i>Back to My Account</span>
+                        <span><i class="fa-solid fa-arrow-right"></i></span>
+
+                    </a>
+                </div>
                 </div>
             </div>
         </div>
