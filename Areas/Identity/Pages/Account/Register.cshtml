@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row g-4 align-items-center">
 
-            <!-- LEFT SIDE -->
+            <!-- LEFT SIDE (Unchanged) -->
             <div class="col-lg-6">
                 <div class="sign__left__blk">
                     <div class="sign__label">
@@ -35,10 +35,7 @@
                         </p>
                     </div>
                     <div class="back__to__home">
-                        <a href="/">
-                            <i class="fa-solid fa-arrow-left-long"></i>
-                            Back to Home
-                        </a>
+                        <a href="/"><i class="fa-solid fa-arrow-left-long"></i> Back to Home</a>
                     </div>
                 </div>
             </div>
@@ -50,55 +47,48 @@
                     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         @Html.AntiForgeryToken()
 
-                        <div asp-validation-summary="ModelOnly"
-                             class="alert alert-danger py-2 small"
-                             role="alert"></div>
+                        <div asp-validation-summary="ModelOnly" class="lf-validation-summary" role="alert"></div>
 
-                        <div class="row g-2 mt-4">
+                        <div class="row g-0">
 
                             <!-- Mobile Number -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
-                                    <label asp-for="Input.MobileNumber" class="form-label form--label">
-                                        Mobile Number
-                                    </label>
-                                    <input asp-for="Input.MobileNumber"
-                                           class="form-control form--control"
-                                           placeholder="Enter 10-digit mobile number"
-                                           maxlength="10"
-                                           inputmode="numeric" />
-                                    <span asp-validation-for="Input.MobileNumber" class="text-danger small"></span>
+                                    <label asp-for="Input.MobileNumber" class="form-label form--label">Mobile Number</label>
+                                    <div class="input--group">
+                                        <input asp-for="Input.MobileNumber"
+                                               class="form-control form--control"
+                                               placeholder="Enter 10-digit mobile number"
+                                               maxlength="10"
+                                               inputmode="numeric" />
+                                    </div>
+                                    <span asp-validation-for="Input.MobileNumber" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Full Name -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
-                                    <label asp-for="Input.FullName" class="form-label form--label">
-                                      Full Name
-                                    </label>
-                                    <input asp-for="Input.FullName"
-                                           class="form-control form--control"
-                                           placeholder="Enter your full name" />
-                                    <span asp-validation-for="Input.FullName" class="text-danger small"></span>
+                                    <label asp-for="Input.FullName" class="form-label form--label">Full Name</label>
+                                    <div class="input--group">
+                                        <input asp-for="Input.FullName"
+                                               class="form-control form--control"
+                                               placeholder="Enter your full name" />
+                                    </div>
+                                    <span asp-validation-for="Input.FullName" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Plan Type -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
-                                    <label class="form-label form--label">
-                                         Select Your Plan Type
-                                    </label>
-
+                                    <label class="form-label form--label">Select Your Plan Type</label>
                                     <div class="plan-type-selector">
 
                                         <label class="plan-type-option">
                                             <input type="radio" asp-for="Input.PlanType" value="Prepaid" />
                                             <div class="plan-type-card">
-                                                <div class="plan-type-icon">
-                                                    <i class="las la-bolt"></i>
-                                                </div>
+                                                <div class="plan-type-icon"><i class="las la-bolt"></i></div>
                                                 <div class="plan-type-name">Prepaid</div>
                                                 <div class="plan-type-desc">Pay before use</div>
                                             </div>
@@ -107,65 +97,75 @@
                                         <label class="plan-type-option">
                                             <input type="radio" asp-for="Input.PlanType" value="Postpaid" />
                                             <div class="plan-type-card">
-                                                <div class="plan-type-icon">
-                                                    <i class="las la-file-invoice-dollar"></i>
-                                                </div>
+                                                <div class="plan-type-icon"><i class="las la-file-invoice-dollar"></i></div>
                                                 <div class="plan-type-name">Postpaid</div>
                                                 <div class="plan-type-desc">Pay monthly</div>
                                             </div>
                                         </label>
 
                                     </div>
-
-                                    <span asp-validation-for="Input.PlanType" class="text-danger small"></span>
+                                    <span asp-validation-for="Input.PlanType" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Password -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
-                                    <label asp-for="Input.Password" class="form-label form--label">
-                                       Password
-                                    </label>
-                                    <input asp-for="Input.Password"
-                                           type="password"
-                                           class="form-control form--control"
-                                           placeholder="Minimum 6 characters"
-                                           autocomplete="new-password" />
-                                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                    <label asp-for="Input.Password" class="form-label form--label">Password</label>
+                                    <div class="lf-pw-wrapper">
+                                        <div class="input--group">
+                                            <input asp-for="Input.Password"
+                                                   type="password"
+                                                   class="form-control form--control"
+                                                   placeholder="Minimum 6 characters"
+                                                   autocomplete="new-password"
+                                                   id="passwordField" />
+                                        </div>
+                                        <button type="button" class="lf-pw-toggle" onclick="togglePassword('passwordField','toggleIcon1')" tabindex="-1">
+                                            <i class="fa-regular fa-eye" id="toggleIcon1"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.Password" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Confirm Password -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
-                                    <label asp-for="Input.ConfirmPassword" class="form-label form--label">
-                                       Confirm Password
-                                    </label>
-                                    <input asp-for="Input.ConfirmPassword"
-                                           type="password"
-                                           class="form-control form--control"
-                                           placeholder="Re-enter your password"
-                                           autocomplete="new-password" />
-                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                                    <label asp-for="Input.ConfirmPassword" class="form-label form--label">Confirm Password</label>
+                                    <div class="lf-pw-wrapper">
+                                        <div class="input--group">
+                                            <input asp-for="Input.ConfirmPassword"
+                                                   type="password"
+                                                   class="form-control form--control"
+                                                   placeholder="Re-enter your password"
+                                                   autocomplete="new-password"
+                                                   id="confirmPasswordField" />
+                                        </div>
+                                        <button type="button" class="lf-pw-toggle" onclick="togglePassword('confirmPasswordField','toggleIcon2')" tabindex="-1">
+                                            <i class="fa-regular fa-eye" id="toggleIcon2"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="lf-field-error"></span>
                                 </div>
                             </div>
 
-                            <!-- Submit --> <div class="col-lg-12">
-                                <div class="sign__wrap__single"> 
-                                    <button type="submit" class="common__btn w-100" style="justify-content:space-between;"> 
-                                        <span>Create Account</span> <span><i class="fa-solid fa-arrow-right"></i></span>
-                                        </button>
-                                        </div>
-                                        </div> 
-                                        <!-- Already have account -->
-                                        
-                                        <div class="col-lg-12"> 
-                                            <div class="sign__already">
-                                                <p> Already have an account? <a asp-page="/Account/Login" asp-area="Identity">Log In</a> 
-                                                    </p>
-                                                    </div> 
-                                                    </div>
+                            <!-- Submit -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single">
+                                    <button type="submit" class="common__btn">
+                                        <span>Create Account</span>
+                                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Already have account -->
+                            <div class="col-lg-12">
+                                <div class="lf-register-row">
+                                    <p>Already have an account? <a asp-page="/Account/Login" asp-area="Identity">Log In</a></p>
+                                </div>
+                            </div>
 
                         </div>
                     </form>
@@ -177,30 +177,123 @@
 </section>
 
 <style>
-    
-    .row {
-        --bs-gutter-y: 0.6rem;
+    /* ── Card wrapper ── */
+    .sign__wrap {
+        width: 530px;
+        margin-top: 50px;
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1.5px solid hsl(var(--border-color) / 0.18);
+        box-shadow: 0 8px 32px -8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+        padding: 36px 40px 32px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .sign__wrap:hover {
+        box-shadow: 0 12px 40px -10px hsl(var(--base) / 0.12), 0 2px 8px rgba(0,0,0,0.04);
     }
 
     .sign__wrap__single {
         margin-bottom: 0;
+        padding-bottom: 6px;
     }
 
+    .col-lg-12 + .col-lg-12 {
+        margin-top: 10px;
+    }
+
+    /* ── Labels ── */
     .form--label {
-        margin-bottom: 4px;
-        font-weight: 500;
-    }
-
-    .text-danger.small {
-        margin-top: 3px;
+        margin-bottom: 8px;
         display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--heading-color));
+        padding-left: 4px;
+        letter-spacing: 0.2px;
     }
 
+    /* ── Input group ── */
+    .input--group {
+        display: flex;
+        align-items: center;
+        height: 52px;
+        border-radius: 14px;
+        border: 2px solid hsl(var(--border-color) / 0.2);
+        overflow: hidden;
+        transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .input--group:focus-within {
+        border-color: hsl(var(--base));
+        box-shadow: 0 6px 18px -6px hsl(var(--base) / 0.25);
+        transform: translateY(-1px);
+    }
+
+    .input--group .form--control {
+        border: none;
+        height: 100%;
+        padding: 0 16px;
+        background: transparent;
+        font-size: 0.95rem;
+        color: hsl(var(--heading-color));
+        font-weight: 400;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .input--group .form--control::placeholder {
+        color: hsl(var(--text-color) / 0.4);
+        font-weight: 300;
+    }
+
+    .input--group .form--control:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* ── Password toggle ── */
+    .lf-pw-wrapper {
+        position: relative;
+    }
+
+    .lf-pw-wrapper .input--group {
+        padding-right: 48px;
+    }
+
+    .lf-pw-toggle {
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        border-radius: 10px;
+        color: hsl(var(--text-color) / 0.4);
+        cursor: pointer;
+        font-size: 16px;
+        transition: color 0.2s, background 0.2s;
+        z-index: 3;
+    }
+
+    .lf-pw-toggle:hover {
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.06);
+    }
+
+    /* ── Plan type selector ── */
     .plan-type-selector {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
-        margin-top: 6px;
+        margin-top: 4px;
     }
 
     .plan-type-option input[type="radio"] {
@@ -208,60 +301,114 @@
     }
 
     .plan-type-card {
-        border: 2px solid #1DA5A5;
-        border-radius: 12px;
+        border: 2px solid hsl(var(--border-color) / 0.25);
+        border-radius: 14px;
         padding: 14px 10px;
         text-align: center;
         cursor: pointer;
         transition: all 0.25s ease;
-        /* background: rgba(0, 199, 103, 0.05); */
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
-        /* Hover state */
-        .plan-type-card:hover {
-            border-color: #00324D;
-            /* background: rgba(0, 199, 103, 0.10); */
-        }
+    .plan-type-card:hover {
+        border-color: hsl(var(--base) / 0.5);
+        box-shadow: 0 4px 12px -4px hsl(var(--base) / 0.15);
+        transform: translateY(-1px);
+    }
 
-    /* Selected state */
     .plan-type-option input:checked + .plan-type-card {
-        border-color: #1DA5A5;
-        /* background: rgba(0, 199, 103, 0.18); */
-        box-shadow: 0 0 0 1px #1DA5A5;
+        border-color: hsl(var(--base));
+        box-shadow: 0 0 0 1px hsl(var(--base)), 0 6px 18px -6px hsl(var(--base) / 0.25);
+        background: hsl(var(--base) / 0.03);
     }
 
-    /* Plan icons */
     .plan-type-icon {
         font-size: 22px;
         margin-bottom: 4px;
-        color: #1DA5A5;
+        color: hsl(var(--base));
     }
 
-    /* Plan text */
     .plan-type-name {
         font-weight: 600;
         font-size: 14px;
         margin-bottom: 2px;
+        color: hsl(var(--heading-color));
     }
 
     .plan-type-desc {
         font-size: 11px;
-        opacity: 0.7;
-    }
-    .form-control:focus {
-        border-color: #1DA5A5 !important;
-        box-shadow: 0 0 0 1px #1DA5A5 !important;
-        outline: none !important;
+        color: hsl(var(--text-color) / 0.6);
     }
 
-    .form-control {
-        box-shadow: none;
+    /* ── Validation ── */
+    .lf-validation-summary {
+        background: #fff5f5;
+        border: 1px solid #feb2b2;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 0.825rem;
+        color: #c53030;
+        margin-bottom: 10px;
     }
 
-    .form-control {
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    .lf-validation-summary:empty { display: none; }
+
+    .lf-field-error {
+        display: block;
+        font-size: 0.78rem;
+        color: #e53e3e;
+        margin-top: 4px;
+        padding-left: 4px;
+        min-height: 1rem;
+    }
+
+    /* ── Already have account ── */
+    .lf-register-row {
+        text-align: center;
+        padding-top: 6px;
+    }
+
+    .lf-register-row p {
+        font-size: 0.9rem;
+        color: hsl(var(--text-color) / 0.7);
+        margin: 0;
+    }
+
+    .lf-register-row a {
+        color: hsl(var(--base));
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 4px;
+    }
+
+    .lf-register-row a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @@media (max-width: 1200px) { .sign__wrap { width: 100%; max-width: 530px; } }
+    @@media (max-width: 991px)  { .sign__wrap { margin: 40px auto 0; } }
+    @@media (max-width: 768px)  { .sign__wrap { padding: 28px 24px 24px; } }
+    @@media (max-width: 576px)  {
+        .sign__wrap { padding: 24px 18px 20px; border-radius: 18px; }
+        .input--group { height: 48px; }
+        .plan-type-selector { grid-template-columns: 1fr 1fr; }
     }
 </style>
+
+<script>
+    function togglePassword(fieldId, iconId) {
+        const f = document.getElementById(fieldId);
+        const i = document.getElementById(iconId);
+        if (!f || !i) return;
+        if (f.type === 'password') {
+            f.type = 'text';
+            i.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            f.type = 'password';
+            i.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -1,122 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\admin\\transactions.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\admin\\transactions.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\admin\\feedbacks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\admin\\feedbacks.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\admin\\topupplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\admin\\topupplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\admin\\specialplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\admin\\specialplans.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\myaccount\\editprofile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\myaccount\\editprofile.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\recharge\\postpaidbill.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\postpaidbill.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 5,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Feedbacks.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\Feedbacks.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\Feedbacks.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\Feedbacks.cshtml",
-              "RelativeToolTip": "Views\\Admin\\Feedbacks.cshtml",
-              "ViewState": "AgIAACABAAAAAAAAAAAUwCABAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T01:18:52.676Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SpecialPlans.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\SpecialPlans.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\SpecialPlans.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\SpecialPlans.cshtml",
-              "RelativeToolTip": "Views\\Admin\\SpecialPlans.cshtml",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAiwFsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T01:00:39.549Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TopUpPlans.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\TopUpPlans.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\TopUpPlans.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\TopUpPlans.cshtml",
-              "RelativeToolTip": "Views\\Admin\\TopUpPlans.cshtml",
-              "ViewState": "AgIAAL0AAAAAAAAAAAAAAMEAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T00:58:42.655Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EditProfile.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\MyAccount\\EditProfile.cshtml",
-              "RelativeDocumentMoniker": "Views\\MyAccount\\EditProfile.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\MyAccount\\EditProfile.cshtml",
-              "RelativeToolTip": "Views\\MyAccount\\EditProfile.cshtml",
-              "ViewState": "AgIAALYAAAAAAAAAAADwv70AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T00:41:58.904Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PostpaidBill.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Recharge\\PostpaidBill.cshtml",
-              "RelativeDocumentMoniker": "Views\\Recharge\\PostpaidBill.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Recharge\\PostpaidBill.cshtml",
-              "RelativeToolTip": "Views\\Recharge\\PostpaidBill.cshtml",
-              "ViewState": "AgIAAJ0CAAAAAAAAAADwv0IDAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T00:41:35.329Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Transactions.cshtml",
-              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\Transactions.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\Transactions.cshtml",
-              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Admin\\Transactions.cshtml",
-              "RelativeToolTip": "Views\\Admin\\Transactions.cshtml",
-              "ViewState": "AgIAAIYBAAAAAAAAAAAmwJEBAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-03-08T00:36:51.409Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

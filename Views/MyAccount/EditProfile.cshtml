@@ -5,157 +5,147 @@
 
 <section class="account-area">
     <div class="container" style="padding-top: 140px; padding-bottom: 60px;">
-
-
         <div class="row justify-content-center">
             <div class="col-lg-7">
 
-                <!-- Main Card -->
-                <div class="transactions-panel">
+                <!-- Card -->
+                <div class="ep__card">
 
-                    <div class="panel-header">
-                        <h5 class="mb-0">
-                            <i class="las la-user-edit" style="color: hsl(var(--base));"></i>
-                            Edit Personal Details
-                        </h5>
-                        <div class="happy-users-badge" style="padding: 0.25rem 1rem;">
+                    <!-- Header -->
+                    <div class="ep__header">
+                        <div class="ep__header__left">
+                            <i class="las la-user-edit"></i>
+                            <span>Edit Personal Details</span>
+                        </div>
+                        <div class="ep__header__badge">
                             <i class="las la-user"></i>
-                            <span>Profile Settings</span>
+                            Profile Settings
                         </div>
                     </div>
 
-                    <div class="p-4">
+                    <!-- Body -->
+                    <div class="ep__body">
 
                         @if (ViewBag.Success != null)
                         {
-                            <div class="alert mb-4" style="background: hsl(var(--base) / 0.1); border-left: 4px solid hsl(var(--base)); border-radius: 12px;">
-                                <i class="las la-check-circle" style="color: hsl(var(--base));"></i>
+                            <div class="ep__alert ep__alert--success">
+                                <i class="las la-check-circle"></i>
                                 @ViewBag.Success
                             </div>
                         }
 
-                        <div asp-validation-summary="ModelOnly" class="alert mb-4" style="background: hsl(var(--danger) / 0.1); border-left: 4px solid hsl(var(--danger)); border-radius: 12px; color: hsl(var(--danger));">
-                        </div>
+                        <div asp-validation-summary="ModelOnly" class="ep__alert ep__alert--danger"></div>
 
                         <form asp-action="EditProfile" method="post">
 
                             <!-- Mobile Number (readonly) -->
-                            <div class="mb-4">
-                                <label class="form-label fw-bold mb-2">
-                                    <i class="las la-mobile-alt" style="color: hsl(var(--base));"></i>
+                            <div class="ep__field">
+                                <label class="form--label">
+                                    <i class="las la-mobile-alt"></i>
                                     Mobile Number (Username)
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                        <i class="las la-phone"></i>
-                                    </span>
-                                    <input asp-for="MobileNumber" class="form-control" readonly
-                                           style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color));" />
+                                <div class="input--group ep__readonly">
+                                    <span class="ep__icon"><i class="las la-phone"></i></span>
+                                    <input asp-for="MobileNumber" class="form-control form--control" readonly />
                                 </div>
-                                <small class="text-danger">Mobile number cannot be changed</small>
+                                <small class="ep__hint">Mobile number cannot be changed</small>
                             </div>
 
                             <!-- Full Name -->
-                            <div class="mb-3">
-                                <label asp-for="FullName" class="form-label fw-bold mb-2">
-                                    <i class="las la-user" style="color: hsl(var(--base));"></i>
+                            <div class="ep__field">
+                                <label asp-for="FullName" class="form--label">
+                                    <i class="las la-user"></i>
                                     Full Name
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                        <i class="las la-user-circle"></i>
-                                    </span>
-                                    <input asp-for="FullName" class="form-control" placeholder="Enter your full name"
-                                           style="border: 1px solid hsl(var(--border-color));" />
+                                <div class="input--group">
+                                    <span class="ep__icon"><i class="las la-user-circle"></i></span>
+                                    <input asp-for="FullName" class="form-control form--control"
+                                           placeholder="Enter your full name" />
                                 </div>
-                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                                <span asp-validation-for="FullName" class="ep__error"></span>
                             </div>
 
-                            <!-- Phone Number -->
-                            <div class="mb-2">
-                                <label asp-for="PhoneNumber" class="form-label fw-bold ">
-                                    <i class="las la-phone" style="color: hsl(var(--base));"></i>
+                            <!-- Alternate Phone -->
+                            <div class="ep__field">
+                                <label asp-for="PhoneNumber" class="form--label">
+                                    <i class="las la-phone"></i>
                                     Alternate Phone Number
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                        <i class="las la-phone-alt"></i>
-                                    </span>
-                                    <input asp-for="PhoneNumber" class="form-control" placeholder="Enter alternate number" maxlength="10"
-                                           style="border: 1px solid hsl(var(--border-color));" />
+                                <div class="input--group">
+                                    <span class="ep__icon"><i class="las la-phone-alt"></i></span>
+                                    <input asp-for="PhoneNumber" class="form-control form--control"
+                                           placeholder="Enter alternate number" maxlength="10" />
                                 </div>
-                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                <span asp-validation-for="PhoneNumber" class="ep__error"></span>
                             </div>
 
-                            <div class="brand__title divider-title">
-                                <span class="divider-line"></span>
-
-                                <h6>
+                            <!-- Divider -->
+                            <div class="ep__divider">
+                                <span class="ep__divider__line"></span>
+                                <span class="ep__divider__label">
                                     <i class="las la-lock"></i>
                                     Change Password (Optional)
-                                </h6>
-
-                                <span class="divider-line"></span>
+                                </span>
+                                <span class="ep__divider__line"></span>
                             </div>
 
                             <!-- New Password -->
-                            <div class="mb-3">
-                                <label asp-for="NewPassword" class="form-label fw-bold mb-2">
-                                    <i class="las la-key" style="color: hsl(var(--base));"></i>
+                            <div class="ep__field">
+                                <label asp-for="NewPassword" class="form--label">
+                                    <i class="las la-key"></i>
                                     New Password
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                        <i class="las la-lock"></i>
-                                    </span>
-                                    <input asp-for="NewPassword" class="form-control"
-                                           placeholder="Leave blank to keep current password"
-                                           autocomplete="new-password"
-                                           style="border: 1px solid hsl(var(--border-color));" />
+                                <div class="lf-pw-wrapper">
+                                    <div class="input--group">
+                                        <span class="ep__icon"><i class="las la-lock"></i></span>
+                                        <input asp-for="NewPassword" class="form-control form--control"
+                                               type="password"
+                                               placeholder="Leave blank to keep current password"
+                                               autocomplete="new-password"
+                                               id="newPasswordField" />
+                                    </div>
+                                    <button type="button" class="lf-pw-toggle" onclick="togglePw('newPasswordField','icon1')" tabindex="-1">
+                                        <i class="fa-regular fa-eye" id="icon1"></i>
+                                    </button>
                                 </div>
-                                <span asp-validation-for="NewPassword" class="text-danger small"></span>
+                                <span asp-validation-for="NewPassword" class="ep__error"></span>
                             </div>
 
                             <!-- Confirm Password -->
-                            <div class="mb-3">
-                                <label asp-for="ConfirmPassword" class="form-label fw-bold mb-2">
-                                    <i class="las la-lock" style="color: hsl(var(--base));"></i>
+                            <div class="ep__field">
+                                <label asp-for="ConfirmPassword" class="form--label">
+                                    <i class="las la-lock"></i>
                                     Confirm New Password
                                 </label>
-                                <div class="input-group">
-                                    <span class="input-group-text" style="background: hsl(var(--section-bg)); border: 1px solid hsl(var(--border-color)); border-right: none;">
-                                        <i class="las la-check-circle"></i>
-                                    </span>
-                                    <input asp-for="ConfirmPassword" class="form-control"
-                                           placeholder="Re-enter new password"
-                                           autocomplete="new-password"
-                                           style="border: 1px solid hsl(var(--border-color));" />
+                                <div class="lf-pw-wrapper">
+                                    <div class="input--group">
+                                        <span class="ep__icon"><i class="las la-check-circle"></i></span>
+                                        <input asp-for="ConfirmPassword" class="form-control form--control"
+                                               type="password"
+                                               placeholder="Re-enter new password"
+                                               autocomplete="new-password"
+                                               id="confirmPasswordField" />
+                                    </div>
+                                    <button type="button" class="lf-pw-toggle" onclick="togglePw('confirmPasswordField','icon2')" tabindex="-1">
+                                        <i class="fa-regular fa-eye" id="icon2"></i>
+                                    </button>
                                 </div>
-                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                                <span asp-validation-for="ConfirmPassword" class="ep__error"></span>
                             </div>
-                            <div class="d-flex justify-content-between mt-4">
 
-                                <button type="submit">
-                                    <a href="/" class="common__btn"
-                                           style="background:transparent; color:hsl(var(--text-color)); width:200px; display:inline-flex; align-items:end; justify-content:end;">
-
-                                        <span style="width:100%">
-                                            <i class="las la-save" style="font-size:20px;"></i>
-                                            Save Changes
-                                        </span>
-                                        <span><i class="fa-solid fa-arrow-right"></i></span>
-
-                                    </a>
-                                </button>
-
-                                <a href="/MyAccount" class="common__btn"
-                                       style="background:transparent; color:hsl(var(--text-color)); width:200px; display:inline-flex; align-items:end; justify-content:end;">
-
-                                    <span style="width:100%">Cancel</span>
-                                    <span><i class="fa-solid fa-arrow-right"></i></span>
-
+                            <!-- Actions -->
+                            <div class="ep__actions">
+                                <div class="ep__save__wrap">
+                                    <button type="submit" class="ep__btn__save__label">
+                                        Save Changes
+                                    </button>
+                                    <button type="submit" class="ep__btn__save__icon">
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <a href="/MyAccount" class="ep__btn__cancel">
+                                    <i class="fa-solid fa-arrow-left"></i> Cancel
                                 </a>
-                              
                             </div>
 
                         </form>
@@ -166,31 +156,358 @@
         </div>
     </div>
 </section>
+
 <style>
-    .divider-title {
+    /* ── Card ── */
+    .ep__card {
+        background: #fff;
+        border-radius: 24px;
+        border: 1.5px solid hsl(var(--border-color) / 0.18);
+        box-shadow: 0 8px 32px -8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+    }
+
+    .ep__card:hover {
+        box-shadow: 0 12px 40px -10px hsl(var(--base) / 0.12), 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    /* ── Header ── */
+    .ep__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 28px;
+        background: hsl(var(--base));
+        border-bottom: 1px solid hsl(var(--base) / 0.15);
+    }
+
+    .ep__header__left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #fff;
+    }
+
+    .ep__header__left i { font-size: 20px; }
+
+    .ep__header__badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255,255,255,0.15);
+        border: 1px solid rgba(255,255,255,0.25);
+        border-radius: 30px;
+        padding: 5px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* ── Body ── */
+    .ep__body { padding: 32px 28px 28px; }
+
+    /* ── Alerts ── */
+    .ep__alert {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 16px;
+        border-radius: 12px;
+        font-size: 13px;
+        margin-bottom: 22px;
+    }
+
+    .ep__alert:empty { display: none; }
+
+    .ep__alert--success {
+        background: hsl(var(--base) / 0.08);
+        border-left: 4px solid hsl(var(--base));
+        color: hsl(var(--base));
+    }
+
+    .ep__alert--success i { font-size: 18px; }
+
+    .ep__alert--danger {
+        background: #fff5f5;
+        border-left: 4px solid #e53e3e;
+        color: #c53030;
+    }
+
+    /* ── Fields ── */
+    .ep__field {
+        margin-bottom: 18px;
+    }
+
+    /* ── Labels — reuse same class as Login ── */
+    .form--label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--heading-color));
+        margin-bottom: 8px;
+        padding-left: 2px;
+    }
+
+    .form--label i {
+        color: hsl(var(--base));
+        font-size: 1rem;
+    }
+
+    /* ── Input group — same as Login ── */
+    .input--group {
+        display: flex;
+        align-items: center;
+        height: 52px;
+        border-radius: 14px;
+        border: 2px solid hsl(var(--border-color) / 0.2);
+        overflow: hidden;
+        transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .input--group:focus-within {
+        border-color: hsl(var(--base));
+        box-shadow: 0 6px 18px -6px hsl(var(--base) / 0.25);
+        transform: translateY(-1px);
+    }
+
+    /* Left icon inside group */
+    .ep__icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 30px 0 20px;
-        gap: 15px;
+        width: 46px;
+        height: 100%;
+        flex-shrink: 0;
+        background: hsl(var(--section-bg) / 0.6);
+        border-right: 1.5px solid hsl(var(--border-color) / 0.15);
+        color: hsl(var(--base));
+        font-size: 1rem;
     }
 
-        .divider-title h6 {
-            margin: 0;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: hsl(var(--heading-color));
-        }
+    .input--group .form--control {
+        border: none;
+        height: 100%;
+        padding: 0 16px;
+        background: transparent;
+        font-size: 0.95rem;
+        color: hsl(var(--heading-color));
+        font-weight: 400;
+        flex: 1;
+        min-width: 0;
+    }
 
-    .divider-line {
+    .input--group .form--control::placeholder {
+        color: hsl(var(--text-color) / 0.4);
+        font-weight: 300;
+    }
+
+    .input--group .form--control:focus { box-shadow: none; outline: none; }
+
+    /* Readonly field */
+    .ep__readonly {
+        background: hsl(var(--section-bg) / 0.3);
+        border-style: dashed;
+    }
+
+    .ep__readonly .form--control {
+        cursor: not-allowed;
+        background-color: #f0f5f8 !important;
+        color: hsl(var(--text-color) / 0.65) !important;
+        -webkit-text-fill-color: hsl(var(--text-color) / 0.65) !important;
+    }
+
+    /* Override browser autofill dark background */
+    .ep__readonly .form--control:-webkit-autofill,
+    .ep__readonly .form--control[readonly] {
+        -webkit-box-shadow: 0 0 0 100px #f0f5f8 inset !important;
+        box-shadow: 0 0 0 100px #f0f5f8 inset !important;
+        -webkit-text-fill-color: hsl(var(--text-color) / 0.65) !important;
+    }
+
+    /* ── Password toggle — same as Login ── */
+    .lf-pw-wrapper { position: relative; }
+
+    .lf-pw-wrapper .input--group { padding-right: 48px; }
+
+    .lf-pw-toggle {
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        border-radius: 10px;
+        color: hsl(var(--text-color) / 0.4);
+        cursor: pointer;
+        font-size: 16px;
+        transition: color 0.2s, background 0.2s;
+        z-index: 3;
+    }
+
+    .lf-pw-toggle:hover {
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.06);
+    }
+
+    /* ── Hints & errors ── */
+    .ep__hint {
+        display: block;
+        font-size: 0.78rem;
+        color: hsl(var(--text-color) / 0.45);
+        margin-top: 5px;
+        padding-left: 4px;
+    }
+
+    .ep__error {
+        display: block;
+        font-size: 0.78rem;
+        color: #e53e3e;
+        margin-top: 5px;
+        padding-left: 4px;
+        min-height: 1rem;
+    }
+
+    /* ── Divider ── */
+    .ep__divider {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 28px 0 22px;
+    }
+
+    .ep__divider__line {
         flex: 1;
         height: 1px;
-        background: hsl(var(--border-color));
+        background: hsl(var(--border-color) / 0.25);
     }
 
+    .ep__divider__label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 13px;
+        font-weight: 600;
+        color: hsl(var(--heading-color));
+        white-space: nowrap;
+    }
+
+    .ep__divider__label i { color: hsl(var(--base)); }
+
+    /* ── Action buttons ── */
+    .ep__actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 30px;
+    }
+
+    /* Save button — matches Logout button style */
+    .ep__save__wrap {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+
+    .ep__btn__save__label {
+        height: 44px;
+        padding: 0 22px;
+        background: hsl(var(--base));
+        color: #fff;
+        border: none;
+        border-radius: 30px 0 0 30px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        white-space: nowrap;
+    }
+
+    .ep__btn__save__label:hover {
+        background: hsl(var(--base-two, var(--base)));
+        transform: translateY(-1px);
+    }
+
+    .ep__btn__save__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: hsl(var(--base));
+        color: #fff;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        flex-shrink: 0;
+        margin-left: 6px;
+    }
+
+    .ep__btn__save__icon:hover {
+        background: hsl(var(--base-two, var(--base)));
+        transform: translateY(-1px);
+    }
+
+    .ep__btn__cancel {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 22px;
+        height: 52px;
+        border-radius: 14px;
+        border: 2px solid hsl(var(--border-color) / 0.25);
+        background: transparent;
+        color: hsl(var(--text-color) / 0.7);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.25s;
+        white-space: nowrap;
+    }
+
+    .ep__btn__cancel:hover {
+        border-color: hsl(var(--base) / 0.4);
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.04);
+    }
+
+    /* ── Responsive ── */
+    @@media (max-width: 576px) {
+        .ep__body { padding: 24px 18px 20px; }
+        .ep__header { padding: 16px 18px; }
+        .ep__actions { flex-direction: column; }
+        .ep__btn__save, .ep__btn__cancel { width: 100%; justify-content: center; }
+        .input--group { height: 48px; }
+    }
 </style>
+
+<script>
+    function togglePw(fieldId, iconId) {
+        const f = document.getElementById(fieldId);
+        const i = document.getElementById(iconId);
+        if (!f || !i) return;
+        if (f.type === 'password') {
+            f.type = 'text';
+            i.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            f.type = 'password';
+            i.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

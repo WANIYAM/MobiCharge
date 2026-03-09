@@ -4,397 +4,6 @@
     Layout = "_Layout";
 }
 
-@section Styles {
-<style>
-/* ── Page ── */
-.bill-page {
-    min-height: 100vh;
-    /* background: #0a0f0f; */
-    padding: 100px 0 60px;
-    position: relative;
-    overflow: hidden;
-}
-.bill-page::before {
-    content: '';
-    position: absolute;
-    top: -200px; right: -100px;
-    width: 600px; height: 600px;
-    /* background: radial-gradient(circle, hsl(180 70% 38% / 0.08) 0%, transparent 70%); */
-    pointer-events: none;
-}
-.bill-page::after {
-    content: '';
-    position: absolute;
-    bottom: -100px; left: -100px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, hsl(200 85% 48% / 0.05) 0%, transparent 70%); 
-    pointer-events: none;
-}
-
-/* ── Left panel ── */
-.bill-left { position: sticky; top: 100px; }
-
-            .bill-left .sign__title h1 {
-                color: #14537A;
-            }
-.bill-left .sign__title span { color: hsl(180 70% 48%); }
-
-/* ── Dark Cards ── */
-.dark-card {
-
-   /* background: #0e1818;          */
-   border: 1.5px solid #14537A;
-    border-radius: 20px;
-    overflow: hidden;
-    /* text-align: center; */
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    margin-bottom: 20px;
-}
-.dark-card__header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 26px;
-    border-bottom: 1px solid #1a2e2e;
-    background: #14537A;
-    /* background: #0a1212; */
-}
-.dark-card__label {
-    font-size: 11px; font-weight: 800;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: white; margin-bottom: 4px;
-}
-
-        .dark-card__cycle {
-            font-size: 13px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-/* Status badges */
-.bill-status {
-    padding: 6px 14px; border-radius: 30px;
-    font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; gap: 6px;
-}
-.bill-status.paid {
-    background: hsl(180 70% 38% / 0.12);
-    color: hsl(180 70% 55%);
-    border: 1px solid hsl(180 70% 38% / 0.3);
-}
-.bill-status.due {
-    background: hsl(0 80% 50% / 0.1);
-    color: hsl(0 80% 65%);
-    border: 1px solid hsl(0 80% 50% / 0.3);
-}
-
-/* Amount hero */
-.bill-amount-hero {
-    padding: 28px 26px 20px;
-    border-bottom: 1px solid #1a2e2e;
-}
-.amount-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #14537A; margin-bottom: 8px; }
-.amount-display .currency { font-size: 18px; color: hsl(180 70% 48%); font-weight: 700; vertical-align: top; line-height: 2.2; }
-        .amount-display .amount {
-            font-size: 52px;
-            font-weight: 900;
-            color: #14537A;
-            font-family: 'ClashDisplay-Variable', sans-serif;
-            line-height: 1;
-        }
-
-/* Body */
-.bill-body { padding: 24px 26px; }
-
-.section-label {
-    font-size: 10px; font-weight: 800; letter-spacing: 2px;
-    text-transform: uppercase; color: #3a5555; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
-}
-.section-label::after { content: ''; flex: 1; height: 1px; background: #1a2e2e; }
-
-/* Usage items */
-.usage-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-.usage-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 16px;
-    background: white; border-radius: 12px;
-            border: 1px solid #14537A;
-            transition: border-color 0.2s;
-}
-.usage-item:hover { border-color: #1da5a5; }
-.usage-icon {
-    width: 40px; height: 40px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-}
-.usage-icon.calls { background: hsl(200 100% 50% / 0.1); color: hsl(200 100% 55%); }
-.usage-icon.data  { background: hsl(270 80%  60% / 0.1); color: hsl(270 80%  65%); }
-.usage-icon.sms   { background: hsl(40  100% 50% / 0.1); color: hsl(40  100% 55%); }
-.usage-icon.rent  { background: hsl(180 70%  38% / 0.1); color: hsl(180 70%  55%); }
-.usage-info { flex: 1; }
-            .usage-info span {
-                display: block;
-                font-size: 13px;
-                font-weight: 600;
-                color: #1da5a5;
-            }
-
-.usage-info small { font-size: 11px; color: #3a5555; }
-        .usage-amount {
-            font-size: 14px;
-            font-weight: 700;
-            color: #14537A;
-            font-family: 'Menlo', monospace;
-        }
-
-/* Totals */
-.bill-totals {
-    border-top: 1px solid #1a2e2e;
-    padding-top: 16px;
-    display: flex; flex-direction: column; gap: 10px;
-    margin-bottom: 28px;
-}
-.bill-total-row { display: flex; justify-content: space-between; font-size: 13px; color: #4a7070; }
-.bill-total-row.grand {
-                font-size: 17px;
-                font-weight: 800;
-                color: #14537A;
-    padding-top: 14px; border-top: 1px solid #1a2e2e; margin-top: 4px;
-}
-.bill-total-row.grand span:last-child { color:#1da5a5; }
-
-/* Paid notice */
-.paid-notice {
-    background: hsl(180 70% 38% / 0.08);
-    border: 1px solid hsl(180 70% 38% / 0.2);
-    border-radius: 14px; padding: 18px 22px;
-    color: hsl(180 70% 55%); font-size: 13px;
-    display: flex; align-items: center; gap: 12px;
-}
-.paid-notice i { font-size: 24px; flex-shrink: 0; }
-
-/* ── Payment Method Grid ── */
-.method-title {
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 2px; text-transform: uppercase;
-    color: #3a5555; margin-bottom: 14px;
-}
-.method-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-bottom: 18px;
-}
-.method-card {
-            border: 1.5px solid #14537A;
-            border-radius: 12px;
-    padding: 14px 12px; cursor: pointer;
-    transition: all 0.2s; 
-    text-align: center; position: relative; overflow: hidden;
-}
-.method-card:hover {
-                border-color: #1da5a5;
-    /* background: hsl(180 70% 38% / 0.05); */
-    transform: translateY(-2px);
-}
-.method-card.selected {
-                border-color: #1da5a5;
-    background: hsl(180 70% 38% / 0.1);
-    box-shadow: 0 0 16px hsl(180 70% 38% / 0.15);
-}
-.method-card.selected::after {
-    content: '✓'; position: absolute; top: 6px; right: 8px;
-                    font-size: 10px;
-                    font-weight: 800;
-                    color: #1da5a5;
-}
-.method-icon { font-size: 22px; margin-bottom: 6px; display: block; }
-.method-name { font-size: 12px; font-weight: 700; color: #c0d8d8; display: block; }
-.method-tag  { font-size: 10px; color: #3a5555; margin-top: 2px; display: block; }
-
-/* ── Payment Detail Panels ── */
-.payment-detail { display: none; margin-bottom: 16px; }
-.payment-detail.visible { display: block; }
-
-.wallet-panel { border-radius: 14px; padding: 20px; }
-.wallet-panel.easypaisa { background: white; border: 1px solid #1a5a2a; }
-.wallet-panel.jazzcash  { background: white; border: 1px solid #5a2a00; }
-.wallet-panel.card-panel{ background: white; border: 1px solid #1a2a4a; }
-.wallet-panel.bank-panel{ background: white; border: 1px solid #1a1a4a; }
-
-.wallet-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.wallet-brand-icon {
-    width: 36px; height: 36px; border-radius: 9px;
-    display: flex; align-items: center; justify-content: center; font-size: 18px;
-}
-.easypaisa .wallet-brand-icon { background: #00a651; }
-.jazzcash  .wallet-brand-icon { background: #e85e00; }
-.card-panel .wallet-brand-icon { background: #1a3a6a; }
-.bank-panel .wallet-brand-icon { background: #2a2a6a; }
-.wallet-brand-name { font-size: 14px; font-weight: 800; color: #fff; }
-.wallet-brand-sub  { font-size: 11px; color: #7a9a8a; margin-top: 1px; }
-.jazzcash  .wallet-brand-sub { color: #9a7a5a; }
-.card-panel .wallet-brand-sub { color: #6a8aaa; }
-.bank-panel .wallet-brand-sub { color: #7a7aaa; }
-
-.qr-wrap { display: flex; gap: 16px; align-items: flex-start; }
-.qr-mock {
-    width: 80px; height: 80px; border-radius: 8px;
-    background: #fff; padding: 5px; flex-shrink: 0;
-    display: grid; grid-template-columns: repeat(7,1fr); gap: 1.5px;
-}
-.qr-mock .qp { border-radius: 1px; }
-.qr-steps { flex: 1; }
-.qr-step { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
-.qr-step-num {
-    width: 18px; height: 18px; border-radius: 50%;
-    font-size: 9px; font-weight: 800;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 1px;
-}
-.qr-step p { font-size: 11px; color: #8aacac; margin: 0; line-height: 1.5; }
-.qr-step p strong { color: #c0d8d8; }
-
-.amount-to-pay {
-    margin-top: 12px; padding: 10px 14px;
-            border-radius: 10px;
-            background: #14537a;
-    display: flex; align-items: center; justify-content: space-between;
-}
-            .amount-to-pay span {
-                font-size: 11px;
-                color: #14537a;
-            }
-.amount-to-pay strong { font-size: 15px; font-weight: 800; color: #fff; }
-
-/* Card inputs */
-.form--field { margin-bottom: 14px; }
-.form--field label {
-    font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; color: #4a7070;
-    margin-bottom: 7px; display: block;
-}
-.form--field input {
-    width: 100%; background: white;
-                border: 1.5px solid #14537a;
-                border-radius: 10px;
-    padding: 11px 14px; color: #d0e8e8; font-size: 13px;
-    font-family: 'Menlo','Consolas',monospace; outline: none;
-    transition: border-color 0.2s;
-}
-.form--field input:focus { border-color: hsl(180 70% 38%); box-shadow: 0 0 0 3px hsl(180 70% 38% / 0.1); }
-.form--field input::placeholder { color: #1a3030; }
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.card-number-wrap { position: relative; }
-.card-type-badge  { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.5; }
-
-.virtual-card {
-            background: linear-gradient(135deg,#14537a,#14537a 50%,#14537a);
-    border-radius: 14px; padding: 18px; margin-bottom: 14px;
-    border: 1px solid #1a3a5a; position: relative; overflow: hidden;
-}
-.virtual-card::before {
-    content: ''; position: absolute; top: -25px; right: -25px;
-    width: 110px; height: 110px; border-radius: 50%;
-    background: hsl(200 85% 48% / 0.07);
-}
-.vc-chip   { width: 28px; height: 22px; background: linear-gradient(135deg,#c8a84b,#f0d060); border-radius: 4px; margin-bottom: 14px; }
-.vc-number { font-family:'Menlo',monospace; font-size:14px; letter-spacing:2px; color:#d0e8f8; margin-bottom:12px; }
-.vc-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
-.vc-label  { font-size:8px; color:#4a7090; letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
-.vc-value  { font-size:12px; color:#c0d8f0; font-weight:600; font-family:'Menlo',monospace; }
-.vc-logo   { font-size:10px; font-weight:800; color:#7090b0; letter-spacing:2px; }
-
-.bank-detail-row {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:10px 0; border-bottom:1px solid #1a1a3a;
-}
-.bank-detail-row:last-child { border-bottom:none; }
-.bank-detail-row span:first-child { font-size:11px; color:#5a5a9a; }
-.bank-detail-row span:last-child  { font-size:12px; font-weight:700; color:#c0c0e8; font-family:'Menlo',monospace; }
-.copy-btn {
-    background:transparent; border:1px solid #2a2a5a;
-    color:#6a6aaa; border-radius:5px; padding:2px 7px;
-    font-size:9px; cursor:pointer; transition:all 0.2s; margin-left:6px;
-}
-.copy-btn:hover { border-color:hsl(180 70% 38%); color:hsl(180 70% 55%); }
-
-/* Buttons */
-.btn-pay-now {
-    width:100%; padding:15px;
-    background:#1da5a5;
-    border:none; border-radius:12px; color:#fff !important;
-    font-size:14px; font-weight:800; letter-spacing:0.5px;
-    cursor:pointer; transition:all 0.25s;
-    display:flex; align-items:center; justify-content:center; gap:10px;
-}
-.btn-pay-now:hover { transform:translateY(-2px); box-shadow:0 12px 35px hsl(180 70% 38% / 0.4); }
-.btn-pay-now:disabled { opacity:0.4; cursor:not-allowed; transform:none; box-shadow:none; }
-.btn-back-method {
-    width:100%; padding:11px;
-    background:transparent; border:1px solid #1a2e2e;
-    border-radius:12px; color:#3a5555; font-size:12px; font-weight:600;
-    cursor:pointer; transition:all 0.2s; margin-top:8px;
-}
-.btn-back-method:hover { border-color:#2a4040; color:#5a8080; }
-
-.security-note {
-    text-align:center; margin-top:14px; font-size:10px; color:#1a3030;
-    display:flex; align-items:center; justify-content:center; gap:5px;
-}
-.security-note i { color:hsl(180 70% 38%); }
-
-/* Processing overlay */
-.processing-overlay {
-    display:none; position:fixed; inset:0;
-    background:rgba(0,0,0,0.85); backdrop-filter:blur(8px);
-    z-index:9999; align-items:center; justify-content:center;
-    flex-direction:column; gap:20px;
-}
-.processing-overlay.show { display:flex; }
-.proc-spinner {
-    width:56px; height:56px;
-    border:3px solid #1a3a3a; border-top-color:hsl(180 70% 48%);
-    border-radius:50%; animation:spin 0.8s linear infinite;
-}
-@@keyframes spin { to { transform:rotate(360deg); } }
-.proc-text { font-size:15px; font-weight:700; color:#c0e0e0; font-family:'ClashDisplay-Variable',sans-serif; }
-.proc-sub  { font-size:11px; color:#3a6060; margin-top:-14px; }
-
-/* History table */
-.badge-teal {
-    background:hsl(180 70% 38% / 0.12); color:hsl(180 70% 55%);
-    border:1px solid hsl(180 70% 38% / 0.3);
-    border-radius:20px; padding:3px 12px; font-size:11px; font-weight:700;
-}
-.hist-table { width:100%; border-collapse:collapse; }
-.hist-table th {
-    font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
-    color:#3a5555; padding:14px 20px; border-bottom:1px solid #1a2e2e;
-    background:#0a1212; text-align:left;
-}
-.hist-table td {
-    padding:14px 20px; font-size:13px; color:#7a9a9a;
-    border-bottom:1px solid #0e1c1c; vertical-align:middle;
-}
-.hist-table tr:last-child td { border-bottom:none; }
-.hist-table tr:hover td { background:#0a1414; }
-.txn-id-badge { font-family:'Menlo',monospace; font-size:12px; font-weight:700; color:hsl(180 70% 55%); }
-.amount-col   { font-family:'Menlo',monospace; font-weight:700; color:#c0d8d8; }
-.status-badge {
-    display:inline-flex; align-items:center; gap:5px;
-    background:hsl(180 70% 38% / 0.1); color:hsl(180 70% 55%);
-    border:1px solid hsl(180 70% 38% / 0.2);
-    border-radius:20px; padding:3px 10px; font-size:11px; font-weight:700;
-}
-
-@@media (max-width:768px) {
-    .method-grid { grid-template-columns:1fr 1fr; }
-    .amount-display .amount { font-size:38px; }
-    .hist-table th:nth-child(4), .hist-table td:nth-child(4) { display:none; }
-}
-</style>
-}
-
 <!-- Processing Overlay -->
 <div class="processing-overlay" id="processingOverlay">
     <div class="proc-spinner"></div>
@@ -402,12 +11,16 @@
     <div class="proc-sub">Please do not close this window</div>
 </div>
 
-<section class="bill-page">
+<section class="sign__area pb__bill__page">
+    <div class="sign__bg"></div>
+
     <div class="container">
-        <div class="row g-4 justify-content-center">
-            <!-- ── LEFT PANEL ── -->
-            @* <div class="col-lg-4">
-                <div class="bill-left sign__left__blk">
+        <div class="row g-4 align-items-start">
+
+            <!-- ═══ LEFT PANEL ═══ -->
+            <div class="col-lg-4">
+                <div class="sign__left__blk pb__left">
+
                     <div class="sign__label">
                         <div class="footer__subs__label">
                             <div class="footer__subs__shr">
@@ -418,312 +31,339 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="sign__title">
                         <span>Postpaid Account</span>
                         <h1>Your <span>Bill</span></h1>
-                        <p class="mt-3" style="color: black;font-size:14px;">
-                            <i class="las la-mobile-alt"></i> @Model.MobileNumber
-                        </p>
-                        <p style="color: black;font-size:14px;">
-                            <i class="las la-user"></i> @Model.FullName
-                        </p>
                     </div>
+
+                    <!-- Account Info Card -->
+                    <div class="pb__account__card">
+                        <div class="pb__account__row">
+                            <i class="las la-mobile-alt"></i>
+                            <span>@Model.MobileNumber</span>
+                        </div>
+                        <div class="pb__account__row">
+                            <i class="las la-user"></i>
+                            <span>@Model.FullName</span>
+                        </div>
+                        <div class="pb__account__row">
+                            <i class="las la-calendar-alt"></i>
+                            <span>@Model.BillingCycle</span>
+                        </div>
+                        <div class="pb__account__row">
+                            <i class="las la-tag"></i>
+                            <span>@Model.PlanName</span>
+                        </div>
+                    </div>
+
                     <div class="back__to__home">
                         <a href="/MyAccount">
-                            <i class="fa-solid fa-arrow-left-long"></i> Back to My Account
+                            <i class="fa-solid fa-arrow-left-long"></i>
+                            Back to My Account
                         </a>
                     </div>
+
                 </div>
-            </div> *@
+            </div>
+            <!-- ═══ LEFT PANEL END ═══ -->
 
-            <!-- ── RIGHT PANEL ── -->
+            <!-- ═══ RIGHT PANEL ═══ -->
             <div class="col-lg-8">
+                <div class="sign__wrap pb__wrap">
 
-                <!-- Current Bill Card -->
-                <div class="dark-card">
-                    <div class="dark-card__header">
+                    <!-- ── Bill Header ── -->
+                    <div class="pb__header">
                         <div>
-                            <div class="dark-card__label">Current Bill</div>
-                            <div class="dark-card__cycle">
+                            <div class="pb__header__label">Current Bill</div>
+                            <div class="pb__header__cycle">
                                 <i class="las la-calendar-alt"></i> @Model.BillingCycle
                             </div>
                         </div>
                         @if (Model.IsPaid)
                         {
-                            <span class="bill-status paid"><i class="las la-check-circle"></i> Paid</span>
+                            <span class="pb__status pb__status--paid"><i class="las la-check-circle"></i> Paid</span>
                         }
                         else
                         {
-                            <span class="bill-status due">
+                            <span class="pb__status pb__status--due">
                                 <i class="las la-exclamation-circle"></i>
                                 Due @Model.DueDate.ToString("dd MMM yyyy")
                             </span>
                         }
                     </div>
 
-                    <!-- Amount Hero -->
-                    <div class="bill-amount-hero">
-                        <div class="amount-label">Total Amount Due</div>
-                        <div class="amount-display">
-                            <span class="currency">Rs.</span>
-                            <span class="amount">@Model.TotalAmount</span>
+                    <!-- ── Amount Hero ── -->
+                    <div class="pb__amount__hero">
+                        <div class="pb__amount__label">Total Amount Due</div>
+                        <div class="pb__amount__display">
+                            <span class="pb__currency">Rs.</span>
+                            <span class="pb__amount">@Model.TotalAmount</span>
                         </div>
                     </div>
 
-                    <div class="bill-body">
+                    <!-- ── Usage Breakdown ── -->
+                    <div class="pb__section__label">Usage Breakdown</div>
+                    <div class="pb__usage__row">
+                        <div class="pb__usage__item">
+                            <div class="pb__usage__icon pb__icon--calls"><i class="las la-phone"></i></div>
+                            <div class="pb__usage__info">
+                                <span>Call Charges</span>
+                                <small>Voice calls this month</small>
+                            </div>
+                            <div class="pb__usage__amount">Rs. @Model.CallCharges</div>
+                        </div>
+                        <div class="pb__usage__item">
+                            <div class="pb__usage__icon pb__icon--data"><i class="las la-wifi"></i></div>
+                            <div class="pb__usage__info">
+                                <span>Data Charges</span>
+                                <small>Mobile data usage</small>
+                            </div>
+                            <div class="pb__usage__amount">Rs. @Model.DataCharges</div>
+                        </div>
+                        <div class="pb__usage__item">
+                            <div class="pb__usage__icon pb__icon--sms"><i class="las la-sms"></i></div>
+                            <div class="pb__usage__info">
+                                <span>SMS Charges</span>
+                                <small>Text messages sent</small>
+                            </div>
+                            <div class="pb__usage__amount">Rs. @Model.SmsCharges</div>
+                        </div>
+                        <div class="pb__usage__item">
+                            <div class="pb__usage__icon pb__icon--rent"><i class="las la-sim-card"></i></div>
+                            <div class="pb__usage__info">
+                                <span>Monthly Rent</span>
+                                <small>@Model.PlanName</small>
+                            </div>
+                            <div class="pb__usage__amount">Rs. @Model.BaseRent</div>
+                        </div>
+                    </div>
 
-                        <!-- Usage Breakdown -->
-                        <div class="section-label">Usage Breakdown</div>
-                        <div class="usage-row">
-                            <div class="usage-item">
-                                <div class="usage-icon calls"><i class="las la-phone"></i></div>
-                                <div class="usage-info"><span>Call Charges</span><small>Voice calls this month</small></div>
-                                <div class="usage-amount">Rs. @Model.CallCharges</div>
-                            </div>
-                            <div class="usage-item">
-                                <div class="usage-icon data"><i class="las la-wifi"></i></div>
-                                <div class="usage-info"><span>Data Charges</span><small>Mobile data usage</small></div>
-                                <div class="usage-amount">Rs. @Model.DataCharges</div>
-                            </div>
-                            <div class="usage-item">
-                                <div class="usage-icon sms"><i class="las la-sms"></i></div>
-                                <div class="usage-info"><span>SMS Charges</span><small>Text messages sent</small></div>
-                                <div class="usage-amount">Rs. @Model.SmsCharges</div>
-                            </div>
-                            <div class="usage-item">
-                                <div class="usage-icon rent"><i class="las la-sim-card"></i></div>
-                                <div class="usage-info"><span>Monthly Rent</span><small>@Model.PlanName</small></div>
-                                <div class="usage-amount">Rs. @Model.BaseRent</div>
+                    <!-- ── Totals ── -->
+                    <div class="pb__totals">
+                        <div class="pb__total__row">
+                            <span>Subtotal</span>
+                            <span>Rs. @(Model.CallCharges + Model.DataCharges + Model.SmsCharges + Model.BaseRent)</span>
+                        </div>
+                        <div class="pb__total__row">
+                            <span>GST (17%)</span>
+                            <span>Rs. @Model.Taxes</span>
+                        </div>
+                        <div class="pb__total__row pb__total__grand">
+                            <span>Total Amount Due</span>
+                            <span>Rs. @Model.TotalAmount</span>
+                        </div>
+                    </div>
+
+                    <!-- ── Paid Notice / Payment Panel ── -->
+                    @if (Model.IsPaid)
+                    {
+                        <div class="pb__paid__notice">
+                            <i class="las la-check-circle"></i>
+                            <div>
+                                This month's bill has been paid successfully.
+                                Your next bill will be generated on
+                                <strong>@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("dd MMM yyyy"))</strong>.
                             </div>
                         </div>
-
-                        <!-- Totals -->
-                        <div class="bill-totals">
-                            <div class="bill-total-row">
-                                <span>Subtotal</span>
-                                <span>Rs. @(Model.CallCharges + Model.DataCharges + Model.SmsCharges + Model.BaseRent)</span>
+                    }
+                    else
+                    {
+                        <!-- STEP A: Choose Method -->
+                        <div id="panelMethod">
+                            <div class="pb__section__label">Select Payment Method</div>
+                            <div class="pb__method__grid">
+                                <div class="pb__method__card" onclick="selectMethod('easypaisa',this)">
+                                    <span class="pb__method__icon">🟢</span>
+                                    <span class="pb__method__name">EasyPaisa</span>
+                                    <span class="pb__method__tag">Wallet</span>
+                                </div>
+                                <div class="pb__method__card" onclick="selectMethod('jazzcash',this)">
+                                    <span class="pb__method__icon">🟠</span>
+                                    <span class="pb__method__name">JazzCash</span>
+                                    <span class="pb__method__tag">Wallet</span>
+                                </div>
+                                <div class="pb__method__card" onclick="selectMethod('card',this)">
+                                    <span class="pb__method__icon">💳</span>
+                                    <span class="pb__method__name">Card</span>
+                                    <span class="pb__method__tag">Visa · Mastercard</span>
+                                </div>
+                                <div class="pb__method__card" onclick="selectMethod('bank',this)">
+                                    <span class="pb__method__icon">🏦</span>
+                                    <span class="pb__method__name">Bank Transfer</span>
+                                    <span class="pb__method__tag">IBFT</span>
+                                </div>
                             </div>
-                            <div class="bill-total-row">
-                                <span>GST (17%)</span>
-                                <span>Rs. @Model.Taxes</span>
-                            </div>
-                            <div class="bill-total-row grand">
-                                <span>Total Amount Due</span>
-                                <span>Rs. @Model.TotalAmount</span>
-                            </div>
+                            <button class="common__btn pb__btn__proceed" id="btnProceed"
+                                    onclick="proceedToDetails()" disabled>
+                                <span>Continue to Payment</span>
+                                <span><i class="fa-solid fa-arrow-right"></i></span>
+                            </button>
                         </div>
 
-                        @if (Model.IsPaid)
-                        {
-                            <div class="paid-notice">
-                                <i class="las la-check-circle"></i>
-                                <div>
-                                    This month's bill has been paid successfully.
-                                    Your next bill will be generated on
-                                    <strong>@(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToString("dd MMM yyyy"))</strong>.
+                        <!-- STEP B: Payment Details -->
+                        <div id="panelDetails" style="display:none;">
+
+                            <!-- EasyPaisa -->
+                            <div class="payment-detail" id="detail-easypaisa">
+                                <div class="pb__wallet__panel pb__ep">
+                                    <div class="pb__wallet__brand">
+                                        <div class="pb__wallet__icon" style="background:#00a651;">🟢</div>
+                                        <div>
+                                            <div class="pb__wallet__name">EasyPaisa</div>
+                                            <div class="pb__wallet__sub">Scan QR or send to number</div>
+                                        </div>
+                                    </div>
+                                    <div class="pb__qr__steps">
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(0,166,81,0.12);border-color:#00a651;color:#00c961;">1</div>
+                                            <p>Open <strong>EasyPaisa App</strong> → tap <strong>Send Money</strong></p>
+                                        </div>
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(0,166,81,0.12);border-color:#00a651;color:#00c961;">2</div>
+                                            <p>Enter <strong>0300-1234567</strong></p>
+                                        </div>
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(0,166,81,0.12);border-color:#00a651;color:#00c961;">3</div>
+                                            <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with PIN</p>
+                                        </div>
+                                    </div>
+                                    <div class="pb__amount__to__pay">
+                                        <span>Total to pay</span>
+                                        <strong>Rs. @Model.TotalAmount</strong>
+                                    </div>
                                 </div>
                             </div>
-                        }
-                        else
-                        {
-                            <!-- ── STEP A: Choose Method ── -->
-                            <div id="panelMethod">
-                                <div class="method-title">Select Payment Method</div>
-                                <div class="method-grid">
-                                    <div class="method-card" onclick="selectMethod('easypaisa',this)">
-                                        <span class="method-icon">🟢</span>
-                                        <span class="method-name">EasyPaisa</span>
-                                        <span class="method-tag">Wallet</span>
+
+                            <!-- JazzCash -->
+                            <div class="payment-detail" id="detail-jazzcash">
+                                <div class="pb__wallet__panel pb__jc">
+                                    <div class="pb__wallet__brand">
+                                        <div class="pb__wallet__icon" style="background:#e85e00;">🟠</div>
+                                        <div>
+                                            <div class="pb__wallet__name">JazzCash</div>
+                                            <div class="pb__wallet__sub">Send via Mobile Account</div>
+                                        </div>
                                     </div>
-                                    <div class="method-card" onclick="selectMethod('jazzcash',this)">
-                                        <span class="method-icon">🟠</span>
-                                        <span class="method-name">JazzCash</span>
-                                        <span class="method-tag">Wallet</span>
+                                    <div class="pb__qr__steps">
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(232,94,0,0.12);border-color:#e85e00;color:#ff8040;">1</div>
+                                            <p>Open <strong>JazzCash App</strong> → tap <strong>Mobile Account</strong></p>
+                                        </div>
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(232,94,0,0.12);border-color:#e85e00;color:#ff8040;">2</div>
+                                            <p>Enter <strong>0311-9876543</strong></p>
+                                        </div>
+                                        <div class="pb__qr__step">
+                                            <div class="pb__step__num" style="background:rgba(232,94,0,0.12);border-color:#e85e00;color:#ff8040;">3</div>
+                                            <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with MPIN</p>
+                                        </div>
                                     </div>
-                                    <div class="method-card" onclick="selectMethod('card',this)">
-                                        <span class="method-icon">💳</span>
-                                        <span class="method-name">Card</span>
-                                        <span class="method-tag">Visa · Mastercard</span>
-                                    </div>
-                                    <div class="method-card" onclick="selectMethod('bank',this)">
-                                        <span class="method-icon">🏦</span>
-                                        <span class="method-name">Bank Transfer</span>
-                                        <span class="method-tag">IBFT</span>
+                                    <div class="pb__amount__to__pay">
+                                        <span>Total to pay</span>
+                                        <strong>Rs. @Model.TotalAmount</strong>
                                     </div>
                                 </div>
-                                <button class="btn-pay-now" id="btnProceed" onclick="proceedToDetails()"
-                                        disabled style="opacity:0.4;cursor:not-allowed;">
-                                    <i class="las la-arrow-right"></i> Continue to Payment
-                                </button>
                             </div>
 
-                            <!-- ── STEP B: Payment Details ── -->
-                            <div id="panelDetails" style="display:none;">
-
-                                <!-- EasyPaisa -->
-                                <div class="payment-detail" id="detail-easypaisa">
-                                    <div class="wallet-panel easypaisa">
-                                        <div class="wallet-brand">
-                                            <div class="wallet-brand-icon">🟢</div>
-                                            <div>
-                                                <div class="wallet-brand-name">EasyPaisa</div>
-                                            </div>
+                            <!-- Card -->
+                            <div class="payment-detail" id="detail-card">
+                                <div class="pb__virtual__card">
+                                    <div class="vc-chip"></div>
+                                    <div class="vc-number" id="vcNumber">•••• •••• •••• ••••</div>
+                                    <div class="vc-bottom">
+                                        <div><div class="vc-label">Card Holder</div><div class="vc-value" id="vcName">YOUR NAME</div></div>
+                                        <div><div class="vc-label">Expires</div><div class="vc-value" id="vcExpiry">MM / YY</div></div>
+                                        <div class="vc-logo" id="vcLogo">VISA</div>
+                                    </div>
+                                </div>
+                                <div class="pb__wallet__panel pb__card__panel">
+                                    <div class="pb__form__field">
+                                        <label>Card Number</label>
+                                        <div style="position:relative;">
+                                            <input type="text" id="cardNumber" placeholder="0000  0000  0000  0000"
+                                                   maxlength="19" oninput="formatCard(this)" autocomplete="cc-number" class="pb__input"/>
+                                            <span class="pb__card__badge" id="cardTypeBadge">💳</span>
                                         </div>
-                                        <div class="qr-wrap">
-                                            <div class="qr-steps">
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">1</div>
-                                                    <p>Open <strong>EasyPaisa App</strong> → tap <strong>Send Money</strong></p>
-                                                </div>
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">2</div>
-                                                    <p>Scan QR or enter <strong>0300-1234567</strong></p>
-                                                </div>
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(0,166,81,0.15);border:1px solid #00a651;color:#00c961;">3</div>
-                                                    <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with PIN</p>
-                                                </div>
-                                            </div>
+                                    </div>
+                                    <div class="pb__form__field">
+                                        <label>Cardholder Name</label>
+                                        <input type="text" id="cardName" placeholder="Name as on card" class="pb__input"
+                                               oninput="document.getElementById('vcName').textContent=this.value.toUpperCase()||'YOUR NAME'"
+                                               autocomplete="cc-name"/>
+                                    </div>
+                                    <div class="pb__form__row2">
+                                        <div class="pb__form__field">
+                                            <label>Expiry</label>
+                                            <input type="text" id="cardExpiry" placeholder="MM / YY" class="pb__input"
+                                                   maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp"/>
                                         </div>
-                                        <div class="amount-to-pay">
-                                            <span>Total to pay</span>
-                                            <strong>Rs. @Model.TotalAmount</strong>
+                                        <div class="pb__form__field">
+                                            <label>CVV</label>
+                                            <input type="password" id="cardCvv" placeholder="•••" class="pb__input" maxlength="3" autocomplete="cc-csc"/>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- JazzCash -->
-                                <div class="payment-detail" id="detail-jazzcash">
-                                    <div class="wallet-panel jazzcash">
-                                        <div class="wallet-brand">
-                                            <div class="wallet-brand-icon">🟠</div>
-                                            <div>
-                                                <div class="wallet-brand-name">JazzCash</div>
-                                            </div>
-                                        </div>
-                                        <div class="qr-wrap">
-                                            <div class="qr-steps">
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">1</div>
-                                                    <p>Open <strong>JazzCash App</strong> → tap <strong>Mobile Account</strong></p>
-                                                </div>
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">2</div>
-                                                    <p>Scan QR or enter <strong>0311-9876543</strong></p>
-                                                </div>
-                                                <div class="qr-step">
-                                                    <div class="qr-step-num" style="background:rgba(232,94,0,0.15);border:1px solid #e85e00;color:#ff8040;">3</div>
-                                                    <p>Enter <strong>Rs. @Model.TotalAmount</strong> and confirm with MPIN</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="amount-to-pay">
-                                            <span>Total to pay</span>
-                                            <strong>Rs. @Model.TotalAmount</strong>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Card -->
-                                <div class="payment-detail" id="detail-card">
-                                    <div class="virtual-card">
-                                        <div class="vc-chip"></div>
-                                        <div class="vc-number" id="vcNumber">•••• •••• •••• ••••</div>
-                                        <div class="vc-bottom">
-                                            <div><div class="vc-label">Card Holder</div><div class="vc-value" id="vcName">YOUR NAME</div></div>
-                                            <div><div class="vc-label">Expires</div><div class="vc-value" id="vcExpiry">MM / YY</div></div>
-                                            <div class="vc-logo" id="vcLogo">VISA</div>
-                                        </div>
-                                    </div>
-                                    <div class="wallet-panel card-panel">
-                                        <div class="form--field">
-                                            <label>Card Number</label>
-                                            <div class="card-number-wrap">
-                                                <input type="text" id="cardNumber" placeholder="0000  0000  0000  0000"
-                                                       maxlength="19" oninput="formatCard(this)" autocomplete="cc-number"/>
-                                                <span class="card-type-badge" id="cardTypeBadge">💳</span>
-                                            </div>
-                                        </div>
-                                        <div class="form--field">
-                                            <label>Cardholder Name</label>
-                                            <input type="text" id="cardName" placeholder="Name as on card"
-                                                   oninput="document.getElementById('vcName').textContent=this.value.toUpperCase()||'YOUR NAME'"
-                                                   autocomplete="cc-name"/>
-                                        </div>
-                                        <div class="form-row-2">
-                                            <div class="form--field">
-                                                <label>Expiry</label>
-                                                <input type="text" id="cardExpiry" placeholder="MM / YY"
-                                                       maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp"/>
-                                            </div>
-                                            <div class="form--field">
-                                                <label>CVV</label>
-                                                <input type="password" id="cardCvv" placeholder="•••" maxlength="3" autocomplete="cc-csc"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Bank Transfer -->
-                                <div class="payment-detail" id="detail-bank">
-                                    <div class="wallet-panel bank-panel">
-                                        <div class="wallet-brand">
-                                            <div class="wallet-brand-icon">🏦</div>
-                                            <div>
-                                                <div class="wallet-brand-name">IBFT / Online Transfer</div>
-                                                <div class="wallet-brand-sub">Transfer exact amount below</div>
-                                            </div>
-                                        </div>
-                                        <div class="bank-detail-row"><span>Bank Name</span><span>HBL — Habib Bank Ltd</span></div>
-                                        <div class="bank-detail-row"><span>Account Title</span><span>MobileRecharge Pvt Ltd</span></div>
-                                        <div class="bank-detail-row">
-                                            <span>Account No.</span>
-                                            <span>0123-4567890-001 <button class="copy-btn" onclick="copyText('0123-4567890-001',this)">Copy</button></span>
-                                        </div>
-                                        <div class="bank-detail-row">
-                                            <span>IBAN</span>
-                                            <span style="font-size:10px;">PK36HABB0123456789000 <button class="copy-btn" onclick="copyText('PK36HABB0123456789000',this)">Copy</button></span>
-                                        </div>
-                                        <div class="bank-detail-row">
-                                            <span>Reference</span>
-                                            <span style="color:hsl(180 70% 55%);">@Model.MobileNumber</span>
-                                        </div>
-                                        <div class="amount-to-pay" style="margin-top:12px;">
-                                            <span>Exact amount to transfer</span>
-                                            <strong>Rs. @Model.TotalAmount</strong>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button class="btn-pay-now" onclick="submitPayment()">
-                                    <i class="las la-lock"></i>
-                                    Confirm & Pay Rs. @Model.TotalAmount
-                                </button>
-                                <button class="btn-back-method" onclick="goBack()">← Change Payment Method</button>
                             </div>
 
-                            <div class="security-note">
-                                <i class="las la-shield-alt"></i>
-                                256-bit SSL encrypted · Demo payment flow
+                            <!-- Bank Transfer -->
+                            <div class="payment-detail" id="detail-bank">
+                                <div class="pb__wallet__panel pb__bank__panel">
+                                    <div class="pb__wallet__brand">
+                                        <div class="pb__wallet__icon" style="background:hsl(var(--base));">🏦</div>
+                                        <div>
+                                            <div class="pb__wallet__name">IBFT / Online Transfer</div>
+                                            <div class="pb__wallet__sub">Transfer exact amount below</div>
+                                        </div>
+                                    </div>
+                                    <div class="pb__bank__row"><span>Bank Name</span><span>HBL — Habib Bank Ltd</span></div>
+                                    <div class="pb__bank__row"><span>Account Title</span><span>MobileRecharge Pvt Ltd</span></div>
+                                    <div class="pb__bank__row">
+                                        <span>Account No.</span>
+                                        <span>0123-4567890-001 <button class="pb__copy__btn" onclick="copyText('0123-4567890-001',this)">Copy</button></span>
+                                    </div>
+                                    <div class="pb__bank__row">
+                                        <span>IBAN</span>
+                                        <span style="font-size:10px;">PK36HABB0123456789000 <button class="pb__copy__btn" onclick="copyText('PK36HABB0123456789000',this)">Copy</button></span>
+                                    </div>
+                                    <div class="pb__bank__row">
+                                        <span>Reference</span>
+                                        <span style="color:hsl(var(--base));">@Model.MobileNumber</span>
+                                    </div>
+                                    <div class="pb__amount__to__pay" style="margin-top:12px;">
+                                        <span>Exact amount to transfer</span>
+                                        <strong>Rs. @Model.TotalAmount</strong>
+                                    </div>
+                                </div>
                             </div>
-                        }
 
-                    </div><!-- /.bill-body -->
-                </div><!-- /.dark-card -->
+                            <button class="common__btn pb__btn__pay" onclick="submitPayment()">
+                                <span><i class="las la-lock"></i> Confirm &amp; Pay Rs. @Model.TotalAmount</span>
+                                <span><i class="fa-solid fa-arrow-right"></i></span>
+                            </button>
+                            <button class="pb__btn__back" onclick="goBack()">
+                                <i class="fa-solid fa-arrow-left"></i> Change Payment Method
+                            </button>
+                        </div>
+
+                        <div class="pb__security__note">
+                            <i class="las la-shield-alt"></i>
+                            256-bit SSL encrypted · Demo payment flow
+                        </div>
+                    }
+
+                </div><!-- /.sign__wrap -->
 
                 <!-- Payment History -->
                 @if (Model.PastBills.Any())
                 {
-                    <div class="dark-card">
-                        <div class="dark-card__header">
-                            <h6 style="margin:0;color:#c0d8d8;font-size:14px;">
-                                <i class="las la-history" style="color:hsl(180 70% 48%);margin-right:8px;"></i>
-                                Payment History
-                            </h6>
-                            <span class="badge-teal">@Model.PastBills.Count() payments</span>
+                    <div class="sign__wrap pb__wrap pb__history">
+                        <div class="pb__section__label" style="margin-bottom:0;">
+                            <i class="las la-history"></i> Payment History
+                            <span class="pb__badge">@Model.PastBills.Count() payments</span>
                         </div>
                         <div class="table-responsive">
-                            <table class="hist-table">
+                            <table class="pb__table">
                                 <thead>
                                     <tr>
                                         <th>Txn ID</th>
@@ -737,11 +377,11 @@
                                     @foreach (var txn in Model.PastBills)
                                     {
                                         <tr>
-                                            <td><span class="txn-id-badge">#TXN@(txn.TxnId.ToString("D6"))</span></td>
+                                            <td><span class="pb__txn__id">#TXN@(txn.TxnId.ToString("D6"))</span></td>
                                             <td>@txn.TxnDate.ToString("dd MMM yyyy")</td>
-                                            <td><span class="amount-col">Rs. @txn.Amount</span></td>
+                                            <td><span class="pb__amount__col">Rs. @txn.Amount</span></td>
                                             <td>@txn.PaymentMethod</td>
-                                            <td><span class="status-badge"><i class="las la-check-circle"></i> @txn.Status</span></td>
+                                            <td><span class="pb__status__badge"><i class="las la-check-circle"></i> @txn.Status</span></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -751,16 +391,630 @@
                 }
 
             </div>
+            <!-- ═══ RIGHT PANEL END ═══ -->
+
         </div>
     </div>
 </section>
 
-<!-- Hidden real form submitted on confirm -->
+<!-- Hidden pay form -->
 <form id="payForm" asp-action="PostpaidPay" asp-controller="Recharge" method="post" style="display:none;">
     <input type="hidden" name="mobileNumber"  value="@Model.MobileNumber" />
     <input type="hidden" name="amount"        value="@Model.TotalAmount" />
     <input type="hidden" name="paymentMethod" id="hiddenMethod" />
 </form>
+
+<style>
+    /* ══ Page wrapper ══ */
+    .pb__bill__page { padding-top: 40px; padding-bottom: 60px; }
+
+    /* ══ Left panel ══ */
+    .pb__left { margin-top: 50px; position: sticky; top: 100px; }
+
+    /* Account info card */
+    .pb__account__card {
+        margin: 20px 0 28px;
+        background: #fff;
+        border-radius: 16px;
+        border: 1.5px solid hsl(var(--border-color) / 0.2);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        overflow: hidden;
+    }
+
+    .pb__account__row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 18px;
+        font-size: 0.9rem;
+        color: hsl(var(--heading-color));
+        border-bottom: 1px solid hsl(var(--border-color) / 0.12);
+    }
+
+    .pb__account__row:last-child { border-bottom: none; }
+
+    .pb__account__row i {
+        color: hsl(var(--base));
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
+    }
+
+    /* ══ Right card ══ */
+    .pb__wrap {
+        width: 100%;
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1.5px solid hsl(var(--border-color) / 0.18);
+        box-shadow: 0 8px 32px -8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+        padding: 0;
+        margin-top: 50px;
+        overflow: hidden;
+        transition: box-shadow 0.3s;
+    }
+
+    .pb__wrap:hover {
+        box-shadow: 0 12px 40px -10px hsl(var(--base) / 0.12), 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .pb__history { padding: 24px 28px !important; margin-top: 20px; }
+
+    /* ══ Bill Header ══ */
+    .pb__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 28px;
+        background: hsl(var(--base));
+        border-bottom: 1px solid hsl(var(--base) / 0.15);
+    }
+
+    .pb__header__label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.85);
+        margin-bottom: 4px;
+    }
+
+    .pb__header__cycle {
+        font-size: 13px;
+        color: rgba(255,255,255,0.9);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Status badges */
+    .pb__status {
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .pb__status--paid {
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .pb__status--due {
+        background: rgba(239,68,68,0.15);
+        color: #fca5a5;
+        border: 1px solid rgba(239,68,68,0.35);
+    }
+
+    /* ══ Amount Hero ══ */
+    .pb__amount__hero {
+        padding: 26px 28px 20px;
+        border-bottom: 1px solid hsl(var(--border-color) / 0.12);
+    }
+
+    .pb__amount__label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: hsl(var(--base));
+        margin-bottom: 8px;
+    }
+
+    .pb__amount__display { display: flex; align-items: baseline; gap: 4px; }
+
+    .pb__currency {
+        font-size: 18px;
+        color: hsl(var(--base));
+        font-weight: 700;
+        line-height: 1;
+        margin-top: 8px;
+    }
+
+    .pb__amount {
+        font-size: 52px;
+        font-weight: 900;
+        color: hsl(var(--heading-color));
+        line-height: 1;
+    }
+
+    /* ══ Section label ══ */
+    .pb__section__label {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: hsl(var(--text-color) / 0.5);
+        margin: 24px 28px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .pb__section__label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: hsl(var(--border-color) / 0.2);
+    }
+
+    /* ══ Usage items ══ */
+    .pb__usage__row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 28px;
+        margin-bottom: 6px;
+    }
+
+    .pb__usage__item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 16px;
+        background: hsl(var(--section-bg) / 0.5);
+        border-radius: 12px;
+        border: 1.5px solid hsl(var(--border-color) / 0.15);
+        transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pb__usage__item:hover {
+        border-color: hsl(var(--base) / 0.4);
+        transform: translateX(4px);
+    }
+
+    .pb__usage__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .pb__icon--calls { background: hsl(200 100% 50% / 0.1); color: hsl(200 100% 45%); }
+    .pb__icon--data  { background: hsl(270 80% 60% / 0.1);  color: hsl(270 80% 55%); }
+    .pb__icon--sms   { background: hsl(40 100% 50% / 0.1);  color: hsl(40 100% 45%); }
+    .pb__icon--rent  { background: hsl(var(--base) / 0.1);  color: hsl(var(--base)); }
+
+    .pb__usage__info { flex: 1; }
+    .pb__usage__info span { display: block; font-size: 13px; font-weight: 600; color: hsl(var(--heading-color)); }
+    .pb__usage__info small { font-size: 11px; color: hsl(var(--text-color) / 0.55); }
+
+    .pb__usage__amount {
+        font-size: 14px;
+        font-weight: 700;
+        color: hsl(var(--base));
+        font-family: 'Menlo', monospace;
+    }
+
+    /* ══ Totals ══ */
+    .pb__totals {
+        margin: 8px 28px 20px;
+        border-top: 1px solid hsl(var(--border-color) / 0.15);
+        padding-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .pb__total__row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: hsl(var(--text-color) / 0.65);
+    }
+
+    .pb__total__grand {
+        font-size: 16px;
+        font-weight: 800;
+        color: hsl(var(--heading-color));
+        padding-top: 12px;
+        border-top: 1px solid hsl(var(--border-color) / 0.15);
+        margin-top: 4px;
+    }
+
+    .pb__total__grand span:last-child { color: hsl(var(--base)); }
+
+    /* ══ Paid notice ══ */
+    .pb__paid__notice {
+        margin: 0 28px 28px;
+        background: hsl(var(--base) / 0.06);
+        border: 1px solid hsl(var(--base) / 0.2);
+        border-radius: 14px;
+        padding: 18px 22px;
+        color: hsl(var(--base));
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .pb__paid__notice i { font-size: 24px; flex-shrink: 0; }
+
+    /* ══ Payment method grid ══ */
+    #panelMethod, #panelDetails { padding: 0 28px 28px; }
+
+    .pb__method__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .pb__method__card {
+        border: 2px solid hsl(var(--border-color) / 0.25);
+        border-radius: 14px;
+        padding: 16px 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+        position: relative;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+
+    .pb__method__card:hover {
+        border-color: hsl(var(--base) / 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -6px hsl(var(--base) / 0.15);
+    }
+
+    .pb__method__card.selected {
+        border-color: hsl(var(--base));
+        background: hsl(var(--base) / 0.04);
+        box-shadow: 0 0 0 1px hsl(var(--base)), 0 8px 20px -6px hsl(var(--base) / 0.2);
+    }
+
+    .pb__method__card.selected::after {
+        content: '✓';
+        position: absolute;
+        top: 7px; right: 9px;
+        font-size: 10px;
+        font-weight: 800;
+        color: hsl(var(--base));
+    }
+
+    .pb__method__icon { font-size: 22px; margin-bottom: 6px; display: block; }
+    .pb__method__name { font-size: 12px; font-weight: 700; color: hsl(var(--heading-color)); display: block; }
+    .pb__method__tag  { font-size: 10px; color: hsl(var(--text-color) / 0.5); margin-top: 2px; display: block; }
+
+    /* Proceed button uses common__btn */
+    .pb__btn__proceed {
+        width: 100%;
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .pb__btn__proceed:not([disabled]) {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    /* ══ Wallet panels ══ */
+    .pb__wallet__panel {
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+        border: 1.5px solid hsl(var(--border-color) / 0.2);
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+
+    .pb__wallet__brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .pb__wallet__icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .pb__wallet__name { font-size: 14px; font-weight: 800; color: hsl(var(--heading-color)); }
+    .pb__wallet__sub  { font-size: 11px; color: hsl(var(--text-color) / 0.55); margin-top: 2px; }
+
+    .pb__qr__steps { display: flex; flex-direction: column; gap: 10px; }
+
+    .pb__qr__step {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .pb__step__num {
+        width: 20px; height: 20px;
+        border-radius: 50%;
+        border: 1px solid;
+        font-size: 9px; font-weight: 800;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; margin-top: 1px;
+    }
+
+    .pb__qr__step p {
+        font-size: 12px;
+        color: hsl(var(--text-color) / 0.7);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .pb__qr__step p strong { color: hsl(var(--heading-color)); }
+
+    .pb__amount__to__pay {
+        margin-top: 14px;
+        padding: 11px 16px;
+        border-radius: 12px;
+        background: hsl(var(--base));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .pb__amount__to__pay span { font-size: 11px; color: rgba(255,255,255,0.75); }
+    .pb__amount__to__pay strong { font-size: 15px; font-weight: 800; color: #fff; }
+
+    /* ══ Card inputs ══ */
+    .pb__form__field { margin-bottom: 14px; }
+    .pb__form__field label {
+        font-size: 10px; font-weight: 700; letter-spacing: 1px;
+        text-transform: uppercase;
+        color: hsl(var(--text-color) / 0.55);
+        margin-bottom: 7px; display: block;
+    }
+
+    .pb__input {
+        width: 100%;
+        height: 48px;
+        border: 2px solid hsl(var(--border-color) / 0.2);
+        border-radius: 12px;
+        padding: 0 14px;
+        font-size: 13px;
+        color: hsl(var(--heading-color));
+        background: #fff;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        font-family: 'Menlo', 'Consolas', monospace;
+    }
+
+    .pb__input:focus {
+        border-color: hsl(var(--base));
+        box-shadow: 0 0 0 3px hsl(var(--base) / 0.1);
+    }
+
+    .pb__input::placeholder { color: hsl(var(--text-color) / 0.35); font-family: inherit; }
+
+    .pb__form__row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .pb__card__badge {
+        position: absolute; right: 12px; top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px; opacity: 0.5;
+    }
+
+    /* Virtual card */
+    .pb__virtual__card {
+        background: linear-gradient(135deg, hsl(var(--base)), hsl(var(--base-two)));
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 14px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pb__virtual__card::before {
+        content: '';
+        position: absolute;
+        top: -30px; right: -30px;
+        width: 120px; height: 120px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.07);
+    }
+
+    .vc-chip   { width: 28px; height: 22px; background: linear-gradient(135deg,#c8a84b,#f0d060); border-radius: 4px; margin-bottom: 14px; }
+    .vc-number { font-family:'Menlo',monospace; font-size:14px; letter-spacing:2px; color:rgba(255,255,255,0.9); margin-bottom:12px; }
+    .vc-bottom { display:flex; justify-content:space-between; align-items:flex-end; }
+    .vc-label  { font-size:8px; color:rgba(255,255,255,0.55); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+    .vc-value  { font-size:12px; color:#fff; font-weight:600; font-family:'Menlo',monospace; }
+    .vc-logo   { font-size:10px; font-weight:800; color:rgba(255,255,255,0.7); letter-spacing:2px; }
+
+    /* Bank rows */
+    .pb__bank__row {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid hsl(var(--border-color) / 0.15);
+    }
+
+    .pb__bank__row:last-child { border-bottom: none; }
+    .pb__bank__row span:first-child { font-size: 11px; color: hsl(var(--text-color) / 0.55); }
+    .pb__bank__row span:last-child  { font-size: 12px; font-weight: 700; color: hsl(var(--heading-color)); font-family: 'Menlo', monospace; }
+
+    .pb__copy__btn {
+        background: transparent;
+        border: 1px solid hsl(var(--border-color) / 0.4);
+        color: hsl(var(--text-color) / 0.5);
+        border-radius: 5px;
+        padding: 2px 7px;
+        font-size: 9px;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-left: 6px;
+    }
+
+    .pb__copy__btn:hover { border-color: hsl(var(--base)); color: hsl(var(--base)); }
+
+    /* Pay / Back buttons */
+    .pb__btn__pay {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .pb__btn__back {
+        width: 100%;
+        padding: 11px;
+        background: transparent;
+        border: 1.5px solid hsl(var(--border-color) / 0.25);
+        border-radius: 12px;
+        color: hsl(var(--text-color) / 0.6);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .pb__btn__back:hover {
+        border-color: hsl(var(--base) / 0.4);
+        color: hsl(var(--base));
+    }
+
+    /* Security note */
+    .pb__security__note {
+        text-align: center;
+        margin-top: 14px;
+        padding-bottom: 4px;
+        font-size: 10px;
+        color: hsl(var(--text-color) / 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .pb__security__note i { color: hsl(var(--base)); }
+
+    /* ══ Processing overlay ══ */
+    .processing-overlay {
+        display: none; position: fixed; inset: 0;
+        background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        align-items: center; justify-content: center;
+        flex-direction: column; gap: 20px;
+    }
+
+    .processing-overlay.show { display: flex; }
+
+    .proc-spinner {
+        width: 56px; height: 56px;
+        border: 3px solid hsl(var(--border-color) / 0.3);
+        border-top-color: hsl(var(--base));
+        border-radius: 50%;
+        animation: pb__spin 0.8s linear infinite;
+    }
+
+    @@keyframes pb__spin { to { transform: rotate(360deg); } }
+
+    .proc-text { font-size: 15px; font-weight: 700; color: #fff; }
+    .proc-sub  { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: -14px; }
+
+    /* ══ History table ══ */
+    .pb__badge {
+        background: hsl(var(--base) / 0.1);
+        color: hsl(var(--base));
+        border: 1px solid hsl(var(--base) / 0.2);
+        border-radius: 20px;
+        padding: 3px 12px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-left: 8px;
+    }
+
+    .pb__table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+
+    .pb__table th {
+        font-size: 10px; font-weight: 800; letter-spacing: 1px;
+        text-transform: uppercase;
+        color: hsl(var(--text-color) / 0.5);
+        padding: 12px 16px;
+        border-bottom: 1px solid hsl(var(--border-color) / 0.15);
+        text-align: left;
+        background: hsl(var(--section-bg) / 0.4);
+    }
+
+    .pb__table td {
+        padding: 13px 16px;
+        font-size: 13px;
+        color: hsl(var(--text-color) / 0.75);
+        border-bottom: 1px solid hsl(var(--border-color) / 0.1);
+        vertical-align: middle;
+    }
+
+    .pb__table tr:last-child td { border-bottom: none; }
+
+    .pb__table tr:hover td {
+        background: hsl(var(--base) / 0.02);
+    }
+
+    .pb__txn__id { font-family: 'Menlo', monospace; font-size: 12px; font-weight: 700; color: hsl(var(--base)); }
+    .pb__amount__col { font-family: 'Menlo', monospace; font-weight: 700; color: hsl(var(--heading-color)); }
+
+    .pb__status__badge {
+        display: inline-flex; align-items: center; gap: 5px;
+        background: hsl(var(--base) / 0.08);
+        color: hsl(var(--base));
+        border: 1px solid hsl(var(--base) / 0.2);
+        border-radius: 20px;
+        padding: 3px 10px;
+        font-size: 11px; font-weight: 700;
+    }
+
+    /* ══ Responsive ══ */
+    @@media (max-width: 991px) {
+        .pb__left { position: static; margin-top: 20px; }
+        .pb__wrap { margin-top: 20px; }
+        .pb__amount .amount { font-size: 38px; }
+    }
+
+    @@media (max-width: 768px) {
+        .pb__method__grid { grid-template-columns: 1fr 1fr; }
+        .pb__table th:nth-child(4), .pb__table td:nth-child(4) { display: none; }
+        .pb__amount { font-size: 38px; }
+        #panelMethod, #panelDetails { padding: 0 18px 20px; }
+        .pb__usage__row { padding: 0 18px; }
+        .pb__totals { margin: 8px 18px 16px; }
+        .pb__section__label { margin: 18px 18px 12px; }
+        .pb__header { padding: 18px 20px; }
+        .pb__amount__hero { padding: 20px 20px 16px; }
+        .pb__paid__notice { margin: 0 18px 20px; }
+    }
+</style>
 
 @section Scripts {
 <script>
@@ -768,10 +1022,12 @@ let selectedMethod = null;
 
 function selectMethod(method, el) {
     selectedMethod = method;
-    document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.pb__method__card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     const btn = document.getElementById('btnProceed');
-    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
 }
 
 function proceedToDetails() {
@@ -780,25 +1036,11 @@ function proceedToDetails() {
     document.getElementById('panelDetails').style.display = 'block';
     document.querySelectorAll('.payment-detail').forEach(p => p.classList.remove('visible'));
     document.getElementById('detail-' + selectedMethod).classList.add('visible');
-    if (selectedMethod === 'easypaisa') drawQR('qrEasypaisa', '#00a651');
-    if (selectedMethod === 'jazzcash')  drawQR('qrJazzcash',  '#e85e00');
 }
 
 function goBack() {
     document.getElementById('panelDetails').style.display = 'none';
     document.getElementById('panelMethod').style.display  = 'block';
-}
-
-function drawQR(id, color) {
-    const el = document.getElementById(id);
-    if (!el || el.children.length) return;
-    const p = [1,1,1,1,1,1,1, 1,0,0,0,0,0,1, 1,0,1,0,1,0,1, 1,0,0,1,0,0,1, 1,0,1,0,1,0,1, 1,0,0,0,0,0,1, 1,1,1,1,1,1,1];
-    p.forEach(v => {
-        const d = document.createElement('div');
-        d.className = 'qp';
-        d.style.cssText = `background:${v ? color : '#fff'};border-radius:1px;`;
-        el.appendChild(d);
-    });
 }
 
 function formatCard(input) {
@@ -821,7 +1063,7 @@ function formatExpiry(input) {
 
 function copyText(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = 'Copied!'; btn.style.color = 'hsl(180 70% 55%)';
+        btn.textContent = 'Copied!'; btn.style.color = 'hsl(var(--base))';
         setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = ''; }, 2000);
     });
 }

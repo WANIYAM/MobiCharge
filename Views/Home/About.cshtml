@@ -1,5 +1,10 @@
-﻿@{
-    ViewData["Title"] = "About Us";
+﻿﻿@{
+ViewData["Title"] = "About Us";
+}
+
+<!-- Add AOS animation library if not already included -->
+@section Styles {
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 }
 
 <!--========================== Banner Section Start ==========================-->
@@ -8,11 +13,20 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="banner__topbar">
-                    <div class="banner__title">
+                <div class="banner__topbar"
+                     data-aos="fade-down"
+                     data-aos-duration="1000"
+                     data-aos-easing="ease-out-cubic">
+                    <div class="banner__title"
+                         data-aos="fade-right"
+                         data-aos-delay="200"
+                         data-aos-duration="1000">
                         <h2>Let's Talk <span>About Us!</span></h2>
                     </div>
-                    <div class="banner__btn">
+                    <div class="banner__btn"
+                         data-aos="fade-left"
+                         data-aos-delay="400"
+                         data-aos-duration="1000">
                         <a href="/" class="common__btn"><span>Back to Home</span><span><i class="fa-solid fa-arrow-right"></i></span></a>
                     </div>
                 </div>
@@ -20,278 +34,383 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="banner__thumb">
+                <div class="banner__thumb"
+                     data-aos="zoom-in-up"
+                     data-aos-delay="600"
+                     data-aos-duration="1200">
                     <video autoplay muted loop>
                         <source src="~/assets/images/banner-thumb.mp4" type="video/mp4">
-                    </video>
+                        </video>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!--========================== Banner Section End ==========================-->
-
-<!--========================== About Details Section Start ==========================-->
-<section class="about__details">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="about__details__wrap">
-                    <div class="about__details__label">
-                        <div class="footer__subs__label about-label">
-                            <div class="footer__subs__shr">
-                                <img src="~/assets/images/about/label-sp.png" alt="img">
-                                <div class="footer__circle__text">
-                                    <p>We are best for your daily payment & bill pay.</p>
+    </section>
+    <!--========================== Banner Section End ==========================-->
+    <!--========================== About Details Section Start ==========================-->
+    <section class="about__details">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="about__details__wrap">
+                        <div class="about__details__label"
+                             data-aos="fade-right"
+                             data-aos-duration="1000"
+                             data-aos-offset="200">
+                            <div class="footer__subs__label about-label">
+                                <div class="footer__subs__shr">
+                                    <img src="~/assets/images/about/label-sp.png" alt="img">
+                                        <div class="footer__circle__text">
+                                            <p>We are best for your daily payment & bill pay.</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="about__details__content"
+                                 data-aos="fade-left"
+                                 data-aos-delay="300"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="200">
+                                <h5>
+                                    Online Mobile Services is a web-based platform designed to provide easy and secure mobile recharge and bill payment services.
+                                    Users can recharge prepaid mobile numbers, pay postpaid bills, activate special services, and manage their accounts online.
+                                    The system also allows administrators to monitor daily transactions and registered user details efficiently.
+                                </h5>
+                            </div>
                         </div>
-                    </div>
-                    <div class="about__details__content">
-                        <h5>
-                            Online Mobile Services is a web-based platform designed to provide easy and secure mobile recharge and bill payment services.
-                            Users can recharge prepaid mobile numbers, pay postpaid bills, activate special services, and manage their accounts online.
-                            The system also allows administrators to monitor daily transactions and registered user details efficiently.
-                        </h5>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!--========================== About Details Section End ==========================-->
+        </section>
+        <!--========================== About Details Section End ==========================-->
+        <!--========================== About Mission Section Start ==========================-->
+        <section class="about__mission">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="about__mission__wrap">
 
-<!--========================== About Mission Section Start ==========================-->
-<section class="about__mission">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="about__mission__wrap">
+                            <div class="about__mission__wrap__content"
+                                 data-aos="fade-up"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="250">
+                                <h4 data-aos="fade-right"
+                                    data-aos-delay="200"
+                                    data-aos-duration="800">
+                                    Our Mission
+                                </h4>
+                                <p data-aos="fade-right"
+                                       data-aos-delay="400"
+                                       data-aos-duration="800">
+                                    Our mission is to provide a fast, secure, and user-friendly platform for mobile recharge, postpaid bill payment,
+                                    and service activation. We aim to simplify online transactions while ensuring accurate validation
+                                    and reliable payment processing for all users.
+                                </p>
+                            </div>
 
-                    <div class="about__mission__wrap__content">
-                        <h4>Our Mission</h4>
-                        <p>
-                            Our mission is to provide a fast, secure, and user-friendly platform for mobile recharge, postpaid bill payment,
-                            and service activation. We aim to simplify online transactions while ensuring accurate validation
-                            and reliable payment processing for all users.
-                        </p>
+                            <div class="about__mission__wrap__curtomers"
+                                 data-aos="zoom-in"
+                                 data-aos-delay="300"
+                                 data-aos-duration="1200"
+                                 data-aos-offset="250">
+                                <ul data-aos="fade-up"
+                                    data-aos-delay="500"
+                                    data-aos-duration="800">
+                                    <li data-aos="zoom-in" data-aos-delay="600"><span><img src="~/assets/images/about/user-1.jpg" alt="img"></span></li>
+                                    <li data-aos="zoom-in" data-aos-delay="700"><span><img src="~/assets/images/about/user-2.jpg" alt="img"></span></li>
+                                    <li data-aos="zoom-in" data-aos-delay="800"><span><img src="~/assets/images/about/user-3.jpg" alt="img"></span></li>
+                                    <li data-aos="zoom-in" data-aos-delay="900"><span><img src="~/assets/images/about/user-4.jpg" alt="img"></span></li>
+                                </ul>
+                                <span class="counter" data-aos="fade-up" data-aos-delay="1000">87,848</span>
+                                <p data-aos="fade-up" data-aos-delay="1100">Our Happy Customers</p>
+                            </div>
+
+                            <div class="about__mission__wrap__content"
+                                 data-aos="fade-up"
+                                 data-aos-delay="200"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="250">
+                                <h4 data-aos="fade-left"
+                                    data-aos-delay="400"
+                                    data-aos-duration="800">
+                                    Our Vision
+                                </h4>
+                                <p data-aos="fade-left"
+                                       data-aos-delay="600"
+                                       data-aos-duration="800">
+                                    Our vision is to become a trusted digital mobile service platform where users can conveniently manage
+                                    their mobile accounts, activate value-added services, and complete transactions anytime, anywhere.
+                                    We strive to maintain transparency, efficiency, and customer satisfaction.
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-
-                    <div class="about__mission__wrap__curtomers">
-                        <ul>
-                            <li><span><img src="~/assets/images/about/user-1.jpg" alt="img"></span></li>
-                            <li><span><img src="~/assets/images/about/user-2.jpg" alt="img"></span></li>
-                            <li><span><img src="~/assets/images/about/user-3.jpg" alt="img"></span></li>
-                            <li><span><img src="~/assets/images/about/user-4.jpg" alt="img"></span></li>
-                        </ul>
-                        <span class="counter">87,848</span>
-                        <p>Our Happy Customers</p>
-                    </div>
-
-                    <div class="about__mission__wrap__content">
-                        <h4>Our Vision</h4>
-                        <p>
-                            Our vision is to become a trusted digital mobile service platform where users can conveniently manage
-                            their mobile accounts, activate value-added services, and complete transactions anytime, anywhere.
-                            We strive to maintain transparency, efficiency, and customer satisfaction.
-                        </p>
-                    </div>
-
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!--========================== About Mission Section End ==========================-->
+        </section>
+        <!--========================== About Mission Section End ==========================-->
+        <!--========================== About Feature Section Start ==========================-->
+        <section class="about__feature">
+            @* <div class="about__fsp"><img src="~/assets/images/yellow-sp.png" alt="img"></div> *@
+            <div class="about__fsp2" data-aos="fade-right" data-aos-duration="1500"><img src="~/assets/images/circle-sp.png" alt="img"></div>
+            <div class="about__fsp3" data-aos="fade-left" data-aos-duration="1500"><img src="~/assets/images/wave-sp.png" alt="img"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="feature__title">
+                            <h2 data-aos="fade-up-left" data-aos-delay="200" data-aos-duration="1200">
+                                Our Awesome <span>Features</span>
+                            </h2>
+                            <a href="/Feedback" class="common__btn" data-aos="fade-down-right" data-aos-delay="400" data-aos-duration="1200">
+                                <span>Discover more</span><span><i class="fa-solid fa-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="about__feature__wrap">
 
-<!--========================== About Feature Section Start ==========================-->
-<section class="about__feature">
-    @* <div class="about__fsp"><img src="~/assets/images/yellow-sp.png" alt="img"></div> *@
-    <div class="about__fsp2"><img src="~/assets/images/circle-sp.png" alt="img"></div>
-    <div class="about__fsp3"><img src="~/assets/images/wave-sp.png" alt="img"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="feature__title">
-                    <h2 data-aos="fade-up-left" data-aos-delay="200" data-aos-duration="1200">
-                        Our Awesome <span>Features</span>
-                    </h2>
-                    <a href="/Feedback" class="common__btn" data-aos="fade-down-right" data-aos-delay="200" data-aos-duration="1200">
-                        <span>Discover more</span><span><i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
+                            <div class="about__feature__wrap__single"
+                                 data-aos="fade-up"
+                                 data-aos-delay="200"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="300">
+                                <div class="about__feature__wrap__single__title"
+                                     data-aos="fade-right"
+                                     data-aos-delay="400"
+                                     data-aos-duration="800">
+                                    <h4>Online <br>Recharge</h4>
+                                </div>
+                                <div class="about__feature__wrap__single__content"
+                                     data-aos="fade-left"
+                                     data-aos-delay="600"
+                                     data-aos-duration="800">
+                                    <p>
+                                        Users can recharge prepaid mobile numbers by entering a valid 10-digit mobile number.
+                                        The system provides Top-Up and Special Recharge options in tabular format.
+                                        After selection, users proceed to secure payment and receive a transaction receipt.
+                                    </p>
+                                    <ul>
+                                        <li data-aos="fade-up" data-aos-delay="700"><span><img src="~/assets/images/about/star.png" alt="img"></span>10 Digit Mobile Validation</li>
+                                        <li data-aos="fade-up" data-aos-delay="800"><span><img src="~/assets/images/about/star.png" alt="img"></span>Top-Up &amp; Special Recharge</li>
+                                        <li data-aos="fade-up" data-aos-delay="900"><span><img src="~/assets/images/about/star.png" alt="img"></span>Transaction Receipt Generation</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="about__feature__wrap__single"
+                                 data-aos="fade-up"
+                                 data-aos-delay="400"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="300">
+                                <div class="about__feature__wrap__single__title"
+                                     data-aos="fade-right"
+                                     data-aos-delay="600"
+                                     data-aos-duration="800">
+                                    <h4>My Account <br>Services</h4>
+                                </div>
+                                <div class="about__feature__wrap__single__content"
+                                     data-aos="fade-left"
+                                     data-aos-delay="800"
+                                     data-aos-duration="800">
+                                    <p>
+                                        Registered users can create an account using their mobile number as username.
+                                        Users can activate services such as Do Not Disturb, Caller Tunes,
+                                        perform online recharge, and edit personal details securely.
+                                    </p>
+                                    <ul>
+                                        <li data-aos="fade-up" data-aos-delay="900"><span><img src="~/assets/images/about/star.png" alt="img"></span>Account Registration</li>
+                                        <li data-aos="fade-up" data-aos-delay="1000"><span><img src="~/assets/images/about/star.png" alt="img"></span>Service Activation (DND, Caller Tunes)</li>
+                                        <li data-aos="fade-up" data-aos-delay="1100"><span><img src="~/assets/images/about/star.png" alt="img"></span>Edit Personal Details</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="about__feature__wrap__single"
+                                 data-aos="fade-up"
+                                 data-aos-delay="600"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="300">
+                                <div class="about__feature__wrap__single__title"
+                                     data-aos="fade-right"
+                                     data-aos-delay="800"
+                                     data-aos-duration="800">
+                                    <h4>Admin &amp; <br>Bill Payment</h4>
+                                </div>
+                                <div class="about__feature__wrap__single__content"
+                                     data-aos="fade-left"
+                                     data-aos-delay="1000"
+                                     data-aos-duration="800">
+                                    <p>
+                                        The system supports Postpaid Bill Payment where users can enter their mobile number
+                                        and pay bills online. Admin login enables monitoring of daily transactions
+                                        and registered user details for efficient management.
+                                    </p>
+                                    <ul>
+                                        <li data-aos="fade-up" data-aos-delay="1100"><span><img src="~/assets/images/about/star.png" alt="img"></span>Postpaid Bill Payment</li>
+                                        <li data-aos="fade-up" data-aos-delay="1200"><span><img src="~/assets/images/about/star.png" alt="img"></span>Admin Transaction Monitoring</li>
+                                        <li data-aos="fade-up" data-aos-delay="1300"><span><img src="~/assets/images/about/star.png" alt="img"></span>Registered User Management</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="about__feature__wrap">
-
-                    <div class="about__feature__wrap__single">
-                        <div class="about__feature__wrap__single__title">
-                            <h4>Online <br>Recharge</h4>
+        </section>
+        <!--========================== About Feature Section End ==========================-->
+        <!--========================== Testimonial Section Start ==========================-->
+        <section class="testimonial__area">
+            @* <div class="testimonial__sp"><img src="~/assets/images/green-sp.png" alt="img"></div> *@
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="hero__wrap__users" data-aos="fade-up-left" data-aos-delay="200" data-aos-duration="1200">
+                            <div class="hero__wrap__users__img">
+                                <span data-aos="zoom-in" data-aos-delay="300"><img src="~/assets/images/hero/user-1.jpg" alt="img"></span>
+                                <span data-aos="zoom-in" data-aos-delay="400"><img src="~/assets/images/hero/user-2.jpg" alt="img"></span>
+                                <span data-aos="zoom-in" data-aos-delay="500"><img src="~/assets/images/hero/user-3.jpg" alt="img"></span>
+                                <span data-aos="zoom-in" data-aos-delay="600"><img src="~/assets/images/hero/user-4.jpg" alt="img"></span>
+                            </div>
+                            <div class="hero__wrap__users__title" data-aos="fade-up" data-aos-delay="700">
+                                <span><span class="counter">20,878</span> Happy users</span>
+                            </div>
                         </div>
-                        <div class="about__feature__wrap__single__content">
-                            <p>
-                                Users can recharge prepaid mobile numbers by entering a valid 10-digit mobile number.
-                                The system provides Top-Up and Special Recharge options in tabular format.
-                                After selection, users proceed to secure payment and receive a transaction receipt.
-                            </p>
-                            <ul>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>10 Digit Mobile Validation</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Top-Up &amp; Special Recharge</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Transaction Receipt Generation</li>
-                            </ul>
+                        <div class="testimonial__title" data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="1400">
+                            <h2>Our beloved clients share their Sharp <span>experience</span></h2>
                         </div>
-                    </div>
-
-                    <div class="about__feature__wrap__single">
-                        <div class="about__feature__wrap__single__title">
-                            <h4>My Account <br>Services</h4>
-                        </div>
-                        <div class="about__feature__wrap__single__content">
-                            <p>
-                                Registered users can create an account using their mobile number as username.
-                                Users can activate services such as Do Not Disturb, Caller Tunes,
-                                perform online recharge, and edit personal details securely.
-                            </p>
-                            <ul>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Account Registration</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Service Activation (DND, Caller Tunes)</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Edit Personal Details</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="about__feature__wrap__single">
-                        <div class="about__feature__wrap__single__title">
-                            <h4>Admin &amp; <br>Bill Payment</h4>
-                        </div>
-                        <div class="about__feature__wrap__single__content">
-                            <p>
-                                The system supports Postpaid Bill Payment where users can enter their mobile number
-                                and pay bills online. Admin login enables monitoring of daily transactions
-                                and registered user details for efficient management.
-                            </p>
-                            <ul>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Postpaid Bill Payment</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Admin Transaction Monitoring</li>
-                                <li><span><img src="~/assets/images/about/star.png" alt="img"></span>Registered User Management</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--========================== About Feature Section End ==========================-->
-
-<!--========================== Testimonial Section Start ==========================-->
-<section class="testimonial__area">
-    @* <div class="testimonial__sp"><img src="~/assets/images/green-sp.png" alt="img"></div> *@
-    <div class="container-fluid p-0">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hero__wrap__users" data-aos="fade-up-left" data-aos-delay="200" data-aos-duration="1200">
-                    <div class="hero__wrap__users__img">
-                        <span><img src="~/assets/images/hero/user-1.jpg" alt="img"></span>
-                        <span><img src="~/assets/images/hero/user-2.jpg" alt="img"></span>
-                        <span><img src="~/assets/images/hero/user-3.jpg" alt="img"></span>
-                        <span><img src="~/assets/images/hero/user-4.jpg" alt="img"></span>
-                    </div>
-                    <div class="hero__wrap__users__title">
-                        <span><span class="counter">20,878</span> Happy users</span>
                     </div>
                 </div>
-                <div class="testimonial__title" data-aos="zoom-in-up" data-aos-delay="400" data-aos-duration="1400">
-                    <h2>Our beloved clients share their Sharp <span>experience</span></h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="testimonial__wrap owl-carousel">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="testimonial__wrap owl-carousel">
 
-                    <div class="testimonial__single">
-                        <div class="testimonial__single__title">
-                            <span><img src="~/assets/images/testimonial/love-emoji.png" alt="img"></span>
-                            <h3>Super Fast Recharge!</h3>
-                        </div>
-                        <div class="testimonial__single__content">
-                            <p>"I recharged my number in less than a minute. The process was so simple — just enter mobile number, select plan, pay and done! Received receipt instantly."</p>
-                        </div>
-                        <div class="testimonial__single__user">
-                            <div class="testimonial__single__user__img">
-                                <img src="~/assets/images/testimonial/user-2.jpg" alt="img">
-                            </div>
-                            <div class="testimonial__single__user__info">
-                                <h4>Rahul Sharma</h4>
-                                <p>Regular User</p>
-                            </div>
-                        </div>
-                    </div>
+                            <div class="testimonial__single"
+                                 data-aos="fade-up"
+                                 data-aos-delay="200"
+                                 data-aos-duration="1000"
+                                 data-aos-offset="200">
+                                <div class="testimonial__single__title" data-aos="fade-down" data-aos-delay="300">
+                                    <span data-aos="zoom-in" data-aos-delay="400"><img src="~/assets/images/testimonial/love-emoji.png" alt="img"></span>
+                                    <h3 data-aos="fade-right" data-aos-delay="500">Super Fast Recharge!</h3>
+                                </div>
+                                <div class="testimonial__single__content" data-aos="fade-left" data-aos-delay="600">
+                                    <p>"I recharged my number in less than a minute. The process was so simple — just enter mobile number, select plan, pay and done! Received receipt instantly."</p>
+                                </div>
+                                <div class="testimonial__single__user" data-aos="fade-up" data-aos-delay="700">
+                                    <div class="testimonial__single__user__img" data-aos="zoom-in" data-aos-delay="800">
+                                        <img src="~/assets/images/testimonial/user-2.jpg" alt="img">
+                                        </div>
+                                        <div class="testimonial__single__user__info" data-aos="fade-left" data-aos-delay="900">
+                                            <h4>Rahul Sharma</h4>
+                                            <p>Regular User</p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="testimonial__single">
-                        <div class="testimonial__single__title">
-                            <span><img src="~/assets/images/testimonial/like.png" alt="img"></span>
-                            <h3>Best Recharge Platform!</h3>
-                        </div>
-                        <div class="testimonial__single__content">
-                            <p>"Paying my postpaid bill has never been easier. I love the My Account section where I can also activate Do Not Disturb and Caller Tunes from one place."</p>
-                        </div>
-                        <div class="testimonial__single__user">
-                            <div class="testimonial__single__user__img">
-                                <img src="~/assets/images/testimonial/user-1.jpg" alt="img">
-                            </div>
-                            <div class="testimonial__single__user__info">
-                                <h4>Priya Mehta</h4>
-                                <p>Verified User</p>
-                            </div>
-                        </div>
-                    </div>
+                                <div class="testimonial__single"
+                                     data-aos="fade-up"
+                                     data-aos-delay="400"
+                                     data-aos-duration="1000"
+                                     data-aos-offset="200">
+                                    <div class="testimonial__single__title" data-aos="fade-down" data-aos-delay="500">
+                                        <span data-aos="zoom-in" data-aos-delay="600"><img src="~/assets/images/testimonial/like.png" alt="img"></span>
+                                        <h3 data-aos="fade-right" data-aos-delay="700">Best Recharge Platform!</h3>
+                                    </div>
+                                    <div class="testimonial__single__content" data-aos="fade-left" data-aos-delay="800">
+                                        <p>"Paying my postpaid bill has never been easier. I love the My Account section where I can also activate Do Not Disturb and Caller Tunes from one place."</p>
+                                    </div>
+                                    <div class="testimonial__single__user" data-aos="fade-up" data-aos-delay="900">
+                                        <div class="testimonial__single__user__img" data-aos="zoom-in" data-aos-delay="1000">
+                                            <img src="~/assets/images/testimonial/user-1.jpg" alt="img">
+                                            </div>
+                                            <div class="testimonial__single__user__info" data-aos="fade-left" data-aos-delay="1100">
+                                                <h4>Priya Mehta</h4>
+                                                <p>Verified User</p>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                    <div class="testimonial__single">
-                        <div class="testimonial__single__title">
-                            <span><img src="~/assets/images/testimonial/star-emoji.png" alt="img"></span>
-                            <h3>Very Secure & Reliable!</h3>
-                        </div>
-                        <div class="testimonial__single__content">
-                            <p>"I was worried about online payments but this platform is very secure. Every transaction shows a printable receipt and the payment methods are all trusted."</p>
-                        </div>
-                        <div class="testimonial__single__user">
-                            <div class="testimonial__single__user__img">
-                                <img src="~/assets/images/testimonial/user-3.jpg" alt="img">
-                            </div>
-                            <div class="testimonial__single__user__info">
-                                <h4>Arjun Patel</h4>
-                                <p>Premium User</p>
-                            </div>
-                        </div>
-                    </div>
+                                    <div class="testimonial__single"
+                                         data-aos="fade-up"
+                                         data-aos-delay="600"
+                                         data-aos-duration="1000"
+                                         data-aos-offset="200">
+                                        <div class="testimonial__single__title" data-aos="fade-down" data-aos-delay="700">
+                                            <span data-aos="zoom-in" data-aos-delay="800"><img src="~/assets/images/testimonial/star-emoji.png" alt="img"></span>
+                                            <h3 data-aos="fade-right" data-aos-delay="900">Very Secure & Reliable!</h3>
+                                        </div>
+                                        <div class="testimonial__single__content" data-aos="fade-left" data-aos-delay="1000">
+                                            <p>"I was worried about online payments but this platform is very secure. Every transaction shows a printable receipt and the payment methods are all trusted."</p>
+                                        </div>
+                                        <div class="testimonial__single__user" data-aos="fade-up" data-aos-delay="1100">
+                                            <div class="testimonial__single__user__img" data-aos="zoom-in" data-aos-delay="1200">
+                                                <img src="~/assets/images/testimonial/user-3.jpg" alt="img">
+                                                </div>
+                                                <div class="testimonial__single__user__info" data-aos="fade-left" data-aos-delay="1300">
+                                                    <h4>Arjun Patel</h4>
+                                                    <p>Premium User</p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <div class="testimonial__single">
-                        <div class="testimonial__single__title">
-                            <span><img src="~/assets/images/testimonial/like.png" alt="img"></span>
-                            <h3>Special Plans Are Amazing!</h3>
-                        </div>
-                        <div class="testimonial__single__content">
-                            <p>"The Special Recharge plans give great value. I get unlimited calls, data and SMS all in one plan. The table listing makes it very easy to compare and choose."</p>
-                        </div>
-                        <div class="testimonial__single__user">
-                            <div class="testimonial__single__user__img">
-                                <img src="~/assets/images/testimonial/user-1.jpg" alt="img">
-                            </div>
-                            <div class="testimonial__single__user__info">
-                                <h4>Sana Khan</h4>
-                                <p>Registered User</p>
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="testimonial__single"
+                                             data-aos="fade-up"
+                                             data-aos-delay="800"
+                                             data-aos-duration="1000"
+                                             data-aos-offset="200">
+                                            <div class="testimonial__single__title" data-aos="fade-down" data-aos-delay="900">
+                                                <span data-aos="zoom-in" data-aos-delay="1000"><img src="~/assets/images/testimonial/like.png" alt="img"></span>
+                                                <h3 data-aos="fade-right" data-aos-delay="1100">Special Plans Are Amazing!</h3>
+                                            </div>
+                                            <div class="testimonial__single__content" data-aos="fade-left" data-aos-delay="1200">
+                                                <p>"The Special Recharge plans give great value. I get unlimited calls, data and SMS all in one plan. The table listing makes it very easy to compare and choose."</p>
+                                            </div>
+                                            <div class="testimonial__single__user" data-aos="fade-up" data-aos-delay="1300">
+                                                <div class="testimonial__single__user__img" data-aos="zoom-in" data-aos-delay="1400">
+                                                    <img src="~/assets/images/testimonial/user-1.jpg" alt="img">
+                                                    </div>
+                                                    <div class="testimonial__single__user__info" data-aos="fade-left" data-aos-delay="1500">
+                                                        <h4>Sana Khan</h4>
+                                                        <p>Registered User</p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--========================== Testimonial Section End ==========================-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--========================== Testimonial Section End ==========================-->
+                        @section Scripts {
+                            <!-- AOS Animation Library -->
+                            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+                            <script>
+                                // Initialize AOS with custom settings
+                                AOS.init({
+                                duration: 200,
+                                once: true,
+                                mirror: false,
+                                offset: 50,
+                                easing: 'ease-out-cubic'
+                                });
+
+                                // Refresh AOS on window load for dynamic content
+                                window.addEventListener('load', function() {
+                                AOS.refresh();
+                                });
+
+                                // Optional: Add parallax effect to floating elements
+                                document.querySelectorAll('.about__fsp2, .about__fsp3, .testimonial__sp').forEach(element => {
+                                if (element) {
+                                element.setAttribute('data-aos', 'fade-up');
+                                element.setAttribute('data-aos-duration', '2000');
+                                element.setAttribute('data-aos-offset', '100');
+                                }
+                                });
+                            </script>
+                        }

@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row g-4 align-items-center">
 
-            <!-- ===== Left Panel ===== -->
+            <!-- ===== Left Panel (Unchanged) ===== -->
             <div class="col-lg-6">
                 <div class="sign__left__blk">
 
@@ -42,114 +42,132 @@
             </div>
             <!-- ===== Left Panel End ===== -->
 
-            <!-- ===== Right Panel — Form ===== -->
+            <!-- ===== Right Panel ===== -->
             <div class="col-lg-6">
                 <div class="sign__wrap">
 
                     <form id="account" method="post">
                         @Html.AntiForgeryToken()
 
-                        <div class="row g-2">
+                        <div class="row g-0">
 
                             <!-- Validation Summary -->
                             <div class="col-12">
-                                <div asp-validation-summary="ModelOnly"
-                                     class="text-danger small"
-                                     role="alert"></div>
+                                <div asp-validation-summary="ModelOnly" class="lf-validation-summary" role="alert"></div>
                             </div>
 
-                            <!-- Mobile / Email -->
-                            <div class="col-12">
+                            <!-- Mobile Number -->
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
                                     <label asp-for="Input.Email" class="form-label form--label">
                                         Mobile Number
                                     </label>
-                                    <input asp-for="Input.Email"
-                                           class="form-control form--control"
-                                           type="text"
-                                           placeholder="Enter mobile number"
-                                           autocomplete="username"
-                                           required />
-                                    <span asp-validation-for="Input.Email"
-                                          class="text-danger small"></span>
+                                    <div class="input--group">
+                                        <input asp-for="Input.Email"
+                                               class="form-control form--control"
+                                               type="text"
+                                               placeholder="03XX XXX XXXX"
+                                               autocomplete="username"
+                                               required />
+                                    </div>
+                                    <span asp-validation-for="Input.Email" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Password -->
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="sign__wrap__single">
                                     <label asp-for="Input.Password" class="form-label form--label">
-                                       Password
+                                        Password
                                     </label>
-                                    <input asp-for="Input.Password"
-                                           type="password"
-                                           class="form-control form--control"
-                                           autocomplete="current-password"
-                                           placeholder="Enter your password"
-                                           required />
-                                    <span asp-validation-for="Input.Password"
-                                          class="text-danger small"></span>
+                                    <div class="lf-pw-wrapper">
+                                        <div class="input--group">
+                                            <input asp-for="Input.Password"
+                                                   type="password"
+                                                   class="form-control form--control"
+                                                   autocomplete="current-password"
+                                                   placeholder="••••••••"
+                                                   id="passwordField"
+                                                   required />
+                                        </div>
+                                        <button type="button" class="lf-pw-toggle" onclick="togglePassword()" tabindex="-1">
+                                            <i class="fa-regular fa-eye" id="toggleIcon"></i>
+                                        </button>
+                                    </div>
+                                    <span asp-validation-for="Input.Password" class="lf-field-error"></span>
                                 </div>
                             </div>
 
                             <!-- Remember + Forgot -->
-                            <div class="col-12">
-                                <div class="sign__forgot">
-                                    <div class="form-check">
-                                        <input class="form-check-input"
-                                               asp-for="Input.RememberMe" />
-                                        <label asp-for="Input.RememberMe"
-                                               class="form-check-label"></label>
+                            <div class="col-lg-12">
+                                <div class="sign__forgot lf-options-row">
+                                    <div class="form-check lf-check">
+                                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                                        <label asp-for="Input.RememberMe" class="form-check-label">
+                                            Remember me
+                                        </label>
                                     </div>
-
-                                    <a asp-page="./ForgotPassword"
-                                       class="forgot-link">
+                                    <a asp-page="./ForgotPassword" class="lf-forgot-link">
                                         Forgot Password?
                                     </a>
                                 </div>
                             </div>
 
-                            <!-- Login Button -->
-                            <div class="col-12">
-                                <button id="login-submit"
-                                        type="submit"
-                                        class="common__btn w-100">
-                                    <span style="width:100%;">Log In</span>
-                                    <span><i class="fa-solid fa-arrow-right"></i></span>
-                                </button>
+                            <!-- Login Button (Unchanged) -->
+                            <div class="col-lg-12">
+                                <div class="sign__wrap__single">
+                                    <button id="login-submit" type="submit" class="common__btn">
+                                        <span>Log In</span>
+                                        <span><i class="fa-solid fa-arrow-right"></i></span>
+                                    </button>
+                                </div>
                             </div>
 
                             <!-- Register -->
                             <div class="col-lg-12">
-                                <div class="sign__already">
-                                <p> Don't have an account? 
-                                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl"> Register </a>
-                                    </p> </div> 
-                                    </div>
+                                <div class="sign__already lf-register-row">
+                                    <p>
+                                        Don't have an account?
+                                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+                                    </p>
+                                </div>
+                            </div>
 
                         </div>
                     </form>
-                    <!-- External Login Separate -->
+
+                    <!-- External Login -->
                     @if ((Model.ExternalLogins?.Count ?? 0) > 0)
                     {
-                        <div class="external-login mt-3 text-center">
-                            <p class="form--label mb-2 small">Or log in with</p>
+                        <div class="lf-external">
+                            <div class="lf-divider"><span>Or continue with</span></div>
 
-                            <form asp-page="./ExternalLogin"
-                                  asp-route-returnUrl="@Model.ReturnUrl"
-                                  method="post">
+                            <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                                 @Html.AntiForgeryToken()
-
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit"
-                                            class="common__btn me-2 mb-2"
-                                            name="provider"
-                                            value="@provider.Name">
-                                        <span>@provider.DisplayName</span>
-                                        <span><i class="fa-solid fa-arrow-right"></i></span>
-                                    </button>
-                                }
+                                <div class="lf-social-grid">
+                                    @foreach (var provider in Model.ExternalLogins!)
+                                    {
+                                        <button type="submit" class="common__btn lf-social-btn"
+                                                name="provider" value="@provider.Name">
+                                            <span>
+                                                @if (provider.Name.ToLower().Contains("google"))
+                                                {
+                                                    <i class="fa-brands fa-google"></i>
+                                                }
+                                                else if (provider.Name.ToLower().Contains("facebook"))
+                                                {
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-regular fa-arrow-right-to-bracket"></i>
+                                                }
+                                                @provider.DisplayName
+                                            </span>
+                                            <span><i class="fa-solid fa-arrow-right"></i></span>
+                                        </button>
+                                    }
+                                </div>
                             </form>
                         </div>
                     }
@@ -161,55 +179,274 @@
         </div>
     </div>
 </section>
+
 <style>
-    #account .row {
-        --bs-gutter-y: 0.6rem;
+    /* ── Layout ── */
+    .sign__wrap {
+        width: 530px;
+        margin-top: 50px;
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1.5px solid hsl(var(--border-color) / 0.18);
+        box-shadow: 0 8px 32px -8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+        padding: 36px 40px 32px;
+        transition: box-shadow 0.3s ease;
     }
 
-    #account .sign__wrap__single {
+    .sign__wrap:hover {
+        box-shadow: 0 12px 40px -10px hsl(var(--base) / 0.12), 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .sign__wrap__single {
         margin-bottom: 0;
+        padding-bottom: 8px;
     }
 
-    #account .form--label {
-        margin-bottom: 4px;
-        font-weight: 500;
+    .col-lg-12 + .col-lg-12 {
+        margin-top: 10px;
     }
 
-    #account .text-danger.small {
-        margin-top: 3px;
+    /* ── Labels ── */
+    .form--label {
+        margin-bottom: 8px;
         display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: hsl(var(--heading-color));
+        padding-left: 4px;
+        letter-spacing: 0.2px;
     }
 
-    #account .sign__forgot {
+    /* ── Input group ── */
+    .input--group {
+        display: flex;
+        align-items: center;
+        height: 52px;
+        border-radius: 14px;
+        border: 2px solid hsl(var(--border-color) / 0.2);
+        transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        overflow: hidden;
+    }
+
+    .input--group:focus-within {
+        border-color: hsl(var(--base));
+        box-shadow: 0 6px 18px -6px hsl(var(--base) / 0.25);
+        transform: translateY(-1px);
+    }
+
+    .input--group .form--control {
+        border: none;
+        height: 100%;
+        padding: 0 16px;
+        background: transparent;
+        font-size: 0.95rem;
+        color: hsl(var(--heading-color));
+        font-weight: 400;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .input--group .form--control::placeholder {
+        color: hsl(var(--text-color) / 0.4);
+        font-weight: 300;
+    }
+
+    .input--group .form--control:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    /* ── Password toggle — sits on outer wrapper, not inside overflow:hidden ── */
+    .lf-pw-wrapper {
+        position: relative;
+    }
+
+    .lf-pw-wrapper .input--group {
+        padding-right: 48px; /* reserve space for toggle */
+    }
+
+    .lf-pw-toggle {
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        border-radius: 10px;
+        color: hsl(var(--text-color) / 0.4);
+        cursor: pointer;
+        font-size: 16px;
+        transition: color 0.2s, background 0.2s;
+        z-index: 3;
+    }
+
+    .lf-pw-toggle:hover {
+        color: hsl(var(--base));
+        background: hsl(var(--base) / 0.06);
+    }
+
+    /* ── Remember / Forgot row ── */
+    .lf-options-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 4px 2px 4px;
+    }
+
+    .lf-check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+    }
+
+    .lf-check .form-check-input {
+        width: 17px;
+        height: 17px;
+        border: 2px solid hsl(var(--border-color) / 0.4);
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0;
+        transition: all 0.2s;
+    }
+
+    .lf-check .form-check-input:checked {
+        background-color: hsl(var(--base));
+        border-color: hsl(var(--base));
+    }
+
+    .lf-check .form-check-label {
+        font-size: 0.875rem;
+        color: hsl(var(--text-color) / 0.75);
+        cursor: pointer;
+        margin: 0;
+    }
+
+    .lf-forgot-link {
+        font-size: 0.875rem;
+        color: hsl(var(--base));
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity 0.2s;
+    }
+
+    .lf-forgot-link:hover { opacity: 0.75; }
+
+    /* ── Register row ── */
+    .lf-register-row {
+        text-align: center;
+        padding-top: 6px;
+    }
+
+    .lf-register-row p {
+        font-size: 0.9rem;
+        color: hsl(var(--text-color) / 0.7);
+        margin: 0;
+    }
+
+    .lf-register-row a {
+        color: hsl(var(--base));
+        font-weight: 600;
+        text-decoration: none;
+        margin-left: 4px;
+    }
+
+    .lf-register-row a:hover { text-decoration: underline; }
+
+    /* ── Validation ── */
+    .lf-validation-summary {
+        background: #fff5f5;
+        border: 1px solid #feb2b2;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 0.825rem;
+        color: #c53030;
+        margin-bottom: 8px;
+    }
+
+    .lf-validation-summary:empty { display: none; }
+
+    .lf-field-error {
+        display: block;
+        font-size: 0.78rem;
+        color: #e53e3e;
         margin-top: 4px;
+        padding-left: 4px;
+        min-height: 1rem;
     }
 
-    #account p {
-        margin-bottom: 0;
+    /* ── Divider ── */
+    .lf-external { margin-top: 20px; }
+
+    .lf-divider {
+        position: relative;
+        text-align: center;
+        margin: 18px 0;
     }
 
-    .external-login {
-        margin-top: 12px;
-    }
-    #account .form-control:focus {
-        border-color: #1DA5A5 !important;
-        box-shadow: 0 0 0 0.1rem #1DA5A5 !important;
-        outline: none !important;
-    }
-
-    #account .form-check-input:focus {
-        border-color: #1DA5A5 !important;
-        box-shadow: 0 0 0 0.1rem #1DA5A5 !important;
+    .lf-divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0; right: 0;
+        height: 1px;
+        background: hsl(var(--border-color) / 0.25);
     }
 
-    #account .form-check-input:checked {
-        background-color: #1DA5A5;
-        border-color: #1DA5A5;
+    .lf-divider span {
+        position: relative;
+        background: #fff;
+        padding: 0 14px;
+        font-size: 0.8rem;
+        color: hsl(var(--text-color) / 0.55);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* ── Social grid ── */
+    .lf-social-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .lf-social-btn {
+        font-size: 14px !important;
+    }
+
+    /* ── Responsive ── */
+    @@media (max-width: 1200px) { .sign__wrap { width: 100%; max-width: 530px; } }
+    @@media (max-width: 991px)  { .sign__wrap { margin: 40px auto 0; } }
+    @@media (max-width: 768px)  { .sign__wrap { padding: 28px 24px 24px; } }
+    @@media (max-width: 576px)  {
+        .sign__wrap { padding: 24px 18px 20px; border-radius: 18px; }
+        .input--group { height: 48px; }
+        .lf-options-row { flex-direction: column; gap: 10px; align-items: flex-start; }
     }
 </style>
+
+<script>
+    function togglePassword() {
+        const f = document.getElementById('passwordField');
+        const i = document.getElementById('toggleIcon');
+        if (!f || !i) return;
+        if (f.type === 'password') {
+            f.type = 'text';
+            i.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            f.type = 'password';
+            i.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+</script>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
