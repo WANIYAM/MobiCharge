@@ -91,7 +91,6 @@
                                                    required />
                                         </div>
                                         <button type="button" class="lf-pw-toggle" onclick="togglePassword()" tabindex="-1">
-                                            <i class="fa-regular fa-eye" id="toggleIcon"></i>
                                         </button>
                                     </div>
                                     <span asp-validation-for="Input.Password" class="lf-field-error"></span>
@@ -107,9 +106,7 @@
                                             Remember me
                                         </label>
                                     </div>
-                                    <a asp-page="./ForgotPassword" class="lf-forgot-link">
-                                        Forgot Password?
-                                    </a>
+                                    
                                 </div>
                             </div>
 
@@ -266,31 +263,9 @@
     .lf-pw-wrapper .input--group {
         padding-right: 48px; /* reserve space for toggle */
     }
+      
+   
 
-    .lf-pw-toggle {
-        position: absolute;
-        right: 4px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        border-radius: 10px;
-        color: hsl(var(--text-color) / 0.4);
-        cursor: pointer;
-        font-size: 16px;
-        transition: color 0.2s, background 0.2s;
-        z-index: 3;
-    }
-
-    .lf-pw-toggle:hover {
-        color: hsl(var(--base));
-        background: hsl(var(--base) / 0.06);
-    }
 
     /* ── Remember / Forgot row ── */
     .lf-options-row {

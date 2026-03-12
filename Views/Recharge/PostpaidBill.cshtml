@@ -196,7 +196,7 @@
                             </div>
                             <button class="common__btn pb__btn__proceed" id="btnProceed"
                                     onclick="proceedToDetails()" disabled>
-                                <span>Continue to Payment</span>
+                                <span style="width:100%;">Continue to Payment</span>
                                 <span><i class="fa-solid fa-arrow-right"></i></span>
                             </button>
                         </div>
@@ -337,8 +337,8 @@
                                 </div>
                             </div>
 
-                            <button class="common__btn pb__btn__pay" onclick="submitPayment()">
-                                <span><i class="las la-lock"></i> Confirm &amp; Pay Rs. @Model.TotalAmount</span>
+                            <button class="common__btn pb__btn__pay " onclick="submitPayment()">
+                                <span style="width:100%;"><i class="las la-lock"></i> Confirm &amp; Pay Rs. @Model.TotalAmount</span>
                                 <span><i class="fa-solid fa-arrow-right"></i></span>
                             </button>
                             <button class="pb__btn__back" onclick="goBack()">
@@ -994,7 +994,9 @@
         padding: 3px 10px;
         font-size: 11px; font-weight: 700;
     }
-
+   /* ══ Payment detail panels — hide all, show only selected ══ */
+.payment-detail          { display: none; }
+.payment-detail.visible  { display: block; }
     /* ══ Responsive ══ */
     @@media (max-width: 991px) {
         .pb__left { position: static; margin-top: 20px; }
@@ -1034,8 +1036,8 @@ function proceedToDetails() {
     if (!selectedMethod) return;
     document.getElementById('panelMethod').style.display  = 'none';
     document.getElementById('panelDetails').style.display = 'block';
-    document.querySelectorAll('.payment-detail').forEach(p => p.classList.remove('visible'));
-    document.getElementById('detail-' + selectedMethod).classList.add('visible');
+   document.querySelectorAll('.payment-detail').forEach(p => p.classList.remove('visible'));
+document.getElementById('detail-' + selectedMethod).classList.add('visible');
 }
 
 function goBack() {

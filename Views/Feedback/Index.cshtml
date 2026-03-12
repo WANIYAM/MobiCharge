@@ -1,4 +1,4 @@
-@model MobileRechargeApp.Models.Feedback
+    @model MobileRechargeApp.Models.Feedback
 @{
     ViewData["Title"] = "Feedback";
 }
@@ -346,32 +346,13 @@
     .sign__wrap {
         width: 530px;
         margin-top: 50px;
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1.5px solid hsl(var(--border-color) / 0.18);
+        box-shadow: 0 8px 32px -8px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
         position: relative;
     }
 
-    .sign__wrap::before {
-        content: '';
-        position: absolute;
-        top: -20px;
-        right: -20px;
-        width: 150px;
-        height: 150px;
-        background: radial-gradient(circle, hsl(var(--base) / 0.1) 0%, transparent 70%);
-        border-radius: 50%;
-        z-index: -1;
-    }
-
-    .sign__wrap::after {
-        content: '';
-        position: absolute;
-        bottom: -30px;
-        left: -30px;
-        width: 200px;
-        height: 200px;
-        background: radial-gradient(circle, hsl(var(--base-two) / 0.08) 0%, transparent 70%);
-        border-radius: 50%;
-        z-index: -1;
-    }
 
     .sign__wrap__single {
         margin-bottom: 0;

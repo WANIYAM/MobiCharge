@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\recharge\\postpaidbill.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\recharge\\postpaidbill.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:areas\\identity\\pages\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|d:\\eproject\\mobilerechargeapp\\mobilerechargeapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D74D169A-0172-1016-5A5B-C6DF33C293D0}|MobileRechargeApp.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -19,12 +31,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PostpaidBill.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Recharge\\PostpaidBill.cshtml",
+              "RelativeDocumentMoniker": "Views\\Recharge\\PostpaidBill.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Recharge\\PostpaidBill.cshtml",
+              "RelativeToolTip": "Views\\Recharge\\PostpaidBill.cshtml",
+              "ViewState": "AgIAANgDAAAAAAAAAAAAAOYDAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T16:52:51.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "RelativeToolTip": "Areas\\Identity\\Pages\\Account\\Login.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAGwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T16:37:30.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAFYBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-03-12T16:14:55.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\Eproject\\MobileRechargeApp\\MobileRechargeApp\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-09T01:16:58.787Z",
               "EditorCaption": ""

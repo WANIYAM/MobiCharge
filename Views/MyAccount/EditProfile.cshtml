@@ -40,13 +40,13 @@
 
                             <!-- Mobile Number (readonly) -->
                             <div class="ep__field">
-                                <label class="form--label">
+                                <label class="form--label" >
                                     <i class="las la-mobile-alt"></i>
                                     Mobile Number (Username)
                                 </label>
                                 <div class="input--group ep__readonly">
                                     <span class="ep__icon"><i class="las la-phone"></i></span>
-                                    <input asp-for="MobileNumber" class="form-control form--control" readonly />
+                                    <input asp-for="MobileNumber" class="form-control" readonly style="background:none !important; cursor:not-allowed;" />
                                 </div>
                                 <small class="ep__hint">Mobile number cannot be changed</small>
                             </div>
@@ -105,7 +105,6 @@
                                                id="newPasswordField" />
                                     </div>
                                     <button type="button" class="lf-pw-toggle" onclick="togglePw('newPasswordField','icon1')" tabindex="-1">
-                                        <i class="fa-regular fa-eye" id="icon1"></i>
                                     </button>
                                 </div>
                                 <span asp-validation-for="NewPassword" class="ep__error"></span>
@@ -127,27 +126,24 @@
                                                id="confirmPasswordField" />
                                     </div>
                                     <button type="button" class="lf-pw-toggle" onclick="togglePw('confirmPasswordField','icon2')" tabindex="-1">
-                                        <i class="fa-regular fa-eye" id="icon2"></i>
                                     </button>
                                 </div>
                                 <span asp-validation-for="ConfirmPassword" class="ep__error"></span>
                             </div>
 
                             <!-- Actions -->
-                            <div class="ep__actions">
-                                <div class="ep__save__wrap">
-                                    <button type="submit" class="ep__btn__save__label">
-                                        Save Changes
-                                    </button>
-                                    <button type="submit" class="ep__btn__save__icon">
-                                        <i class="fa-solid fa-arrow-right"></i>
-                                    </button>
-                                </div>
+                            <div class="btn-wrapper mt-4">
+
+                                <button type="submit" class="common__btn save-btn">
+                                    <span style="width:100%"><i class="las la-check-circle me-2"></i>Save Changes</span>
+                                    <span><i class="fa-solid fa-arrow-right"></i></span>
+                                </button>
+
                                 <a href="/MyAccount" class="ep__btn__cancel">
                                     <i class="fa-solid fa-arrow-left"></i> Cancel
                                 </a>
-                            </div>
 
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -483,7 +479,20 @@
         color: hsl(var(--base));
         background: hsl(var(--base) / 0.04);
     }
+    .btn-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
+    .save-btn {
+        background: transparent;
+        color: hsl(var(--text-color));
+        width: 200px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     /* ── Responsive ── */
     @@media (max-width: 576px) {
         .ep__body { padding: 24px 18px 20px; }
